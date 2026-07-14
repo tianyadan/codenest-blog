@@ -1,0 +1,66 @@
+export type Language = 'zh' | 'en';
+
+export type ThemeMode = 'light' | 'dark';
+
+export type ContentType = 'article' | 'question';
+
+export type Difficulty = 'easy' | 'medium' | 'hard';
+
+export type ArticleCategory = 'learning' | 'work' | 'diary';
+
+export type Article = {
+  id: string;
+  slug: string;
+  title: string;
+  summary: string;
+  author: string;
+  category: ArticleCategory;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+  readingMinutes: number;
+  topOrder?: number;
+  content: string;
+};
+
+export type QuestionBank = {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  tags: string[];
+};
+
+export type QuestionItem = {
+  id: string;
+  slug: string;
+  bankSlug: string;
+  title: string;
+  description: string;
+  answer: string;
+  tags: string[];
+  difficulty: Difficulty;
+  source?: string;
+};
+
+export type SearchableContent = {
+  id: string;
+  type: ContentType;
+  slug: string;
+  title: string;
+  summary: string;
+  tags: string[];
+  body: string;
+};
+
+export type SearchResult = {
+  item: SearchableContent;
+  score: number;
+  matchedFields: string[];
+};
+
+export type TocItem = {
+  id: string;
+  level: number;
+  text: string;
+};
