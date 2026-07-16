@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { EmailModal } from '../components/EmailModal';
 import { ArrowRightIcon, CodeIcon, DatabaseIcon, GithubIcon, MailIcon } from '../components/Icons';
 import { TagList } from '../components/TagList';
 import { appRoutes, buildArticlePath } from '../lib/routes';
@@ -7,6 +9,7 @@ import { useAppContext } from '../layouts/AppLayout';
 
 export default function HomePage() {
   const { dictionary, language } = useAppContext();
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
   const articles = getLocalizedArticles(language);
   const questions = getLocalizedQuestions(language);
   const questionBanks = getLocalizedQuestionBanks(language);
@@ -93,15 +96,15 @@ export default function HomePage() {
       <aside className="home-sidebar" aria-label="Home sidebar">
         <section className="side-panel about-panel">
           <h2>{dictionary.pages.aboutMe}</h2>
-          <p>热爱编程，喜欢研究技术与业务结合的可能性。</p>
-          <p>专注于 Java 后端开发，沉淀知识，分享成长。</p>
+          <p>{dictionary.pages.aboutMeBio1}</p>
+          <p>{dictionary.pages.aboutMeBio2}</p>
           <div className="social-links">
-            <a href="https://github.com" aria-label="GitHub">
+            <a href="https://github.com/tianyadan/codenest-blog" target="_blank" rel="noreferrer" aria-label={dictionary.labels.github}>
               <GithubIcon />
             </a>
-            <a href="mailto:hello@codenest.dev" aria-label="Email">
+            <button type="button" className="social-link-button" aria-label={dictionary.labels.email} onClick={() => setEmailModalOpen(true)}>
               <MailIcon />
-            </a>
+            </button>
           </div>
         </section>
 
@@ -120,8 +123,10 @@ export default function HomePage() {
 
       <footer className="home-footer">
         <span>© 2026 CodeNest. All rights reserved.</span>
-        <span>专注技术成长 · 持续输出价值</span>
+        <span>{dictionary.pages.footerTagline}</span>
       </footer>
+
+      <EmailModal open={emailModalOpen} onClose={() => setEmailModalOpen(false)} dictionary={dictionary} />
     </div>
   );
 }

@@ -14,6 +14,9 @@ export type Dictionary = {
     viewQuestion: string;
     toggleTheme: string;
     switchLanguage: string;
+    copyEmail: string;
+    copied: string;
+    close: string;
   };
   pages: {
     homeTitle: string;
@@ -21,6 +24,10 @@ export type Dictionary = {
     latestArticles: string;
     questionBanks: string;
     aboutMe: string;
+    aboutMeBio1: string;
+    aboutMeBio2: string;
+    footerTagline: string;
+    emailTitle: string;
     recentUpdates: string;
     articleIntro: string;
     all: string;
@@ -40,6 +47,8 @@ export type Dictionary = {
     source: string;
     updatedAt: string;
     readingMinutes: string;
+    github: string;
+    email: string;
   };
 };
 
@@ -57,7 +66,10 @@ const dictionaries: Record<Language, Dictionary> = {
       readArticle: '阅读文章',
       viewQuestion: '查看题目',
       toggleTheme: '切换主题',
-      switchLanguage: '切换语言'
+      switchLanguage: '切换语言',
+      copyEmail: '复制邮箱',
+      copied: '已复制',
+      close: '关闭'
     },
     pages: {
       homeTitle: 'CodeNest 技术知识库',
@@ -65,6 +77,10 @@ const dictionaries: Record<Language, Dictionary> = {
       latestArticles: '最新文章',
       questionBanks: '题库分类',
       aboutMe: '关于我',
+      aboutMeBio1: '热爱编程，喜欢研究技术与业务结合的可能性。',
+      aboutMeBio2: '专注于 Java 后端开发，沉淀知识，分享成长。',
+      footerTagline: '专注技术成长 · 持续输出价值',
+      emailTitle: '联系邮箱',
       recentUpdates: '最近更新',
       articleIntro: '记录技术成长，沉淀知识价值。',
       all: '全部',
@@ -83,7 +99,9 @@ const dictionaries: Record<Language, Dictionary> = {
       difficulty: '难度',
       source: '来源',
       updatedAt: '更新于',
-      readingMinutes: '分钟阅读'
+      readingMinutes: '分钟阅读',
+      github: 'GitHub',
+      email: '邮箱'
     }
   },
   en: {
@@ -99,7 +117,10 @@ const dictionaries: Record<Language, Dictionary> = {
       readArticle: 'Read article',
       viewQuestion: 'View question',
       toggleTheme: 'Toggle theme',
-      switchLanguage: 'Switch language'
+      switchLanguage: 'Switch language',
+      copyEmail: 'Copy email',
+      copied: 'Copied',
+      close: 'Close'
     },
     pages: {
       homeTitle: 'CodeNest Knowledge Base',
@@ -107,6 +128,10 @@ const dictionaries: Record<Language, Dictionary> = {
       latestArticles: 'Latest Articles',
       questionBanks: 'Question Banks',
       aboutMe: 'About Me',
+      aboutMeBio1: 'Passionate about programming and exploring how technology integrates with business.',
+      aboutMeBio2: 'Focused on Java backend development — building knowledge and sharing growth.',
+      footerTagline: 'Focused on technical growth · Continuous value creation',
+      emailTitle: 'Contact Email',
       recentUpdates: 'Recent Updates',
       articleIntro: 'Record growth and preserve technical value.',
       all: 'All',
@@ -125,7 +150,9 @@ const dictionaries: Record<Language, Dictionary> = {
       difficulty: 'Difficulty',
       source: 'Source',
       updatedAt: 'Updated',
-      readingMinutes: 'min read'
+      readingMinutes: 'min read',
+      github: 'GitHub',
+      email: 'Email'
     }
   }
 };
