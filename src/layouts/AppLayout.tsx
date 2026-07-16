@@ -27,7 +27,7 @@ export function AppLayout({ context }: AppLayoutProps) {
     <div className="app-shell">
       <header className="site-header">
         <NavLink to={appRoutes.home} className="brand" aria-label="CodeNest home">
-          <span className="brand-mark">CN</span>
+          <img className="brand-logo" src="/favicon-32x32.png" alt="" width={32} height={32} />
           <span>CodeNest</span>
         </NavLink>
 

@@ -97,13 +97,17 @@ button {
 }
 
 .brand {
+  gap: 10px;
   min-height: 72px;
   font-size: 22px;
   font-weight: 700;
 }
 
-.brand-mark {
-  display: none;
+.brand-logo {
+  display: block;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
 }
 
 .main-nav {
