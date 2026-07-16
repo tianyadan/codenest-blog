@@ -1,16 +1,33 @@
 import { Link, useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { SearchBox } from '../components/SearchBox';
 import { TagList } from '../components/TagList';
-import { searchableContent } from '../data/content';
+import { loadSearchableContent } from '../data/searchCorpus';
 import { useAppContext } from '../layouts/AppLayout';
 import { appRoutes, buildArticlePath, buildQuestionPath } from '../lib/routes';
 import { searchContent } from '../lib/search';
+import type { SearchableContent } from '../types/content';
 
 export default function SearchPage() {
   const { dictionary } = useAppContext();
   const [searchParams, setSearchParams] = useSearchParams();
   const keyword = searchParams.get('q') ?? '';
-  const results = searchContent(searchableContent, keyword);
+  const [corpus, setCorpus] = useState<SearchableContent[] | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    // WHY: 搜索语料含正文，单独异步加载，避免拖慢首屏。
+    loadSearchableContent().then((items) => {
+      if (!cancelled) setCorpus(items);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const results = corpus ? searchContent(corpus, keyword) : [];
 
   return (
     <section className="page-stack">
@@ -26,7 +43,9 @@ export default function SearchPage() {
       />
 
       <div className="search-results">
-        {results.length === 0 ? (
+        {!corpus ? (
+          <p className="muted">Loading…</p>
+        ) : results.length === 0 ? (
           <div className="empty-state">
             <p>{dictionary.pages.noResults}</p>
           </div>
