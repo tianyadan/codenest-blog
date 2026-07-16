@@ -1,4 +1,4 @@
-import type { Article, ArticleCategory } from '../types/content';
+import type { ArticleCategory } from '../types/content';
 
 export const articleCategoryLabels: Record<ArticleCategory, { zh: string; en: string }> = {
   learning: { zh: '学习沉淀', en: 'Learning' },
@@ -8,7 +8,11 @@ export const articleCategoryLabels: Record<ArticleCategory, { zh: string; en: st
 
 export type ArticleCategoryFilter = ArticleCategory | 'all';
 
-export const getArticlesByCategory = (articles: Article[], category: ArticleCategoryFilter) => {
+type CategorizedArticle = {
+  category: ArticleCategory;
+};
+
+export const getArticlesByCategory = <T extends CategorizedArticle>(articles: T[], category: ArticleCategoryFilter) => {
   if (category === 'all') {
     return articles;
   }
@@ -16,7 +20,7 @@ export const getArticlesByCategory = (articles: Article[], category: ArticleCate
   return articles.filter((article) => article.category === category);
 };
 
-export const getArticleCategories = (articles: Article[]) => {
+export const getArticleCategories = (articles: CategorizedArticle[]) => {
   const categoryCount = new Map<ArticleCategory, number>();
 
   // WHY: 文章分类侧栏必须来自真实内容，避免后续 Markdown 迁移后出现固定数字失真。
