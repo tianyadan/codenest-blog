@@ -2,21 +2,23 @@ import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ContentCard } from '../components/ContentCard';
 import { TagList } from '../components/TagList';
-import { questionBanks, questions } from '../data/content';
 import { useAppContext } from '../layouts/AppLayout';
+import { getLocalizedQuestionBanks, getLocalizedQuestions } from '../lib/localizedContent';
 import { buildQuestionPath } from '../lib/routes';
 
 export default function QuestionListPage() {
-  const { dictionary } = useAppContext();
+  const { dictionary, language } = useAppContext();
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedBank = searchParams.get('bank') ?? 'all';
+  const questions = getLocalizedQuestions(language);
+  const questionBanks = getLocalizedQuestionBanks(language);
 
   const filteredQuestions = useMemo(() => {
     if (selectedBank === 'all') {
       return questions;
     }
     return questions.filter((question) => question.bankSlug === selectedBank);
-  }, [selectedBank]);
+  }, [selectedBank, questions]);
 
   return (
     <section className="page-stack">

@@ -9,7 +9,7 @@ import { searchContent } from '../lib/search';
 import type { SearchableContent } from '../types/content';
 
 export default function SearchPage() {
-  const { dictionary } = useAppContext();
+  const { dictionary, language } = useAppContext();
   const [searchParams, setSearchParams] = useSearchParams();
   const keyword = searchParams.get('q') ?? '';
   const [corpus, setCorpus] = useState<SearchableContent[] | null>(null);
@@ -17,15 +17,15 @@ export default function SearchPage() {
   useEffect(() => {
     let cancelled = false;
 
-    // WHY: 搜索语料含正文，单独异步加载，避免拖慢首屏。
-    loadSearchableContent().then((items) => {
+    // WHY: 搜索语料含正文，单独异步加载，并按语言严格隔离。
+    loadSearchableContent(language).then((items) => {
       if (!cancelled) setCorpus(items);
     });
 
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [language]);
 
   const results = corpus ? searchContent(corpus, keyword) : [];
 

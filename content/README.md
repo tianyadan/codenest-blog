@@ -1,16 +1,23 @@
 # Content 写作指南
 
-把 Markdown 丢进对应目录即可，开发服务器 / 构建会自动扫描。
+把 Markdown 丢进对应语言目录即可，开发服务器 / 构建会自动扫描。
 
 ## 目录约定
 
 | 类型 | 路径 | 说明 |
 |------|------|------|
-| 文章 | `content/articles/*.md` | 文件名默认作为 `slug` |
-| 题库 | `content/banks/*.md` | 文件名默认作为题库 `slug` |
-| 题目 | `content/questions/<bankSlug>/*.md` | 子目录名即所属题库 |
+| 中文文章 | `content/zh/articles/*.md` | 文件名默认作为 `slug` |
+| 英文文章 | `content/en/articles/*.md` | 与中文共用同一 `slug` 配对 |
+| 中文题库 | `content/zh/banks/*.md` | 文件名默认作为题库 `slug` |
+| 英文题库 | `content/en/banks/*.md` | 同上 |
+| 中文题目 | `content/zh/questions/<bankSlug>/*.md` | 子目录名即所属题库 |
+| 英文题目 | `content/en/questions/<bankSlug>/*.md` | 同上 |
 
 以 `_` 开头的文件名会被忽略（可用于草稿说明）。
+
+切换站点语言后，**只展示当前语言内容**；缺译不会回退到另一语言。
+
+AI 整理文档时请阅读：`docs/ai-content-rules/RULES.zh.md`（中文）或 `RULES.en.md`（英文）。
 
 ## 文章 frontmatter
 
@@ -63,6 +70,6 @@ tags: [Java, JVM, 并发]
 
 ## 工作流
 
-1. 新建或编辑上述目录中的 `.md`
+1. 在 `content/zh/` 或 `content/en/` 下新建或编辑 `.md`
 2. 本地 `npm run dev` 可热更新
 3. `git push` 到主分支后由 CI/部署重新构建即可上线

@@ -3,17 +3,18 @@ import { useEffect, useState } from 'react';
 import { MarkdownRenderer } from '../components/MarkdownRenderer';
 import { TableOfContents } from '../components/TableOfContents';
 import { TagList } from '../components/TagList';
-import { loadQuestionAnswer, questionBanks, questions } from '../data/content';
+import { loadQuestionAnswer } from '../data/content';
 import { useAppContext } from '../layouts/AppLayout';
+import { findLocalizedQuestion, getLocalizedQuestionBanks } from '../lib/localizedContent';
 import { appRoutes } from '../lib/routes';
 import { extractTableOfContents } from '../lib/toc';
 
 export default function QuestionDetailPage() {
   const { slug = '' } = useParams();
-  const { dictionary } = useAppContext();
+  const { dictionary, language } = useAppContext();
   const decodedSlug = decodeURIComponent(slug);
-  const question = questions.find((item) => item.slug === decodedSlug);
-  const bank = questionBanks.find((item) => item.slug === question?.bankSlug);
+  const question = findLocalizedQuestion(decodedSlug, language);
+  const bank = getLocalizedQuestionBanks(language).find((item) => item.slug === question?.bankSlug);
   const [answer, setAnswer] = useState<string | null>(null);
   const [loadState, setLoadState] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle');
 
@@ -27,7 +28,7 @@ export default function QuestionDetailPage() {
     let cancelled = false;
     setLoadState('loading');
 
-    loadQuestionAnswer(question.slug)
+    loadQuestionAnswer(question.slug, language)
       .then((markdown) => {
         if (cancelled) return;
         if (markdown === null) {
@@ -44,7 +45,7 @@ export default function QuestionDetailPage() {
     return () => {
       cancelled = true;
     };
-  }, [question]);
+  }, [question, language]);
 
   if (!question) {
     return (

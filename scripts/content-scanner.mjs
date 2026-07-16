@@ -1,11 +1,12 @@
 /**
- * 扫描 content/ 目录，生成文章、题库、题目的元数据与搜索语料。
+ * 扫描 content/{zh|en}/ 目录，生成文章、题库、题目的元数据与搜索语料。
  * 供 Vite 插件在构建/开发时调用，实现「丢 md 即用」。
  */
 import fs from 'node:fs';
 import path from 'node:path';
 
 const FRONTMATTER_PATTERN = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/;
+const SUPPORTED_LANGS = ['zh', 'en'];
 
 const stripQuotes = (value) => {
   if (
@@ -140,90 +141,101 @@ const toPosixRelative = (rootDir, filePath) =>
 
 export const scanContent = (rootDir) => {
   const contentRoot = path.join(rootDir, 'content');
-  const articleFiles = listMarkdownFiles(path.join(contentRoot, 'articles'));
-  const bankFiles = listMarkdownFiles(path.join(contentRoot, 'banks'));
-  const questionFiles = listMarkdownFiles(path.join(contentRoot, 'questions'));
+  const articles = [];
+  const questionBanks = [];
+  const questions = [];
 
-  const articles = articleFiles.map((filePath) => {
-    const raw = fs.readFileSync(filePath, 'utf8');
-    const { data, content } = parseFrontmatter(raw);
-    const slug = toStringValue(data.slug, fileSlug(filePath));
-    const readingMinutes = toNumberValue(data.readingMinutes) ?? Math.max(1, Math.ceil(content.length / 400));
-    const topOrder = toNumberValue(data.topOrder);
+  for (const lang of SUPPORTED_LANGS) {
+    const langRoot = path.join(contentRoot, lang);
+    const articleFiles = listMarkdownFiles(path.join(langRoot, 'articles'));
+    const bankFiles = listMarkdownFiles(path.join(langRoot, 'banks'));
+    const questionFiles = listMarkdownFiles(path.join(langRoot, 'questions'));
+    const bankSlugSet = new Set();
 
-    const rawCategory = toStringValue(data.category, 'learning');
-    const category = ['learning', 'work', 'diary'].includes(rawCategory) ? rawCategory : 'learning';
+    for (const filePath of bankFiles) {
+      const raw = fs.readFileSync(filePath, 'utf8');
+      const { data } = parseFrontmatter(raw);
+      const slug = toStringValue(data.slug, fileSlug(filePath));
 
-    return {
-      id: toStringValue(data.id, `article-${slug}`),
-      slug,
-      title: toStringValue(data.title, slug),
-      summary: toStringValue(data.summary),
-      author: toStringValue(data.author, 'CodeNest'),
-      category,
-      tags: toStringArray(data.tags),
-      createdAt: toStringValue(data.createdAt, '1970-01-01'),
-      updatedAt: toStringValue(data.updatedAt, toStringValue(data.createdAt, '1970-01-01')),
-      readingMinutes,
-      ...(topOrder === undefined ? {} : { topOrder }),
-      file: toPosixRelative(rootDir, filePath),
-      body: content
-    };
-  });
-
-  const questionBanks = bankFiles.map((filePath) => {
-    const raw = fs.readFileSync(filePath, 'utf8');
-    const { data } = parseFrontmatter(raw);
-    const slug = toStringValue(data.slug, fileSlug(filePath));
-
-    return {
-      id: toStringValue(data.id, `bank-${slug}`),
-      slug,
-      name: toStringValue(data.name, slug),
-      description: toStringValue(data.description),
-      tags: toStringArray(data.tags)
-    };
-  });
-
-  const bankSlugSet = new Set(questionBanks.map((bank) => bank.slug));
-
-  const questions = questionFiles.map((filePath) => {
-    const raw = fs.readFileSync(filePath, 'utf8');
-    const { data, content } = parseFrontmatter(raw);
-    const slug = toStringValue(data.slug, fileSlug(filePath));
-    const relativeFromQuestions = path.relative(path.join(contentRoot, 'questions'), filePath);
-    const folderBank = relativeFromQuestions.includes(path.sep)
-      ? relativeFromQuestions.split(path.sep)[0]
-      : '';
-    const bankSlug = toStringValue(data.bank, folderBank || 'general');
-
-    if (bankSlug && !bankSlugSet.has(bankSlug)) {
       questionBanks.push({
-        id: `bank-${bankSlug}`,
-        slug: bankSlug,
-        name: bankSlug,
-        description: '',
-        tags: []
+        id: toStringValue(data.id, `bank-${lang}-${slug}`),
+        lang,
+        slug,
+        name: toStringValue(data.name, slug),
+        description: toStringValue(data.description),
+        tags: toStringArray(data.tags)
       });
-      bankSlugSet.add(bankSlug);
+      bankSlugSet.add(slug);
     }
 
-    const rawDifficulty = toStringValue(data.difficulty, 'medium');
-    const difficulty = ['easy', 'medium', 'hard'].includes(rawDifficulty) ? rawDifficulty : 'medium';
+    for (const filePath of articleFiles) {
+      const raw = fs.readFileSync(filePath, 'utf8');
+      const { data, content } = parseFrontmatter(raw);
+      const slug = toStringValue(data.slug, fileSlug(filePath));
+      const readingMinutes = toNumberValue(data.readingMinutes) ?? Math.max(1, Math.ceil(content.length / 400));
+      const topOrder = toNumberValue(data.topOrder);
 
-    return {
-      id: toStringValue(data.id, `question-${slug}`),
-      slug,
-      bankSlug,
-      title: toStringValue(data.title, slug),
-      description: toStringValue(data.description),
-      tags: toStringArray(data.tags),
-      difficulty,
-      ...(data.source ? { source: toStringValue(data.source) } : {}),
-      file: toPosixRelative(rootDir, filePath),
-      body: content
-    };
-  });
+      const rawCategory = toStringValue(data.category, 'learning');
+      const category = ['learning', 'work', 'diary'].includes(rawCategory) ? rawCategory : 'learning';
+
+      articles.push({
+        id: toStringValue(data.id, `article-${lang}-${slug}`),
+        lang,
+        slug,
+        title: toStringValue(data.title, slug),
+        summary: toStringValue(data.summary),
+        author: toStringValue(data.author, 'CodeNest'),
+        category,
+        tags: toStringArray(data.tags),
+        createdAt: toStringValue(data.createdAt, '1970-01-01'),
+        updatedAt: toStringValue(data.updatedAt, toStringValue(data.createdAt, '1970-01-01')),
+        readingMinutes,
+        ...(topOrder === undefined ? {} : { topOrder }),
+        file: toPosixRelative(rootDir, filePath),
+        body: content
+      });
+    }
+
+    for (const filePath of questionFiles) {
+      const raw = fs.readFileSync(filePath, 'utf8');
+      const { data, content } = parseFrontmatter(raw);
+      const slug = toStringValue(data.slug, fileSlug(filePath));
+      const relativeFromQuestions = path.relative(path.join(langRoot, 'questions'), filePath);
+      const folderBank = relativeFromQuestions.includes(path.sep)
+        ? relativeFromQuestions.split(path.sep)[0]
+        : '';
+      const bankSlug = toStringValue(data.bank, folderBank || 'general');
+
+      if (bankSlug && !bankSlugSet.has(bankSlug)) {
+        questionBanks.push({
+          id: `bank-${lang}-${bankSlug}`,
+          lang,
+          slug: bankSlug,
+          name: bankSlug,
+          description: '',
+          tags: []
+        });
+        bankSlugSet.add(bankSlug);
+      }
+
+      const rawDifficulty = toStringValue(data.difficulty, 'medium');
+      const difficulty = ['easy', 'medium', 'hard'].includes(rawDifficulty) ? rawDifficulty : 'medium';
+
+      questions.push({
+        id: toStringValue(data.id, `question-${lang}-${slug}`),
+        lang,
+        slug,
+        bankSlug,
+        title: toStringValue(data.title, slug),
+        description: toStringValue(data.description),
+        tags: toStringArray(data.tags),
+        difficulty,
+        ...(data.source ? { source: toStringValue(data.source) } : {}),
+        file: toPosixRelative(rootDir, filePath),
+        body: content
+      });
+    }
+  }
 
   const articleMetas = articles.map(({ body, file, ...meta }) => ({ ...meta, file }));
   const questionMetas = questions.map(({ body, file, ...meta }) => ({ ...meta, file }));
@@ -231,6 +243,7 @@ export const scanContent = (rootDir) => {
   const searchableContent = [
     ...articles.map((article) => ({
       id: article.id,
+      lang: article.lang,
       type: 'article',
       slug: article.slug,
       title: article.title,
@@ -240,6 +253,7 @@ export const scanContent = (rootDir) => {
     })),
     ...questions.map((question) => ({
       id: question.id,
+      lang: question.lang,
       type: 'question',
       slug: question.slug,
       title: question.title,
@@ -252,7 +266,10 @@ export const scanContent = (rootDir) => {
   return {
     articleMetas,
     questionMetas,
-    questionBanks: questionBanks.sort((left, right) => left.slug.localeCompare(right.slug)),
+    questionBanks: questionBanks.sort((left, right) => {
+      const langCompare = left.lang.localeCompare(right.lang);
+      return langCompare !== 0 ? langCompare : left.slug.localeCompare(right.slug);
+    }),
     searchableContent
   };
 };
@@ -268,10 +285,11 @@ export const renderContentModules = (rootDir) => {
     searchableContent: scanned.searchableContent,
     indexModule: `/* eslint-disable */
 // AUTO-GENERATED by scripts/generate-content.mjs. Do not edit.
-import type { ArticleCategory, Difficulty, QuestionBank } from '../../types/content';
+import type { ArticleCategory, Difficulty, Language, QuestionBank } from '../../types/content';
 
 export type ArticleMeta = {
   id: string;
+  lang: Language;
   slug: string;
   title: string;
   summary: string;
@@ -287,6 +305,7 @@ export type ArticleMeta = {
 
 export type QuestionMeta = {
   id: string;
+  lang: Language;
   slug: string;
   bankSlug: string;
   title: string;
@@ -297,17 +316,21 @@ export type QuestionMeta = {
   file: string;
 };
 
+export type QuestionBankMeta = QuestionBank & { lang: Language };
+
 export const articleMetas: ArticleMeta[] = ${serialize(scanned.articleMetas)};
 
 export const questionMetas: QuestionMeta[] = ${serialize(scanned.questionMetas)};
 
-export const questionBanks: QuestionBank[] = ${serialize(scanned.questionBanks)};
+export const questionBanks: QuestionBankMeta[] = ${serialize(scanned.questionBanks)};
 `,
     searchModule: `/* eslint-disable */
 // AUTO-GENERATED by scripts/generate-content.mjs. Do not edit.
-import type { SearchableContent } from '../../types/content';
+import type { Language, SearchableContent } from '../../types/content';
 
-export const searchableContent: SearchableContent[] = ${serialize(scanned.searchableContent)};
+export type SearchableContentMeta = SearchableContent & { lang: Language };
+
+export const searchableContent: SearchableContentMeta[] = ${serialize(scanned.searchableContent)};
 `
   };
 };

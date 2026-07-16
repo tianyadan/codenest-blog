@@ -5,6 +5,7 @@ import { searchContent } from './search';
 const searchableContent: SearchableContent[] = [
   {
     id: 'article-1',
+    lang: 'zh',
     type: 'article',
     slug: 'spring-cache',
     title: 'Spring 缓存一致性',
@@ -14,6 +15,7 @@ const searchableContent: SearchableContent[] = [
   },
   {
     id: 'question-1',
+    lang: 'zh',
     type: 'question',
     slug: 'mysql-index',
     title: 'MySQL 索引为什么会失效',

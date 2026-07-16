@@ -3,16 +3,17 @@ import { useEffect, useState } from 'react';
 import { MarkdownRenderer } from '../components/MarkdownRenderer';
 import { TableOfContents } from '../components/TableOfContents';
 import { TagList } from '../components/TagList';
-import { articles, loadArticleContent } from '../data/content';
+import { loadArticleContent } from '../data/content';
 import { useAppContext } from '../layouts/AppLayout';
+import { findLocalizedArticle } from '../lib/localizedContent';
 import { appRoutes } from '../lib/routes';
 import { extractTableOfContents } from '../lib/toc';
 
 export default function ArticleDetailPage() {
   const { slug = '' } = useParams();
-  const { dictionary } = useAppContext();
+  const { dictionary, language } = useAppContext();
   const decodedSlug = decodeURIComponent(slug);
-  const article = articles.find((item) => item.slug === decodedSlug);
+  const article = findLocalizedArticle(decodedSlug, language);
   const [content, setContent] = useState<string | null>(null);
   const [loadState, setLoadState] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle');
 
@@ -26,8 +27,8 @@ export default function ArticleDetailPage() {
     let cancelled = false;
     setLoadState('loading');
 
-    // WHY: 正文按 slug 懒加载，列表页不必打包全部 Markdown。
-    loadArticleContent(article.slug)
+    // WHY: 正文按 slug + 语言懒加载，列表页不必打包全部 Markdown。
+    loadArticleContent(article.slug, language)
       .then((markdown) => {
         if (cancelled) return;
         if (markdown === null) {
@@ -44,7 +45,7 @@ export default function ArticleDetailPage() {
     return () => {
       cancelled = true;
     };
-  }, [article]);
+  }, [article, language]);
 
   if (!article) {
     return (

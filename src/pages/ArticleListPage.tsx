@@ -1,9 +1,9 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import { ArrowRightIcon, ChevronLeftIcon, ChevronRightIcon, ClockIcon } from '../components/Icons';
 import { TagList } from '../components/TagList';
-import { articles } from '../data/content';
 import { useAppContext } from '../layouts/AppLayout';
 import { articleCategoryLabels, getArticleCategories, getArticlesByCategory, type ArticleCategoryFilter } from '../lib/articles';
+import { getLocalizedArticles } from '../lib/localizedContent';
 import { buildArticlePath } from '../lib/routes';
 import type { ArticleCategory } from '../types/content';
 
@@ -13,6 +13,7 @@ export default function ArticleListPage() {
   const { dictionary, language } = useAppContext();
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCategory = (searchParams.get('category') ?? 'all') as ArticleCategoryFilter;
+  const articles = getLocalizedArticles(language);
   const sortedArticles = [...articles].sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
   const filteredArticles = getArticlesByCategory(sortedArticles, selectedCategory);
   const articleCategories = getArticleCategories(articles);

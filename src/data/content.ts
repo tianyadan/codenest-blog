@@ -1,8 +1,8 @@
 import { articleMetas, questionBanks, questionMetas } from './generated/content-index';
 import { parseFrontmatter } from '../lib/frontmatter';
-import type { Article, QuestionItem } from '../types/content';
+import type { Article, Language, QuestionItem } from '../types/content';
 
-export type { ArticleMeta, QuestionMeta } from './generated/content-index';
+export type { ArticleMeta, QuestionMeta, QuestionBankMeta } from './generated/content-index';
 
 /** 列表/首页只用元数据，避免把全部正文打进首包。 */
 export const articles = articleMetas;
@@ -11,7 +11,12 @@ export { questionBanks };
 
 /** Vite 按文件拆 chunk，详情页点击后再加载对应 md。 */
 const markdownLoaders = import.meta.glob(
-  ['../../content/articles/**/*.md', '../../content/questions/**/*.md'],
+  [
+    '../../content/zh/articles/**/*.md',
+    '../../content/zh/questions/**/*.md',
+    '../../content/en/articles/**/*.md',
+    '../../content/en/questions/**/*.md'
+  ],
   {
     query: '?raw',
     import: 'default',
@@ -29,9 +34,9 @@ const resolveLoader = (relativeFile: string) => {
   return matched?.[1];
 };
 
-/** 加载文章正文（去掉 frontmatter）。 */
-export const loadArticleContent = async (slug: string): Promise<string | null> => {
-  const meta = articleMetas.find((item) => item.slug === slug);
+/** 加载文章正文（去掉 frontmatter），按语言精确匹配。 */
+export const loadArticleContent = async (slug: string, language: Language): Promise<string | null> => {
+  const meta = articleMetas.find((item) => item.slug === slug && item.lang === language);
   if (!meta) {
     return null;
   }
@@ -45,9 +50,9 @@ export const loadArticleContent = async (slug: string): Promise<string | null> =
   return parseFrontmatter(raw).content;
 };
 
-/** 加载题目答案正文（去掉 frontmatter）。 */
-export const loadQuestionAnswer = async (slug: string): Promise<string | null> => {
-  const meta = questionMetas.find((item) => item.slug === slug);
+/** 加载题目答案正文（去掉 frontmatter），按语言精确匹配。 */
+export const loadQuestionAnswer = async (slug: string, language: Language): Promise<string | null> => {
+  const meta = questionMetas.find((item) => item.slug === slug && item.lang === language);
   if (!meta) {
     return null;
   }

@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
-import { articles, questions } from '../data/content';
 import { useAppContext } from '../layouts/AppLayout';
+import { getLocalizedArticles, getLocalizedQuestions } from '../lib/localizedContent';
 import { appRoutes } from '../lib/routes';
+import type { Language } from '../types/content';
 
-const collectTags = () => {
+/** 汇总当前语言下的标签出现次数。 */
+const collectTags = (language: Language) => {
+  const articles = getLocalizedArticles(language);
+  const questions = getLocalizedQuestions(language);
   const tagCounter = new Map<string, number>();
 
   [...articles.flatMap((article) => article.tags), ...questions.flatMap((question) => question.tags)].forEach((tag) => {
@@ -14,8 +18,8 @@ const collectTags = () => {
 };
 
 export default function TagsPage() {
-  const { dictionary } = useAppContext();
-  const tags = collectTags();
+  const { dictionary, language } = useAppContext();
+  const tags = collectTags(language);
 
   return (
     <section className="page-stack">

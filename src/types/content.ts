@@ -10,6 +10,7 @@ export type ArticleCategory = 'learning' | 'work' | 'diary';
 
 export type Article = {
   id: string;
+  lang: Language;
   slug: string;
   title: string;
   summary: string;
@@ -25,6 +26,7 @@ export type Article = {
 
 export type QuestionBank = {
   id: string;
+  lang: Language;
   slug: string;
   name: string;
   description: string;
@@ -33,6 +35,7 @@ export type QuestionBank = {
 
 export type QuestionItem = {
   id: string;
+  lang: Language;
   slug: string;
   bankSlug: string;
   title: string;
@@ -45,6 +48,7 @@ export type QuestionItem = {
 
 export type SearchableContent = {
   id: string;
+  lang: Language;
   type: ContentType;
   slug: string;
   title: string;

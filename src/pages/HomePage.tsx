@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon, CodeIcon, DatabaseIcon, GithubIcon, MailIcon } from '../components/Icons';
 import { TagList } from '../components/TagList';
-import { articles, questionBanks, questions } from '../data/content';
 import { appRoutes, buildArticlePath } from '../lib/routes';
+import { getLocalizedArticles, getLocalizedQuestionBanks, getLocalizedQuestions } from '../lib/localizedContent';
 import { useAppContext } from '../layouts/AppLayout';
 
 export default function HomePage() {
-  const { dictionary } = useAppContext();
+  const { dictionary, language } = useAppContext();
+  const articles = getLocalizedArticles(language);
+  const questions = getLocalizedQuestions(language);
+  const questionBanks = getLocalizedQuestionBanks(language);
   const topArticles = [...articles].sort((left, right) => (left.topOrder ?? 99) - (right.topOrder ?? 99)).slice(0, 3);
   const latestArticles = [...articles].sort((left, right) => right.updatedAt.localeCompare(left.updatedAt)).slice(0, 4);
 

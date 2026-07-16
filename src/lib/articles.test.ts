@@ -5,6 +5,7 @@ import { getArticleCategories, getArticlesByCategory } from './articles';
 const articleFixtures: Article[] = [
   {
     id: 'a1',
+    lang: 'zh',
     slug: 'spring-cache',
     title: 'Spring 缓存',
     summary: '缓存实践',
@@ -18,6 +19,7 @@ const articleFixtures: Article[] = [
   },
   {
     id: 'a2',
+    lang: 'zh',
     slug: 'work-summary',
     title: '工作总结',
     summary: '项目复盘',
