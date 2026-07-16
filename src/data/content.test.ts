@@ -11,7 +11,7 @@ describe('markdown content catalog', () => {
     expect(getLocalizedQuestionBanks('zh').map((bank) => bank.slug).sort()).toEqual(['java', 'mysql']);
     expect(getLocalizedArticles('zh').some((article) => article.slug === 'spring-cache-consistency')).toBe(true);
     expect(getLocalizedArticles('zh').some((article) => article.slug === 'seatunnel-data-sync')).toBe(true);
-    expect(getLocalizedArticles('en')).toHaveLength(0);
+    expect(getLocalizedArticles('en').some((article) => article.slug === 'seatunnel-data-sync')).toBe(true);
     expect(questionBanks.every((bank) => bank.lang === 'zh' || bank.lang === 'en')).toBe(true);
   });
 
@@ -20,6 +20,10 @@ describe('markdown content catalog', () => {
     expect(content).toContain('旁路缓存模式');
     expect(content).not.toContain('title: Spring');
     expect(await loadArticleContent('spring-cache-consistency', 'en')).toBeNull();
+
+    const enContent = await loadArticleContent('seatunnel-data-sync', 'en');
+    expect(enContent).toContain('Batch sync config');
+    expect(enContent).not.toContain('title: SeaTunnel');
   });
 
   it('builds searchable corpus from markdown bodies and filters by language', async () => {
@@ -28,6 +32,7 @@ describe('markdown content catalog', () => {
     expect(zhCorpus.every((item) => item.lang === 'zh')).toBe(true);
 
     const enCorpus = await loadSearchableContent('en');
-    expect(enCorpus).toHaveLength(0);
+    expect(enCorpus.some((item) => item.slug === 'seatunnel-data-sync' && item.lang === 'en')).toBe(true);
+    expect(enCorpus.every((item) => item.lang === 'en')).toBe(true);
   });
 });
