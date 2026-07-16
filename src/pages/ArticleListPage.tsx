@@ -4,27 +4,49 @@ import { TagList } from '../components/TagList';
 import { useAppContext } from '../layouts/AppLayout';
 import { articleCategoryLabels, getArticleCategories, getArticlesByCategory, type ArticleCategoryFilter } from '../lib/articles';
 import { getLocalizedArticles } from '../lib/localizedContent';
-import { buildArticlePath } from '../lib/routes';
+import { appRoutes, buildArticlePath } from '../lib/routes';
 import type { ArticleCategory } from '../types/content';
 
 const orderedCategories: ArticleCategory[] = ['learning', 'work', 'diary'];
+const PAGE_SIZE = 10;
 
 export default function ArticleListPage() {
   const { dictionary, language } = useAppContext();
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCategory = (searchParams.get('category') ?? 'all') as ArticleCategoryFilter;
+  const currentPage = Math.max(1, Number(searchParams.get('page') ?? '1') || 1);
   const articles = getLocalizedArticles(language);
   const sortedArticles = [...articles].sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
   const filteredArticles = getArticlesByCategory(sortedArticles, selectedCategory);
   const articleCategories = getArticleCategories(articles);
   const latestArticles = sortedArticles.slice(0, 5);
+  const totalPages = Math.max(1, Math.ceil(filteredArticles.length / PAGE_SIZE));
+  const safePage = Math.min(currentPage, totalPages);
+  const pagedArticles = filteredArticles.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
+  /** 切换分类时重置页码 */
   const setCategory = (category: ArticleCategoryFilter) => {
     if (category === 'all') {
       setSearchParams({});
       return;
     }
     setSearchParams({ category });
+  };
+
+  /** 切换分页并保留当前分类筛选 */
+  const setPage = (page: number) => {
+    const nextPage = Math.min(Math.max(page, 1), totalPages);
+    const params: Record<string, string> = {};
+
+    if (selectedCategory !== 'all') {
+      params.category = selectedCategory;
+    }
+
+    if (nextPage > 1) {
+      params.page = String(nextPage);
+    }
+
+    setSearchParams(params);
   };
 
   return (
@@ -52,7 +74,7 @@ export default function ArticleListPage() {
         </header>
 
         <div className="article-feed">
-          {filteredArticles.map((article) => (
+          {pagedArticles.map((article) => (
             <article className="article-feed-row" key={article.id}>
               <time className="article-feed-date" dateTime={article.updatedAt}>
                 {article.updatedAt}
@@ -72,23 +94,26 @@ export default function ArticleListPage() {
           ))}
         </div>
 
-        <nav className="pagination" aria-label="Pagination">
-          <button type="button" aria-label="Previous page">
-            <ChevronLeftIcon />
-          </button>
-          <button className="active" type="button">
-            1
-          </button>
-          <button type="button">2</button>
-          <button type="button" aria-label="Next page">
-            <ChevronRightIcon />
-          </button>
-        </nav>
+        {totalPages > 1 ? (
+          <nav className="pagination" aria-label="Pagination">
+            <button type="button" aria-label={dictionary.actions.previousPage} disabled={safePage <= 1} onClick={() => setPage(safePage - 1)}>
+              <ChevronLeftIcon />
+            </button>
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+              <button className={page === safePage ? 'active' : ''} type="button" key={page} onClick={() => setPage(page)}>
+                {page}
+              </button>
+            ))}
+            <button type="button" aria-label={dictionary.actions.nextPage} disabled={safePage >= totalPages} onClick={() => setPage(safePage + 1)}>
+              <ChevronRightIcon />
+            </button>
+          </nav>
+        ) : null}
       </section>
 
       <aside className="article-page-sidebar" aria-label="Article sidebar">
         <section className="side-panel">
-          <h2>文章分类</h2>
+          <h2>{dictionary.pages.articleCategories}</h2>
           <div className="article-category-list">
             {orderedCategories.map((category) => {
               const categoryCount = articleCategories.find((item) => item.category === category)?.count ?? 0;
@@ -118,8 +143,8 @@ export default function ArticleListPage() {
               </li>
             ))}
           </ul>
-          <Link className="article-sidebar-link" to="/文章">
-            查看全部文章
+          <Link className="article-sidebar-link" to={appRoutes.articles}>
+            {dictionary.pages.viewAllArticles}
             <ArrowRightIcon />
           </Link>
         </section>

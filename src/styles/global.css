@@ -10,6 +10,14 @@
   --primary: #050505;
   --primary-soft: #f5f5f5;
   --shadow: none;
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-base: 15px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 22px;
+  --font-size-2xl: 28px;
+  --font-size-hero: clamp(28px, 3.8vw, 38px);
 }
 
 :root[data-theme='dark'] {
@@ -42,8 +50,8 @@ body {
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei',
     sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: var(--font-size-base);
+  line-height: 1.65;
 }
 
 a {
@@ -98,15 +106,15 @@ button {
 
 .brand {
   gap: 10px;
-  min-height: 72px;
-  font-size: 22px;
+  min-height: 56px;
+  font-size: var(--font-size-lg);
   font-weight: 700;
 }
 
 .brand-logo {
   display: block;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   flex-shrink: 0;
 }
 
@@ -118,10 +126,11 @@ button {
 .main-nav a {
   position: relative;
   display: inline-flex;
-  min-height: 72px;
+  min-height: 56px;
   align-items: center;
   border: 1px solid transparent;
   color: var(--text);
+  font-size: var(--font-size-base);
   font-weight: 600;
 }
 
@@ -172,7 +181,7 @@ button {
 .site-main {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 56px 0 36px;
+  padding: 40px 0 32px;
 }
 
 .page-stack {
@@ -246,16 +255,16 @@ button {
 }
 
 .home-hero {
-  padding: 42px 0 8px;
+  padding: 28px 0 8px;
 }
 
 .home-hero h1,
 .page-heading h1,
 .detail-content > h1 {
   margin: 0;
-  font-size: clamp(38px, 5vw, 56px);
-  line-height: 1.12;
-  letter-spacing: 0;
+  font-size: var(--font-size-hero);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .home-hero p,
@@ -263,14 +272,14 @@ button {
 .page-heading p {
   max-width: 680px;
   color: var(--muted);
-  font-size: 20px;
+  font-size: var(--font-size-md);
 }
 
 .home-stats {
   display: grid;
   max-width: 560px;
   grid-template-columns: repeat(3, 1fr);
-  margin-top: 42px;
+  margin-top: 28px;
 }
 
 .home-stats div {
@@ -284,7 +293,7 @@ button {
 
 .home-stats strong {
   display: block;
-  font-size: 22px;
+  font-size: var(--font-size-lg);
   line-height: 1.2;
 }
 
@@ -315,7 +324,7 @@ button {
 .section-heading h2,
 .section-block h2 {
   margin: 0;
-  font-size: 20px;
+  font-size: var(--font-size-md);
 }
 
 .home-section-heading a,
@@ -342,8 +351,8 @@ button {
 
 .article-row h3 {
   margin: 0 0 8px;
-  font-size: 20px;
-  line-height: 1.35;
+  font-size: var(--font-size-md);
+  line-height: 1.4;
 }
 
 .article-row p {
@@ -411,10 +420,10 @@ button {
 }
 
 .side-panel h2 {
-  margin: 0 0 18px;
+  margin: 0 0 14px;
   border-bottom: 1px solid var(--border);
-  padding-bottom: 12px;
-  font-size: 18px;
+  padding-bottom: 10px;
+  font-size: var(--font-size-md);
 }
 
 .side-panel p {
@@ -577,8 +586,8 @@ button {
 .bank-card h3,
 .search-result h2 {
   margin: 6px 0 8px;
-  font-size: 22px;
-  line-height: 1.3;
+  font-size: var(--font-size-lg);
+  line-height: 1.35;
 }
 
 .content-card p,
@@ -615,7 +624,7 @@ button {
 .eyebrow {
   margin: 0 0 10px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: var(--font-size-xs);
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -652,13 +661,13 @@ button {
 }
 
 .markdown-body h2 {
-  margin-top: 34px;
-  font-size: 28px;
+  margin-top: 28px;
+  font-size: var(--font-size-xl);
 }
 
 .markdown-body h3 {
-  margin-top: 26px;
-  font-size: 22px;
+  margin-top: 22px;
+  font-size: var(--font-size-lg);
 }
 
 .markdown-body p,
@@ -748,14 +757,14 @@ button {
 
 .article-page-hero h1 {
   margin: 0;
-  font-size: 38px;
-  line-height: 1.2;
+  font-size: var(--font-size-2xl);
+  line-height: 1.25;
 }
 
 .article-page-hero p {
-  margin: 10px 0 26px;
+  margin: 8px 0 20px;
   color: var(--muted);
-  font-size: 18px;
+  font-size: var(--font-size-base);
 }
 
 .article-tabs {
@@ -807,8 +816,8 @@ button {
 
 .article-feed-body h2 {
   margin: 0 0 8px;
-  font-size: 22px;
-  line-height: 1.32;
+  font-size: var(--font-size-lg);
+  line-height: 1.35;
 }
 
 .article-feed-body p {
@@ -834,13 +843,19 @@ button {
 
 .pagination button {
   display: inline-grid;
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   place-items: center;
   border: 1px solid var(--border);
   border-radius: 6px;
   background: var(--surface);
   color: var(--text);
+  font-size: var(--font-size-sm);
+}
+
+.pagination button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 .pagination button.active {

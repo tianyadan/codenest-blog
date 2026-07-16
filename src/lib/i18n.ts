@@ -17,6 +17,8 @@ export type Dictionary = {
     copyEmail: string;
     copied: string;
     close: string;
+    previousPage: string;
+    nextPage: string;
   };
   pages: {
     homeTitle: string;
@@ -33,6 +35,8 @@ export type Dictionary = {
     all: string;
     allArticles: string;
     allQuestions: string;
+    articleCategories: string;
+    viewAllArticles: string;
     globalSearch: string;
     noResults: string;
     notFound: string;
@@ -69,7 +73,9 @@ const dictionaries: Record<Language, Dictionary> = {
       switchLanguage: '切换语言',
       copyEmail: '复制邮箱',
       copied: '已复制',
-      close: '关闭'
+      close: '关闭',
+      previousPage: '上一页',
+      nextPage: '下一页'
     },
     pages: {
       homeTitle: 'CodeNest 技术知识库',
@@ -86,6 +92,8 @@ const dictionaries: Record<Language, Dictionary> = {
       all: '全部',
       allArticles: '全部文章',
       allQuestions: '全部题目',
+      articleCategories: '文章分类',
+      viewAllArticles: '查看全部文章',
       globalSearch: '全局搜索',
       noResults: '没有找到匹配内容',
       notFound: '页面不存在',
@@ -120,7 +128,9 @@ const dictionaries: Record<Language, Dictionary> = {
       switchLanguage: 'Switch language',
       copyEmail: 'Copy email',
       copied: 'Copied',
-      close: 'Close'
+      close: 'Close',
+      previousPage: 'Previous page',
+      nextPage: 'Next page'
     },
     pages: {
       homeTitle: 'CodeNest Knowledge Base',
@@ -137,6 +147,8 @@ const dictionaries: Record<Language, Dictionary> = {
       all: 'All',
       allArticles: 'All Articles',
       allQuestions: 'All Questions',
+      articleCategories: 'Article Categories',
+      viewAllArticles: 'View All Articles',
       globalSearch: 'Global Search',
       noResults: 'No matching content found',
       notFound: 'Page not found',
