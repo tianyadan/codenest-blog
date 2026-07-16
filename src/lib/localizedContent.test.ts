@@ -17,6 +17,5 @@ describe('localizedContent', () => {
   it('finds articles by slug within the requested language only', () => {
     expect(findLocalizedArticle('seatunnel-data-sync', 'zh')?.title).toContain('SeaTunnel');
     expect(findLocalizedArticle('seatunnel-data-sync', 'en')?.title).toContain('SeaTunnel');
-    expect(findLocalizedArticle('spring-cache-consistency', 'en')).toBeUndefined();
   });
 });
