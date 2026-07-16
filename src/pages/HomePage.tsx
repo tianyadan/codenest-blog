@@ -99,7 +99,7 @@ export default function HomePage() {
           <p>{dictionary.pages.aboutMeBio1}</p>
           <p>{dictionary.pages.aboutMeBio2}</p>
           <div className="social-links">
-            <a href="https://github.com/tianyadan/codenest-blog" target="_blank" rel="noreferrer" aria-label={dictionary.labels.github}>
+            <a href="https://github.com/tianyadan/codenest-blog/tree/main" target="_blank" rel="noreferrer" aria-label={dictionary.labels.github}>
               <GithubIcon />
             </a>
             <button type="button" className="social-link-button" aria-label={dictionary.labels.email} onClick={() => setEmailModalOpen(true)}>
