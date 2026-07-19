@@ -5,7 +5,7 @@ author: evan
 category: work
 tags: [AI, 开发流程, 数据字典, 前后端协作]
 createdAt: 2026-07-09 23:25:42
-updatedAt: 2026-07-09 23:25:42
+updatedAt: 2026-07-19 21:40:00
 readingMinutes: 5
 ---
 
@@ -48,3 +48,7 @@ UI 和数据字典就绪后，生成对应 SQL 脚本与 Java 实体类，再开
 ## 7. 联调、测试，再发布上线
 
 最后进入前后端联调、边界值测试与回归测试。先发布到 dev 环境验证，确认无误后再正式上线。
+
+## 开发模式总结图
+
+![2026 年 AI 加持下的开发模式总结图](/images/articles/ai-assisted-dev-workflow-2026-summary.svg)
