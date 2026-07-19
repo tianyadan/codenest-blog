@@ -1,5 +1,44 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
-  <title id="title">2026 年 AI 加持下的开发模式</title>
-  <desc id="desc">人机协同开发流程动漫总结图</desc>
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#06142d"/><stop offset=".55" stop-color="#092c62"/><stop offset="1"
+<title id="title">2026 年 AI 加持下的开发模式</title><desc id="desc">开发者与 AI 智能体协作的动漫风格流程总结图</desc>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07152f"/><stop offset=".55" stop-color="#0b3470"/><stop offset="1" stop-color="#24165c"/></linearGradient>
+<linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#4ce7ff"/><stop offset="1" stop-color="#9d6cff"/></linearGradient>
+<filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<style>.t{font-family:Arial,'PingFang SC','Microsoft YaHei',sans-serif;fill:#fff}.muted{fill:#b8d8ff}.panel{fill:#0b2455;stroke:#4ce7ff;stroke-width:2}.small{font-size:24px}.label{font-size:30px;font-weight:700}.num{font-size:28px;font-weight:800}.line{stroke:#67e8ff;stroke-width:5;fill:none;marker-end:url(#arrow)}</style>
+<marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#67e8ff"/></marker>
+</defs>
+<rect width="1600" height="900" rx="36" fill="url(#bg)"/>
+<circle cx="800" cy="455" r="260" fill="#0b214c" opacity=".55" stroke="#4ce7ff" stroke-width="2" stroke-dasharray="12 18"/>
+<text x="800" y="82" text-anchor="middle" class="t" font-size="58" font-weight="800">2026 年 <tspan fill="url(#accent)">AI</tspan> 加持下的开发模式</text>
+<text x="800" y="126" text-anchor="middle" class="muted" font-size="24">人机协同 · 需求拆解 · 智能生成 · 自动验证 · 持续交付</text>
+
+<!-- flow arrows -->
+<path class="line" d="M400 240 C520 180 610 180 675 225"/><path class="line" d="M925 225 C1010 175 1110 185 1200 250"/>
+<path class="line" d="M1325 350 C1380 430 1380 500 1320 560"/><path class="line" d="M1180 690 C1060 760 970 760 910 700"/>
+<path class="line" d="M690 700 C590 760 480 750 390 680"/><path class="line" d="M275 560 C220 470 225 390 285 330"/>
+
+<!-- panels -->
+<g transform="translate(70 175)"><rect class="panel" width="350" height="160" rx="26"/><circle cx="42" cy="42" r="24" fill="#fff"/><text x="42" y="52" text-anchor="middle" fill="#163a7a" class="num">1</text><text x="82" y="52" class="t label">需求拆解</text><text x="28" y="98" class="muted small">竞品分析、目标澄清、任务拆分</text><text x="28" y="132" class="muted small">把复杂需求变成可执行单元</text></g>
+<g transform="translate(1180 175)"><rect class="panel" width="350" height="160" rx="26"/><circle cx="42" cy="42" r="24" fill="#fff"/><text x="42" y="52" text-anchor="middle" fill="#163a7a" class="num">2</text><text x="82" y="52" class="t label">上下文整理</text><text x="28" y="98" class="muted small">文档、代码、规范、历史决策</text><text x="28" y="132" class="muted small">构建 AI 可理解的完整上下文</text></g>
+<g transform="translate(1220 480)"><rect class="panel" width="310" height="160" rx="26"/><circle cx="42" cy="42" r="24" fill="#fff"/><text x="42" y="52" text-anchor="middle" fill="#163a7a" class="num">3</text><text x="82" y="52" class="t label">AI 编码生成</text><text x="28" y="98" class="muted small">SQL、实体、接口、前端页面</text><text x="28" y="132" class="muted small">基于约束快速生成实现</text></g>
+<g transform="translate(1010 690)"><rect class="panel" width="430" height="150" rx="26"/><circle cx="42" cy="42" r="24" fill="#fff"/><text x="42" y="52" text-anchor="middle" fill="#163a7a" class="num">4</text><text x="82" y="52" class="t label">自动测试与自检</text><text x="28" y="98" class="muted small">单元测试、边界校验、失败重试、结果复核</text></g>
+<g transform="translate(160 690)"><rect class="panel" width="430" height="150" rx="26"/><circle cx="42" cy="42" r="24" fill="#fff"/><text x="42" y="52" text-anchor="middle" fill="#163a7a" class="num">5</text><text x="82" y="52" class="t label">代码评审与优化</text><text x="28" y="98" class="muted small">安全、性能、可维护性与架构质量检查</text></g>
+<g transform="translate(70 480)"><rect class="panel" width="360" height="160" rx="26"/><circle cx="42" cy="42" r="24" fill="#fff"/><text x="42" y="52" text-anchor="middle" fill="#163a7a" class="num">6</text><text x="82" y="52" class="t label">部署与持续迭代</text><text x="28" y="98" class="muted small">构建、发布、监控、反馈闭环</text><text x="28" y="132" class="muted small">让交付过程持续自动化</text></g>
+
+<!-- anime developer -->
+<g transform="translate(575 205)">
+<ellipse cx="225" cy="430" rx="190" ry="42" fill="#031129" opacity=".7"/>
+<circle cx="225" cy="92" r="70" fill="#ffd9c4"/><path d="M160 88 Q165 12 225 18 Q298 15 298 98 Q270 65 235 68 Q195 50 160 88" fill="#17243f"/><path d="M178 76 Q220 28 284 58 Q260 20 218 20 Q174 24 160 86" fill="#273a68"/>
+<circle cx="202" cy="94" r="7" fill="#2556a8"/><circle cx="252" cy="94" r="7" fill="#2556a8"/><path d="M210 122 Q228 132 246 121" stroke="#c46f72" stroke-width="4" fill="none"/>
+<path d="M135 250 Q150 160 225 155 Q310 160 325 250 L340 400 L110 400 Z" fill="#111d37" stroke="#5be5ff" stroke-width="3"/><path d="M185 162 L225 215 L265 162" fill="#243761"/>
+<rect x="70" y="250" width="310" height="180" rx="18" fill="#091630" stroke="#6cecff" stroke-width="4"/><rect x="90" y="270" width="270" height="120" rx="10" fill="#07101f"/>
+<text x="105" y="300" fill="#75ecff" font-family="monospace" font-size="18">const workflow = AI.assist({</text><text x="125" y="330" fill="#9dffb2" font-family="monospace" font-size="18">context: complete,</text><text x="125" y="360" fill="#d5b0ff" font-family="monospace" font-size="18">tests: automatic</text><text x="105" y="388" fill="#75ecff" font-family="monospace" font-size="18">});</text>
+<rect x="175" y="430" width="100" height="18" rx="9" fill="#4ce7ff"/>
+</g>
+
+<!-- AI agents -->
+<g filter="url(#glow)"><circle cx="680" cy="210" r="38" fill="#eafcff" stroke="#66eaff" stroke-width="5"/><rect x="660" y="198" width="40" height="24" rx="10" fill="#10275c"/><circle cx="672" cy="210" r="4" fill="#66eaff"/><circle cx="688" cy="210" r="4" fill="#66eaff"/>
+<circle cx="930" cy="210" r="38" fill="#eafcff" stroke="#a98bff" stroke-width="5"/><rect x="910" y="198" width="40" height="24" rx="10" fill="#24165c"/><circle cx="922" cy="210" r="4" fill="#a98bff"/><circle cx="938" cy="210" r="4" fill="#a98bff"/></g>
+<text x="800" y="190" text-anchor="middle" class="t" font-size="30" font-weight="700">AI AGENTS</text>
+<text x="800" y="860" text-anchor="middle" class="t" font-size="34" font-weight="800">人机协同，开发者从执行者升级为设计者</text>
+</svg>
