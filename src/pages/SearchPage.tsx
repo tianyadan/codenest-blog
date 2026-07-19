@@ -51,7 +51,12 @@ export default function SearchPage() {
           </div>
         ) : (
           results.map((result) => {
-            const href = result.item.type === 'article' ? buildArticlePath(result.item.slug) : buildQuestionPath(result.item.slug);
+            const href =
+              result.item.type === 'article'
+                ? buildArticlePath(result.item.slug)
+                : result.item.bankSlug
+                  ? buildQuestionPath(result.item.bankSlug, result.item.slug)
+                  : appRoutes.questions;
 
             return (
               <article className="search-result" key={result.item.id}>

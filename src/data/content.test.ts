@@ -8,7 +8,16 @@ describe('markdown content catalog', () => {
     expect(articles.length).toBeGreaterThanOrEqual(2);
     expect(questions.length).toBeGreaterThanOrEqual(2);
     expect(articles.every((article) => article.lang === 'zh' || article.lang === 'en')).toBe(true);
-    expect(getLocalizedQuestionBanks('zh').map((bank) => bank.slug).sort()).toEqual(['java', 'mysql']);
+    expect(getLocalizedQuestionBanks('zh').map((bank) => bank.slug)).toEqual([
+      'mysql',
+      'redis',
+      'java',
+      'spring',
+      'vue',
+      'react',
+      'go',
+      'data-structures'
+    ]);
     expect(getLocalizedArticles('zh').some((article) => article.slug === 'seatunnel-data-sync')).toBe(true);
     expect(getLocalizedArticles('en').some((article) => article.slug === 'seatunnel-data-sync')).toBe(true);
     expect(questionBanks.every((bank) => bank.lang === 'zh' || bank.lang === 'en')).toBe(true);

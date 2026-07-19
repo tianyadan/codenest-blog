@@ -31,6 +31,8 @@ export type QuestionBank = {
   name: string;
   description: string;
   tags: string[];
+  /** 题库展示排序，越小越靠前。 */
+  order?: number;
 };
 
 export type QuestionItem = {
@@ -51,6 +53,8 @@ export type SearchableContent = {
   lang: Language;
   type: ContentType;
   slug: string;
+  /** 题目所属题库，用于拼详情路径。 */
+  bankSlug?: string;
   title: string;
   summary: string;
   tags: string[];

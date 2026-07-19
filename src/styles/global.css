@@ -621,12 +621,97 @@ button {
   gap: 8px;
 }
 
+.page-intro {
+  margin: 0;
+  color: var(--muted);
+  max-width: 52ch;
+}
+
 .eyebrow {
   margin: 0 0 10px;
   color: var(--muted);
   font-size: var(--font-size-xs);
   font-weight: 700;
   text-transform: uppercase;
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: var(--font-size-sm);
+}
+
+.breadcrumb a:hover {
+  color: var(--text);
+}
+
+.breadcrumb span:last-child {
+  color: var(--text);
+}
+
+.bank-index-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.bank-index-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 92px;
+  padding: 22px 24px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  transition: border-color 0.16s ease, background-color 0.16s ease;
+}
+
+.bank-index-card:hover {
+  border-color: var(--text);
+  background: var(--surface-muted);
+}
+
+.bank-index-card-main {
+  display: grid;
+  gap: 8px;
+}
+
+.bank-index-card-main h2 {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  line-height: 1.2;
+}
+
+.bank-index-card-main p {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0;
+  color: var(--muted);
+}
+
+.bank-index-card-main strong {
+  color: var(--text);
+  font-size: var(--font-size-lg);
+}
+
+.bank-index-card-action {
+  display: inline-grid;
+  place-items: center;
+  color: var(--muted);
+}
+
+.bank-index-card:hover .bank-index-card-action {
+  color: var(--text);
+}
+
+.detail-back-links {
+  margin: 4px 0 18px;
 }
 
 .bank-filter {
@@ -958,7 +1043,8 @@ button {
   .detail-layout,
   .card-grid,
   .bank-grid,
-  .bank-grid-plain {
+  .bank-grid-plain,
+  .bank-index-grid {
     grid-template-columns: 1fr;
   }
 

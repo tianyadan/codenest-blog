@@ -17,6 +17,12 @@
 
 切换站点语言后，**只展示当前语言内容**；缺译不会回退到另一语言。
 
+题库页面层级：
+
+1. `/题库` — 只展示分类与题目数量
+2. `/题库/:bankSlug` — 该分类下的题目列表
+3. `/题库/:bankSlug/:slug` — 题目详情
+
 AI 整理文档时请阅读：`docs/ai-content-rules/RULES.zh.md`（中文）或 `RULES.en.md`（英文）。
 
 ## 文章 frontmatter
@@ -62,9 +68,10 @@ source: 手工整理     # 可选
 
 ```md
 ---
-name: Java 基础
+name: Java
 description: 覆盖集合、并发、JVM 等高频面试题。
 tags: [Java, JVM, 并发]
+order: 3          # 可选，分类页排序，越小越靠前
 ---
 ```
 
