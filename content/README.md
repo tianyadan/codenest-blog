@@ -19,9 +19,11 @@
 
 题库页面层级：
 
-1. `/题库` — 只展示分类与题目数量
-2. `/题库/:bankSlug` — 该分类下的题目列表
-3. `/题库/:bankSlug/:slug` — 题目详情
+1. `/questions` — 只展示分类与题目数量
+2. `/questions/:bankSlug` — 该分类下的题目列表
+3. `/questions/:bankSlug/:slug` — 题目详情
+
+主路由统一使用英文：`/articles`、`/questions`、`/tags`、`/search`。
 
 AI 整理文档时请阅读：`docs/ai-content-rules/RULES.zh.md`（中文）或 `RULES.en.md`（英文）。
 

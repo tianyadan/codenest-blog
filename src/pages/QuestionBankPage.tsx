@@ -16,7 +16,7 @@ export default function QuestionBankPage() {
   const bank = findLocalizedQuestionBank(decodedBankSlug, language);
   const bankQuestions = getQuestionsByBank(decodedBankSlug, language);
 
-  // 兼容旧路径 /题库/:slug（曾直接指向题目详情）。
+  // 兼容旧路径 /questions/:slug（曾直接指向题目详情）。
   if (!bank) {
     const legacyQuestion = findLocalizedQuestion(decodedBankSlug, language);
     if (legacyQuestion) {

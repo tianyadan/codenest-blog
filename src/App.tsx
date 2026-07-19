@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { AppLayout, type AppOutletContext } from './layouts/AppLayout';
 import { getDictionary, normalizeLanguage } from './lib/i18n';
-import { appRoutes } from './lib/routes';
+import { appRoutes, buildArticlePath, buildQuestionBankPath, buildQuestionPath } from './lib/routes';
 import { normalizeTheme, resolveNextTheme } from './lib/theme';
 import ArticleDetailPage from './pages/ArticleDetailPage';
 import ArticleListPage from './pages/ArticleListPage';
@@ -17,6 +17,30 @@ import type { Language, ThemeMode } from './types/content';
 
 const languageStorageKey = 'codenest-language';
 const themeStorageKey = 'codenest-theme';
+
+/** 兼容旧中文文章详情路径。 */
+function LegacyArticleRedirect() {
+  const { slug = '' } = useParams();
+  return <Navigate to={buildArticlePath(decodeURIComponent(slug))} replace />;
+}
+
+/** 兼容旧中文题库分类路径。 */
+function LegacyQuestionBankRedirect() {
+  const { bankSlug = '' } = useParams();
+  return <Navigate to={buildQuestionBankPath(decodeURIComponent(bankSlug))} replace />;
+}
+
+/** 兼容旧中文题目详情路径。 */
+function LegacyQuestionDetailRedirect() {
+  const { bankSlug = '', slug = '' } = useParams();
+  return <Navigate to={buildQuestionPath(decodeURIComponent(bankSlug), decodeURIComponent(slug))} replace />;
+}
+
+/** 兼容旧中文搜索路径，保留查询参数。 */
+function LegacySearchRedirect() {
+  const location = useLocation();
+  return <Navigate to={`${appRoutes.search}${location.search}`} replace />;
+}
 
 export default function App() {
   const [language, setLanguage] = useState<Language>(() => normalizeLanguage(localStorage.getItem(languageStorageKey)));
@@ -54,12 +78,16 @@ export default function App() {
         <Route path={appRoutes.questionDetail.slice(1)} element={<QuestionDetailPage />} />
         <Route path={appRoutes.tags.slice(1)} element={<TagsPage />} />
         <Route path={appRoutes.search.slice(1)} element={<SearchPage />} />
-        <Route path="/articles" element={<Navigate to={appRoutes.articles} replace />} />
-        <Route path="/questions" element={<Navigate to={appRoutes.questions} replace />} />
-        <Route path="/questions/:bankSlug" element={<QuestionBankPage />} />
-        <Route path="/questions/:bankSlug/:slug" element={<QuestionDetailPage />} />
-        <Route path="/search" element={<Navigate to={appRoutes.search} replace />} />
-        <Route path="/tags" element={<Navigate to={appRoutes.tags} replace />} />
+
+        {/* 旧中文路径 → 英文路径 */}
+        <Route path="文章" element={<Navigate to={appRoutes.articles} replace />} />
+        <Route path="文章/:slug" element={<LegacyArticleRedirect />} />
+        <Route path="题库" element={<Navigate to={appRoutes.questions} replace />} />
+        <Route path="题库/:bankSlug" element={<LegacyQuestionBankRedirect />} />
+        <Route path="题库/:bankSlug/:slug" element={<LegacyQuestionDetailRedirect />} />
+        <Route path="标签" element={<Navigate to={appRoutes.tags} replace />} />
+        <Route path="搜索" element={<LegacySearchRedirect />} />
+
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
