@@ -1,73 +1,42 @@
-import { useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { ContentCard } from '../components/ContentCard';
-import { TagList } from '../components/TagList';
+import { Link } from 'react-router-dom';
+import { ArrowRightIcon } from '../components/Icons';
 import { useAppContext } from '../layouts/AppLayout';
 import { getLocalizedQuestionBanks, getLocalizedQuestions } from '../lib/localizedContent';
-import { buildQuestionPath } from '../lib/routes';
+import { buildQuestionBankPath } from '../lib/routes';
 
+/** 题库首页：只展示分类与题目数量。 */
 export default function QuestionListPage() {
   const { dictionary, language } = useAppContext();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const selectedBank = searchParams.get('bank') ?? 'all';
   const questions = getLocalizedQuestions(language);
   const questionBanks = getLocalizedQuestionBanks(language);
-
-  const filteredQuestions = useMemo(() => {
-    if (selectedBank === 'all') {
-      return questions;
-    }
-    return questions.filter((question) => question.bankSlug === selectedBank);
-  }, [selectedBank, questions]);
 
   return (
     <section className="page-stack">
       <div className="page-heading">
         <p className="eyebrow">Question Bank</p>
-        <h1>{dictionary.pages.allQuestions}</h1>
+        <h1>{dictionary.pages.questionBanks}</h1>
+        <p className="page-intro">{dictionary.pages.questionBankIntro}</p>
       </div>
 
-      <div className="bank-filter" aria-label={dictionary.pages.questionBanks}>
-        <button className={selectedBank === 'all' ? 'active' : ''} type="button" onClick={() => setSearchParams({})}>
-          All
-        </button>
-        {questionBanks.map((bank) => (
-          <button
-            className={selectedBank === bank.slug ? 'active' : ''}
-            type="button"
-            onClick={() => setSearchParams({ bank: bank.slug })}
-            key={bank.id}
-          >
-            {bank.name}
-          </button>
-        ))}
-      </div>
+      <div className="bank-index-grid">
+        {questionBanks.map((bank) => {
+          const count = questions.filter((question) => question.bankSlug === bank.slug).length;
 
-      <div className="card-grid">
-        {filteredQuestions.map((question) => (
-          <ContentCard
-            key={question.id}
-            title={question.title}
-            summary={question.description}
-            href={buildQuestionPath(question.slug)}
-            tags={question.tags}
-            meta={`${dictionary.labels.difficulty}: ${question.difficulty}`}
-            actionLabel={dictionary.actions.viewQuestion}
-          />
-        ))}
-      </div>
-
-      <div className="section-block">
-        <h2>{dictionary.pages.questionBanks}</h2>
-        <div className="bank-grid">
-          {questionBanks.map((bank) => (
-            <article className="bank-card" key={bank.id}>
-              <h3>{bank.name}</h3>
-              <p>{bank.description}</p>
-              <TagList tags={bank.tags} />
-            </article>
-          ))}
-        </div>
+          return (
+            <Link className="bank-index-card" to={buildQuestionBankPath(bank.slug)} key={bank.id}>
+              <div className="bank-index-card-main">
+                <h2>{bank.name}</h2>
+                <p>
+                  <strong>{count}</strong>
+                  <span>{dictionary.labels.questionCount}</span>
+                </p>
+              </div>
+              <span className="bank-index-card-action" aria-hidden="true">
+                <ArrowRightIcon />
+              </span>
+            </Link>
+          );
+        })}
       </div>
     </section>
   );

@@ -156,6 +156,7 @@ export const scanContent = (rootDir) => {
       const raw = fs.readFileSync(filePath, 'utf8');
       const { data } = parseFrontmatter(raw);
       const slug = toStringValue(data.slug, fileSlug(filePath));
+      const order = toNumberValue(data.order);
 
       questionBanks.push({
         id: toStringValue(data.id, `bank-${lang}-${slug}`),
@@ -163,7 +164,8 @@ export const scanContent = (rootDir) => {
         slug,
         name: toStringValue(data.name, slug),
         description: toStringValue(data.description),
-        tags: toStringArray(data.tags)
+        tags: toStringArray(data.tags),
+        ...(order === undefined ? {} : { order })
       });
       bankSlugSet.add(slug);
     }
@@ -256,6 +258,7 @@ export const scanContent = (rootDir) => {
       lang: question.lang,
       type: 'question',
       slug: question.slug,
+      bankSlug: question.bankSlug,
       title: question.title,
       summary: question.description,
       tags: question.tags,
@@ -268,7 +271,11 @@ export const scanContent = (rootDir) => {
     questionMetas,
     questionBanks: questionBanks.sort((left, right) => {
       const langCompare = left.lang.localeCompare(right.lang);
-      return langCompare !== 0 ? langCompare : left.slug.localeCompare(right.slug);
+      if (langCompare !== 0) return langCompare;
+      const leftOrder = typeof left.order === 'number' ? left.order : Number.MAX_SAFE_INTEGER;
+      const rightOrder = typeof right.order === 'number' ? right.order : Number.MAX_SAFE_INTEGER;
+      if (leftOrder !== rightOrder) return leftOrder - rightOrder;
+      return left.slug.localeCompare(right.slug);
     }),
     searchableContent
   };

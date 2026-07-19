@@ -12,6 +12,9 @@ export type Dictionary = {
     searchPlaceholder: string;
     readArticle: string;
     viewQuestion: string;
+    viewBank: string;
+    backToBanks: string;
+    backToQuestions: string;
     toggleTheme: string;
     switchLanguage: string;
     copyEmail: string;
@@ -25,6 +28,7 @@ export type Dictionary = {
     homeSubtitle: string;
     latestArticles: string;
     questionBanks: string;
+    questionBankIntro: string;
     aboutMe: string;
     aboutMeBio1: string;
     aboutMeBio2: string;
@@ -37,6 +41,7 @@ export type Dictionary = {
     allQuestions: string;
     articleCategories: string;
     viewAllArticles: string;
+    emptyBank: string;
     globalSearch: string;
     noResults: string;
     notFound: string;
@@ -45,6 +50,7 @@ export type Dictionary = {
   labels: {
     articles: string;
     questions: string;
+    questionCount: string;
     tags: string;
     toc: string;
     difficulty: string;
@@ -69,6 +75,9 @@ const dictionaries: Record<Language, Dictionary> = {
       searchPlaceholder: '搜索文章、题目、标签',
       readArticle: '阅读文章',
       viewQuestion: '查看题目',
+      viewBank: '进入题库',
+      backToBanks: '返回题库分类',
+      backToQuestions: '返回题目列表',
       toggleTheme: '切换主题',
       switchLanguage: '切换语言',
       copyEmail: '复制邮箱',
@@ -82,6 +91,7 @@ const dictionaries: Record<Language, Dictionary> = {
       homeSubtitle: '轻量静态站点，沉淀文章与八股文题库。',
       latestArticles: '最新文章',
       questionBanks: '题库分类',
+      questionBankIntro: '先选分类，再刷题目，逐层深入学习。',
       aboutMe: '关于我',
       aboutMeBio1: '热爱编程，喜欢研究技术与业务结合的可能性。',
       aboutMeBio2: '专注于 Java 后端开发，沉淀知识，分享成长。',
@@ -94,6 +104,7 @@ const dictionaries: Record<Language, Dictionary> = {
       allQuestions: '全部题目',
       articleCategories: '文章分类',
       viewAllArticles: '查看全部文章',
+      emptyBank: '该分类暂无题目，敬请期待。',
       globalSearch: '全局搜索',
       noResults: '没有找到匹配内容',
       notFound: '页面不存在',
@@ -102,6 +113,7 @@ const dictionaries: Record<Language, Dictionary> = {
     labels: {
       articles: '文章',
       questions: '题目',
+      questionCount: '道题目',
       tags: '标签',
       toc: '目录',
       difficulty: '难度',
@@ -124,6 +136,9 @@ const dictionaries: Record<Language, Dictionary> = {
       searchPlaceholder: 'Search articles, questions, tags',
       readArticle: 'Read article',
       viewQuestion: 'View question',
+      viewBank: 'Open bank',
+      backToBanks: 'Back to banks',
+      backToQuestions: 'Back to questions',
       toggleTheme: 'Toggle theme',
       switchLanguage: 'Switch language',
       copyEmail: 'Copy email',
@@ -137,6 +152,7 @@ const dictionaries: Record<Language, Dictionary> = {
       homeSubtitle: 'A lightweight static site for articles and interview notes.',
       latestArticles: 'Latest Articles',
       questionBanks: 'Question Banks',
+      questionBankIntro: 'Pick a category first, then drill into questions.',
       aboutMe: 'About Me',
       aboutMeBio1: 'Passionate about programming and exploring how technology integrates with business.',
       aboutMeBio2: 'Focused on Java backend development — building knowledge and sharing growth.',
@@ -149,6 +165,7 @@ const dictionaries: Record<Language, Dictionary> = {
       allQuestions: 'All Questions',
       articleCategories: 'Article Categories',
       viewAllArticles: 'View All Articles',
+      emptyBank: 'No questions in this bank yet.',
       globalSearch: 'Global Search',
       noResults: 'No matching content found',
       notFound: 'Page not found',
@@ -157,6 +174,7 @@ const dictionaries: Record<Language, Dictionary> = {
     labels: {
       articles: 'Articles',
       questions: 'Questions',
+      questionCount: 'questions',
       tags: 'Tags',
       toc: 'Contents',
       difficulty: 'Difficulty',

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { EmailModal } from '../components/EmailModal';
 import { ArrowRightIcon, CodeIcon, DatabaseIcon, GithubIcon, MailIcon } from '../components/Icons';
 import { TagList } from '../components/TagList';
-import { appRoutes, buildArticlePath } from '../lib/routes';
+import { appRoutes, buildArticlePath, buildQuestionBankPath } from '../lib/routes';
 import { getLocalizedArticles, getLocalizedQuestionBanks, getLocalizedQuestions } from '../lib/localizedContent';
 import { useAppContext } from '../layouts/AppLayout';
 
@@ -73,22 +73,27 @@ export default function HomePage() {
           <div className="home-section-heading">
           <h2>{dictionary.pages.questionBanks}</h2>
             <Link to={appRoutes.questions}>
-              {dictionary.pages.allQuestions}
+              {dictionary.pages.questionBanks}
               <ArrowRightIcon />
             </Link>
           </div>
 
           <div className="bank-grid-plain">
-            {questionBanks.map((bank) => (
-              <Link className="bank-card-plain" to={`${appRoutes.questions}?bank=${bank.slug}`} key={bank.id}>
-                <span className="bank-icon">{bank.slug === 'mysql' ? <DatabaseIcon /> : <CodeIcon />}</span>
-                <span>
-                  <strong>{bank.name}</strong>
-                  <small>{bank.description}</small>
-                  <em>{questions.filter((question) => question.bankSlug === bank.slug).length} questions</em>
-                </span>
-              </Link>
-            ))}
+            {questionBanks.map((bank) => {
+              const count = questions.filter((question) => question.bankSlug === bank.slug).length;
+
+              return (
+                <Link className="bank-card-plain" to={buildQuestionBankPath(bank.slug)} key={bank.id}>
+                  <span className="bank-icon">{bank.slug === 'mysql' || bank.slug === 'redis' ? <DatabaseIcon /> : <CodeIcon />}</span>
+                  <span>
+                    <strong>{bank.name}</strong>
+                    <em>
+                      {count} {dictionary.labels.questionCount}
+                    </em>
+                  </span>
+                </Link>
+              );
+            })}
           </div>
         </section>
       </div>

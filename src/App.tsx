@@ -8,6 +8,7 @@ import ArticleDetailPage from './pages/ArticleDetailPage';
 import ArticleListPage from './pages/ArticleListPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
+import QuestionBankPage from './pages/QuestionBankPage';
 import QuestionDetailPage from './pages/QuestionDetailPage';
 import QuestionListPage from './pages/QuestionListPage';
 import SearchPage from './pages/SearchPage';
@@ -49,11 +50,14 @@ export default function App() {
         <Route path={appRoutes.articles.slice(1)} element={<ArticleListPage />} />
         <Route path={appRoutes.articleDetail.slice(1)} element={<ArticleDetailPage />} />
         <Route path={appRoutes.questions.slice(1)} element={<QuestionListPage />} />
+        <Route path={appRoutes.questionBank.slice(1)} element={<QuestionBankPage />} />
         <Route path={appRoutes.questionDetail.slice(1)} element={<QuestionDetailPage />} />
         <Route path={appRoutes.tags.slice(1)} element={<TagsPage />} />
         <Route path={appRoutes.search.slice(1)} element={<SearchPage />} />
         <Route path="/articles" element={<Navigate to={appRoutes.articles} replace />} />
         <Route path="/questions" element={<Navigate to={appRoutes.questions} replace />} />
+        <Route path="/questions/:bankSlug" element={<QuestionBankPage />} />
+        <Route path="/questions/:bankSlug/:slug" element={<QuestionDetailPage />} />
         <Route path="/search" element={<Navigate to={appRoutes.search} replace />} />
         <Route path="/tags" element={<Navigate to={appRoutes.tags} replace />} />
         <Route path="*" element={<NotFoundPage />} />
