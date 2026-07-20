@@ -21,6 +21,7 @@ export type Dictionary = {
     toggleTheme: string;
     switchLanguage: string;
     copyEmail: string;
+    copyCode: string;
     copied: string;
     close: string;
     previousPage: string;
@@ -30,6 +31,7 @@ export type Dictionary = {
     homeTitle: string;
     homeSubtitle: string;
     latestArticles: string;
+    latestPrompts: string;
     questionBanks: string;
     questionBankIntro: string;
     aboutMe: string;
@@ -92,6 +94,7 @@ const dictionaries: Record<Language, Dictionary> = {
       toggleTheme: '切换主题',
       switchLanguage: '切换语言',
       copyEmail: '复制邮箱',
+      copyCode: '复制',
       copied: '已复制',
       close: '关闭',
       previousPage: '上一页',
@@ -101,6 +104,7 @@ const dictionaries: Record<Language, Dictionary> = {
       homeTitle: 'CodeNest 技术知识库',
       homeSubtitle: '轻量静态站点，沉淀文章、题库与开发提示词。',
       latestArticles: '最新文章',
+      latestPrompts: '最近提示词',
       questionBanks: '题库分类',
       questionBankIntro: '先选分类，再刷题目，逐层深入学习。',
       aboutMe: '关于我',
@@ -161,6 +165,7 @@ const dictionaries: Record<Language, Dictionary> = {
       toggleTheme: 'Toggle theme',
       switchLanguage: 'Switch language',
       copyEmail: 'Copy email',
+      copyCode: 'Copy',
       copied: 'Copied',
       close: 'Close',
       previousPage: 'Previous page',
@@ -170,6 +175,7 @@ const dictionaries: Record<Language, Dictionary> = {
       homeTitle: 'CodeNest Knowledge Base',
       homeSubtitle: 'A lightweight static site for articles, interview notes, and prompts.',
       latestArticles: 'Latest Articles',
+      latestPrompts: 'Recent Prompts',
       questionBanks: 'Question Banks',
       questionBankIntro: 'Pick a category first, then drill into questions.',
       aboutMe: 'About Me',

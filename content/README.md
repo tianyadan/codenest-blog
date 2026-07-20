@@ -57,7 +57,7 @@ slug: custom-slug    # 可选，默认用文件名
 title: 提示词标题
 summary: 一句话说明适用场景
 author: evan
-category: frontend   # frontend | backend | ui | schema | backend-test
+category: frontend   # 见下方分类表
 tags: [Vue3, 交互]
 createdAt: 2026-07-20
 updatedAt: 2026-07-20
@@ -66,7 +66,7 @@ slug: custom-slug    # 可选，默认用文件名
 
 # 正文标题
 
-建议把「可直接复制给 AI 的提示词」放在代码块中。
+建议把「可直接复制给 AI 的提示词」放在代码块中；站点会对代码块提供一键复制。
 ```
 
 分类对应：
@@ -78,6 +78,10 @@ slug: custom-slug    # 可选，默认用文件名
 | `ui` | UI | UI |
 | `schema` | 表结构设计 | Schema Design |
 | `backend-test` | 后端测试 | Backend Testing |
+| `ops` | 运维 | Ops |
+| `sql` | SQL 优化 | SQL Optimization |
+| `code-review` | Code Review | Code Review |
+| `product` | 产品需求拆解 | Product Breakdown |
 
 ## 题目 frontmatter
 
