@@ -8,6 +8,8 @@
 |------|------|------|
 | 中文文章 | `content/zh/articles/*.md` | 文件名默认作为 `slug` |
 | 英文文章 | `content/en/articles/*.md` | 与中文共用同一 `slug` 配对 |
+| 中文提示词 | `content/zh/prompts/*.md` | 文件名默认作为 `slug` |
+| 英文提示词 | `content/en/prompts/*.md` | 与中文共用同一 `slug` 配对 |
 | 中文题库 | `content/zh/banks/*.md` | 文件名默认作为题库 `slug` |
 | 英文题库 | `content/en/banks/*.md` | 同上 |
 | 中文题目 | `content/zh/questions/<bankSlug>/*.md` | 子目录名即所属题库 |
@@ -23,7 +25,7 @@
 2. `/questions/:bankSlug` — 该分类下的题目列表
 3. `/questions/:bankSlug/:slug` — 题目详情
 
-主路由统一使用英文：`/articles`、`/questions`、`/tags`、`/search`。
+主路由统一使用英文：`/articles`、`/questions`、`/prompts`、`/tags`、`/search`。
 
 AI 整理文档时请阅读：`docs/ai-content-rules/RULES.zh.md`（中文）或 `RULES.en.md`（英文）。
 
@@ -47,6 +49,35 @@ slug: custom-slug    # 可选，默认用文件名
 
 正文……
 ```
+
+## 提示词 frontmatter
+
+```md
+---
+title: 提示词标题
+summary: 一句话说明适用场景
+author: evan
+category: frontend   # frontend | backend | ui | schema | backend-test
+tags: [Vue3, 交互]
+createdAt: 2026-07-20
+updatedAt: 2026-07-20
+slug: custom-slug    # 可选，默认用文件名
+---
+
+# 正文标题
+
+建议把「可直接复制给 AI 的提示词」放在代码块中。
+```
+
+分类对应：
+
+| category | 中文 | English |
+|----------|------|---------|
+| `frontend` | 前端 | Frontend |
+| `backend` | 后端 | Backend |
+| `ui` | UI | UI |
+| `schema` | 表结构设计 | Schema Design |
+| `backend-test` | 后端测试 | Backend Testing |
 
 ## 题目 frontmatter
 

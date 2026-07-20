@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
   findLocalizedArticle,
+  findLocalizedPrompt,
   findLocalizedQuestionBank,
   getLocalizedArticles,
+  getLocalizedPrompts,
   getLocalizedQuestionBanks,
   getLocalizedQuestions,
   getQuestionsByBank
@@ -12,6 +14,8 @@ describe('localizedContent', () => {
   it('filters content by language without cross-language fallback', () => {
     expect(getLocalizedArticles('zh').length).toBeGreaterThan(0);
     expect(getLocalizedArticles('en').length).toBeGreaterThan(0);
+    expect(getLocalizedPrompts('zh').length).toBeGreaterThan(0);
+    expect(getLocalizedPrompts('en').length).toBeGreaterThan(0);
     expect(getLocalizedQuestions('zh').length).toBeGreaterThan(0);
     expect(getLocalizedQuestions('en').length).toBeGreaterThan(0);
     expect(getLocalizedQuestionBanks('zh').length).toBeGreaterThanOrEqual(8);
@@ -38,4 +42,10 @@ describe('localizedContent', () => {
     expect(findLocalizedQuestionBank('redis', 'zh')?.name).toBe('Redis');
     expect(getQuestionsByBank('mysql', 'zh').every((item) => item.bankSlug === 'mysql')).toBe(true);
   });
+
+  it('finds prompts by slug within the requested language only', () => {
+    expect(findLocalizedPrompt('busy-timeline-drawer', 'zh')?.category).toBe('frontend');
+    expect(findLocalizedPrompt('busy-timeline-drawer', 'en')?.title).toContain('Busy Timeline');
+  });
 });
+

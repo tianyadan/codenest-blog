@@ -1,16 +1,21 @@
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../layouts/AppLayout';
-import { getLocalizedArticles, getLocalizedQuestions } from '../lib/localizedContent';
+import { getLocalizedArticles, getLocalizedPrompts, getLocalizedQuestions } from '../lib/localizedContent';
 import { appRoutes } from '../lib/routes';
 import type { Language } from '../types/content';
 
 /** 汇总当前语言下的标签出现次数。 */
 const collectTags = (language: Language) => {
   const articles = getLocalizedArticles(language);
+  const prompts = getLocalizedPrompts(language);
   const questions = getLocalizedQuestions(language);
   const tagCounter = new Map<string, number>();
 
-  [...articles.flatMap((article) => article.tags), ...questions.flatMap((question) => question.tags)].forEach((tag) => {
+  [
+    ...articles.flatMap((article) => article.tags),
+    ...prompts.flatMap((prompt) => prompt.tags),
+    ...questions.flatMap((question) => question.tags)
+  ].forEach((tag) => {
     tagCounter.set(tag, (tagCounter.get(tag) ?? 0) + 1);
   });
 

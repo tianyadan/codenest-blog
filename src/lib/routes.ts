@@ -5,6 +5,8 @@ export const appRoutes = {
   questions: '/questions',
   questionBank: '/questions/:bankSlug',
   questionDetail: '/questions/:bankSlug/:slug',
+  prompts: '/prompts',
+  promptDetail: '/prompts/:slug',
   tags: '/tags',
   search: '/search'
 } as const;
@@ -21,3 +23,6 @@ export const buildQuestionBankPath = (bankSlug: string) => buildDetailPath(appRo
 /** 题目详情路径：/questions/:bankSlug/:slug */
 export const buildQuestionPath = (bankSlug: string, slug: string) =>
   `${buildQuestionBankPath(bankSlug)}/${encodeURIComponent(slug)}`;
+
+/** 提示词详情路径：/prompts/:slug */
+export const buildPromptPath = (slug: string) => buildDetailPath(appRoutes.prompts, slug);
