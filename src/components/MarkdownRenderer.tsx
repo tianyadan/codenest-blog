@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import { slugifyHeading } from '../lib/toc';
+import { CodeBlock } from './CodeBlock';
 
 type MarkdownRendererProps = {
   markdown: string;
@@ -47,11 +48,7 @@ export function MarkdownRenderer({ markdown }: MarkdownRendererProps) {
     if (codeLines.length === 0) {
       return;
     }
-    nodes.push(
-      <pre key={`code-${nodes.length}`}>
-        <code>{codeLines.join('\n')}</code>
-      </pre>
-    );
+    nodes.push(<CodeBlock key={`code-${nodes.length}`} code={codeLines.join('\n')} />);
     codeLines = [];
   };
 

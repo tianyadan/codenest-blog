@@ -139,7 +139,17 @@ const fileSlug = (filePath) => path.basename(filePath, '.md');
 const toPosixRelative = (rootDir, filePath) =>
   path.relative(rootDir, filePath).split(path.sep).join('/');
 
-const PROMPT_CATEGORIES = ['frontend', 'backend', 'ui', 'schema', 'backend-test'];
+const PROMPT_CATEGORIES = [
+  'frontend',
+  'backend',
+  'ui',
+  'schema',
+  'backend-test',
+  'ops',
+  'sql',
+  'code-review',
+  'product'
+];
 
 export const scanContent = (rootDir) => {
   const contentRoot = path.join(rootDir, 'content');

@@ -3,7 +3,17 @@ import { getPromptCategories, getPromptsByCategory, orderedPromptCategories } fr
 
 describe('prompts helpers', () => {
   it('keeps a stable category order for navigation', () => {
-    expect(orderedPromptCategories).toEqual(['frontend', 'backend', 'ui', 'schema', 'backend-test']);
+    expect(orderedPromptCategories).toEqual([
+      'frontend',
+      'backend',
+      'ui',
+      'schema',
+      'backend-test',
+      'ops',
+      'sql',
+      'code-review',
+      'product'
+    ]);
   });
 
   it('filters prompts by category and counts sidebar totals', () => {

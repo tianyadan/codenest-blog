@@ -6,7 +6,7 @@ import { getLocalizedArticles, getLocalizedPrompts, getLocalizedQuestionBanks } 
 describe('markdown content catalog', () => {
   it('loads article, prompt and question metadata from language content trees', () => {
     expect(articles.length).toBeGreaterThanOrEqual(2);
-    expect(prompts.length).toBeGreaterThanOrEqual(5);
+    expect(prompts.length).toBeGreaterThanOrEqual(9);
     expect(questions.length).toBeGreaterThanOrEqual(2);
     expect(articles.every((article) => article.lang === 'zh' || article.lang === 'en')).toBe(true);
     expect(getLocalizedQuestionBanks('zh').map((bank) => bank.slug)).toEqual([
