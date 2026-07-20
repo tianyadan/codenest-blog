@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { AppLayout, type AppOutletContext } from './layouts/AppLayout';
 import { getDictionary, normalizeLanguage } from './lib/i18n';
-import { appRoutes, buildArticlePath, buildQuestionBankPath, buildQuestionPath } from './lib/routes';
+import { appRoutes, buildArticlePath, buildPromptPath, buildQuestionBankPath, buildQuestionPath } from './lib/routes';
 import { normalizeTheme, resolveNextTheme } from './lib/theme';
 import ArticleDetailPage from './pages/ArticleDetailPage';
 import ArticleListPage from './pages/ArticleListPage';
@@ -82,6 +82,16 @@ export default function App() {
         <Route path={appRoutes.promptDetail.slice(1)} element={<PromptDetailPage />} />
         <Route path={appRoutes.tags.slice(1)} element={<TagsPage />} />
         <Route path={appRoutes.search.slice(1)} element={<SearchPage />} />
+
+        {/* 旧工作总结里的提示词文章 → 提示词详情 */}
+        <Route
+          path="articles/schedule-busy-timeline-prompt"
+          element={<Navigate to={buildPromptPath('busy-timeline-drawer')} replace />}
+        />
+        <Route
+          path="文章/schedule-busy-timeline-prompt"
+          element={<Navigate to={buildPromptPath('busy-timeline-drawer')} replace />}
+        />
 
         {/* 旧中文路径 → 英文路径 */}
         <Route path="文章" element={<Navigate to={appRoutes.articles} replace />} />

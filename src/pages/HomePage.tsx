@@ -3,18 +3,26 @@ import { Link } from 'react-router-dom';
 import { EmailModal } from '../components/EmailModal';
 import { ArrowRightIcon, CodeIcon, DatabaseIcon, GithubIcon, MailIcon } from '../components/Icons';
 import { TagList } from '../components/TagList';
-import { appRoutes, buildArticlePath, buildQuestionBankPath } from '../lib/routes';
-import { getLocalizedArticles, getLocalizedQuestionBanks, getLocalizedQuestions } from '../lib/localizedContent';
+import { appRoutes, buildArticlePath, buildPromptPath, buildQuestionBankPath } from '../lib/routes';
+import {
+  getLocalizedArticles,
+  getLocalizedPrompts,
+  getLocalizedQuestionBanks,
+  getLocalizedQuestions
+} from '../lib/localizedContent';
+import { promptCategoryLabels } from '../lib/prompts';
 import { useAppContext } from '../layouts/AppLayout';
 
 export default function HomePage() {
   const { dictionary, language } = useAppContext();
   const [emailModalOpen, setEmailModalOpen] = useState(false);
   const articles = getLocalizedArticles(language);
+  const prompts = getLocalizedPrompts(language);
   const questions = getLocalizedQuestions(language);
   const questionBanks = getLocalizedQuestionBanks(language);
   const topArticles = [...articles].sort((left, right) => (left.topOrder ?? 99) - (right.topOrder ?? 99)).slice(0, 3);
   const latestArticles = [...articles].sort((left, right) => right.updatedAt.localeCompare(left.updatedAt)).slice(0, 4);
+  const latestPrompts = [...prompts].sort((left, right) => right.updatedAt.localeCompare(left.updatedAt)).slice(0, 5);
 
   return (
     <div className="home-layout">
@@ -33,15 +41,15 @@ export default function HomePage() {
               <span>{dictionary.labels.questions}</span>
             </div>
             <div>
-              <strong>{questionBanks.length}</strong>
-              <span>{dictionary.pages.questionBanks}</span>
+              <strong>{prompts.length}</strong>
+              <span>{dictionary.labels.prompts}</span>
             </div>
           </div>
         </section>
 
         <section className="home-section">
           <div className="home-section-heading">
-          <h2>{dictionary.pages.latestArticles}</h2>
+            <h2>{dictionary.pages.latestArticles}</h2>
             <Link to={appRoutes.articles}>
               {dictionary.pages.allArticles}
               <ArrowRightIcon />
@@ -71,7 +79,31 @@ export default function HomePage() {
 
         <section className="home-section">
           <div className="home-section-heading">
-          <h2>{dictionary.pages.questionBanks}</h2>
+            <h2>{dictionary.pages.latestPrompts}</h2>
+            <Link to={appRoutes.prompts}>
+              {dictionary.pages.allPrompts}
+              <ArrowRightIcon />
+            </Link>
+          </div>
+
+          <div className="prompt-feed home-prompt-feed">
+            {latestPrompts.map((prompt) => (
+              <Link className="prompt-feed-row" to={buildPromptPath(prompt.slug)} key={prompt.id}>
+                <div className="prompt-feed-main">
+                  <h2>{prompt.title}</h2>
+                  {prompt.summary ? <p>{prompt.summary}</p> : null}
+                </div>
+                <div className="prompt-feed-tags">
+                  <TagList tags={[promptCategoryLabels[prompt.category][language], ...prompt.tags.slice(0, 2)]} />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="home-section">
+          <div className="home-section-heading">
+            <h2>{dictionary.pages.questionBanks}</h2>
             <Link to={appRoutes.questions}>
               {dictionary.pages.questionBanks}
               <ArrowRightIcon />

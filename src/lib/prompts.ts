@@ -5,7 +5,11 @@ export const promptCategoryLabels: Record<PromptCategory, { zh: string; en: stri
   backend: { zh: '后端', en: 'Backend' },
   ui: { zh: 'UI', en: 'UI' },
   schema: { zh: '表结构设计', en: 'Schema Design' },
-  'backend-test': { zh: '后端测试', en: 'Backend Testing' }
+  'backend-test': { zh: '后端测试', en: 'Backend Testing' },
+  ops: { zh: '运维', en: 'Ops' },
+  sql: { zh: 'SQL 优化', en: 'SQL Optimization' },
+  'code-review': { zh: 'Code Review', en: 'Code Review' },
+  product: { zh: '产品需求拆解', en: 'Product Breakdown' }
 };
 
 export const orderedPromptCategories: PromptCategory[] = [
@@ -13,7 +17,11 @@ export const orderedPromptCategories: PromptCategory[] = [
   'backend',
   'ui',
   'schema',
-  'backend-test'
+  'backend-test',
+  'ops',
+  'sql',
+  'code-review',
+  'product'
 ];
 
 export type PromptCategoryFilter = PromptCategory | 'all';

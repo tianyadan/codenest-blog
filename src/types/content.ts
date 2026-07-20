@@ -8,8 +8,17 @@ export type Difficulty = 'easy' | 'medium' | 'hard';
 
 export type ArticleCategory = 'learning' | 'work' | 'diary';
 
-/** 提示词分类：前端 / 后端 / UI / 表结构设计 / 后端测试。 */
-export type PromptCategory = 'frontend' | 'backend' | 'ui' | 'schema' | 'backend-test';
+/** 提示词分类。 */
+export type PromptCategory =
+  | 'frontend'
+  | 'backend'
+  | 'ui'
+  | 'schema'
+  | 'backend-test'
+  | 'ops'
+  | 'sql'
+  | 'code-review'
+  | 'product';
 
 export type Article = {
   id: string;
