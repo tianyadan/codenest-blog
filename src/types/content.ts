@@ -2,11 +2,14 @@ export type Language = 'zh' | 'en';
 
 export type ThemeMode = 'light' | 'dark';
 
-export type ContentType = 'article' | 'question';
+export type ContentType = 'article' | 'question' | 'prompt';
 
 export type Difficulty = 'easy' | 'medium' | 'hard';
 
 export type ArticleCategory = 'learning' | 'work' | 'diary';
+
+/** 提示词分类：前端 / 后端 / UI / 表结构设计 / 后端测试。 */
+export type PromptCategory = 'frontend' | 'backend' | 'ui' | 'schema' | 'backend-test';
 
 export type Article = {
   id: string;
@@ -21,6 +24,20 @@ export type Article = {
   updatedAt: string;
   readingMinutes: number;
   topOrder?: number;
+  content: string;
+};
+
+export type Prompt = {
+  id: string;
+  lang: Language;
+  slug: string;
+  title: string;
+  summary: string;
+  author: string;
+  category: PromptCategory;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
   content: string;
 };
 

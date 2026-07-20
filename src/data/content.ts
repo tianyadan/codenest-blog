@@ -1,11 +1,12 @@
-import { articleMetas, questionBanks, questionMetas } from './generated/content-index';
+import { articleMetas, promptMetas, questionBanks, questionMetas } from './generated/content-index';
 import { parseFrontmatter } from '../lib/frontmatter';
-import type { Article, Language, QuestionItem } from '../types/content';
+import type { Article, Language, Prompt, QuestionItem } from '../types/content';
 
-export type { ArticleMeta, QuestionMeta, QuestionBankMeta } from './generated/content-index';
+export type { ArticleMeta, PromptMeta, QuestionMeta, QuestionBankMeta } from './generated/content-index';
 
 /** 列表/首页只用元数据，避免把全部正文打进首包。 */
 export const articles = articleMetas;
+export const prompts = promptMetas;
 export const questions = questionMetas;
 export { questionBanks };
 
@@ -13,8 +14,10 @@ export { questionBanks };
 const markdownLoaders = import.meta.glob(
   [
     '../../content/zh/articles/**/*.md',
+    '../../content/zh/prompts/**/*.md',
     '../../content/zh/questions/**/*.md',
     '../../content/en/articles/**/*.md',
+    '../../content/en/prompts/**/*.md',
     '../../content/en/questions/**/*.md'
   ],
   {
@@ -50,6 +53,22 @@ export const loadArticleContent = async (slug: string, language: Language): Prom
   return parseFrontmatter(raw).content;
 };
 
+/** 加载提示词正文（去掉 frontmatter），按语言精确匹配。 */
+export const loadPromptContent = async (slug: string, language: Language): Promise<string | null> => {
+  const meta = promptMetas.find((item) => item.slug === slug && item.lang === language);
+  if (!meta) {
+    return null;
+  }
+
+  const loader = resolveLoader(meta.file);
+  if (!loader) {
+    return null;
+  }
+
+  const raw = await loader();
+  return parseFrontmatter(raw).content;
+};
+
 /** 加载题目答案正文（去掉 frontmatter），按语言精确匹配。 */
 export const loadQuestionAnswer = async (slug: string, language: Language): Promise<string | null> => {
   const meta = questionMetas.find((item) => item.slug === slug && item.lang === language);
@@ -68,6 +87,12 @@ export const loadQuestionAnswer = async (slug: string, language: Language): Prom
 
 /** 组装完整 Article（测试或需要同步结构时使用）。 */
 export const toArticle = (meta: (typeof articleMetas)[number], content: string): Article => {
+  const { file: _file, ...rest } = meta;
+  return { ...rest, content };
+};
+
+/** 组装完整 Prompt。 */
+export const toPrompt = (meta: (typeof promptMetas)[number], content: string): Prompt => {
   const { file: _file, ...rest } = meta;
   return { ...rest, content };
 };

@@ -8,6 +8,8 @@ import ArticleDetailPage from './pages/ArticleDetailPage';
 import ArticleListPage from './pages/ArticleListPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
+import PromptDetailPage from './pages/PromptDetailPage';
+import PromptListPage from './pages/PromptListPage';
 import QuestionBankPage from './pages/QuestionBankPage';
 import QuestionDetailPage from './pages/QuestionDetailPage';
 import QuestionListPage from './pages/QuestionListPage';
@@ -76,6 +78,8 @@ export default function App() {
         <Route path={appRoutes.questions.slice(1)} element={<QuestionListPage />} />
         <Route path={appRoutes.questionBank.slice(1)} element={<QuestionBankPage />} />
         <Route path={appRoutes.questionDetail.slice(1)} element={<QuestionDetailPage />} />
+        <Route path={appRoutes.prompts.slice(1)} element={<PromptListPage />} />
+        <Route path={appRoutes.promptDetail.slice(1)} element={<PromptDetailPage />} />
         <Route path={appRoutes.tags.slice(1)} element={<TagsPage />} />
         <Route path={appRoutes.search.slice(1)} element={<SearchPage />} />
 

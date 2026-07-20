@@ -4,9 +4,30 @@ import { SearchBox } from '../components/SearchBox';
 import { TagList } from '../components/TagList';
 import { loadSearchableContent } from '../data/searchCorpus';
 import { useAppContext } from '../layouts/AppLayout';
-import { appRoutes, buildArticlePath, buildQuestionPath } from '../lib/routes';
+import { appRoutes, buildArticlePath, buildPromptPath, buildQuestionPath } from '../lib/routes';
 import { searchContent } from '../lib/search';
 import type { SearchableContent } from '../types/content';
+
+/** 根据内容类型拼详情路径。 */
+const resolveSearchHref = (item: SearchableContent) => {
+  if (item.type === 'article') {
+    return buildArticlePath(item.slug);
+  }
+  if (item.type === 'prompt') {
+    return buildPromptPath(item.slug);
+  }
+  if (item.bankSlug) {
+    return buildQuestionPath(item.bankSlug, item.slug);
+  }
+  return appRoutes.questions;
+};
+
+/** 搜索结果类型文案。 */
+const resolveTypeLabel = (type: SearchableContent['type'], dictionary: ReturnType<typeof useAppContext>['dictionary']) => {
+  if (type === 'article') return dictionary.labels.articles;
+  if (type === 'prompt') return dictionary.labels.prompts;
+  return dictionary.labels.questions;
+};
 
 export default function SearchPage() {
   const { dictionary, language } = useAppContext();
@@ -51,16 +72,11 @@ export default function SearchPage() {
           </div>
         ) : (
           results.map((result) => {
-            const href =
-              result.item.type === 'article'
-                ? buildArticlePath(result.item.slug)
-                : result.item.bankSlug
-                  ? buildQuestionPath(result.item.bankSlug, result.item.slug)
-                  : appRoutes.questions;
+            const href = resolveSearchHref(result.item);
 
             return (
               <article className="search-result" key={result.item.id}>
-                <p className="card-meta">{result.item.type === 'article' ? dictionary.labels.articles : dictionary.labels.questions}</p>
+                <p className="card-meta">{resolveTypeLabel(result.item.type, dictionary)}</p>
                 <h2>
                   <Link to={href}>{result.item.title}</Link>
                 </h2>
