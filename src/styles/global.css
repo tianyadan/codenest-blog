@@ -767,6 +767,27 @@ button {
   background: var(--surface-muted);
 }
 
+.markdown-body .markdown-image {
+  margin: 20px 0;
+}
+
+.markdown-body .markdown-image img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-muted);
+}
+
+.markdown-body .markdown-image figcaption {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
 .toc {
   position: sticky;
   top: 88px;
