@@ -87,13 +87,7 @@ npm test                   # 生成内容后跑测试
 
 ### 架构图
 
-将架构图放到仓库后，取消下面注释或替换为实际路径：
-
-```markdown
 ![CodeNest Blog Architecture](./docs/architecture.png)
-```
-
-（架构说明文案见本 PR / 对话回复，可交给绘图工具生成图片后放入 `docs/architecture.png`。）
 
 ---
 
@@ -178,10 +172,4 @@ npm test                   # generate content, then run tests
 
 ### Architecture diagram
 
-After you add the image to the repo, use:
-
-```markdown
 ![CodeNest Blog Architecture](./docs/architecture.png)
-```
-
-Suggested path: `docs/architecture.png`.
