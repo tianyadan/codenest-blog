@@ -1,6 +1,6 @@
 ---
-name: Redis
-description: 覆盖数据结构、持久化、缓存策略与常见面试题。
-tags: [Redis, 缓存, 分布式]
-order: 2
+name: "Redis 知识库"
+description: "高效缓存与数据存储练习平台"
+tags: ["database"]
+order: 13
 ---

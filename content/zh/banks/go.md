@@ -1,6 +1,6 @@
 ---
-name: Go
-description: 覆盖并发模型、channel、内存与常见陷阱。
-tags: [Go, 并发, 后端]
-order: 7
+name: "Go 知识库"
+description: "专注于 Go 语言核心技术与现代后端开发实践，从入门到进阶，系统整理高频面试题、实战项目经验与性能优化技巧，帮助开发者快速掌握 Go 的高性能编程思想，构建稳定、轻量、可扩展的现代服务端应用。"
+tags: ["backend"]
+order: 19
 ---

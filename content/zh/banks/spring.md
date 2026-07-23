@@ -1,6 +1,6 @@
 ---
-name: Spring
-description: 覆盖 IoC、AOP、事务、Spring Boot 等核心概念。
-tags: [Spring, Spring Boot, 后端]
-order: 4
+name: "Spring知识库"
+description: "掌握 Spring，全栈进阶的核心钥匙。"
+tags: ["backend"]
+order: 7
 ---

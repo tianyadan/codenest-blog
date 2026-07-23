@@ -1,6 +1,6 @@
 ---
-name: MySQL
-description: 覆盖索引、事务、锁、SQL 优化等核心知识。
-tags: [MySQL, 数据库, 索引]
-order: 1
+name: "MySQL知识库"
+description: "数据存储与查询的核心技能。"
+tags: ["database"]
+order: 12
 ---
