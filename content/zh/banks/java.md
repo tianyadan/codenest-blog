@@ -1,6 +1,6 @@
 ---
-name: Java
-description: 覆盖集合、并发、JVM 等高频面试题。
-tags: [Java, JVM, 并发]
-order: 3
+name: "Java知识库"
+description: "后端开发的中坚力量，刷题才能更稳。"
+tags: ["backend"]
+order: 5
 ---

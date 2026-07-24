@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "content:generate": "node scripts/generate-content.mjs",
+    "question-bank:migrate": "node scripts/migrate-question-bank.mjs",
     "dev": "npm run content:generate && vite --host 127.0.0.1",
     "build": "npm run content:generate && tsc -b && vite build",
     "preview": "vite preview --host 127.0.0.1",
