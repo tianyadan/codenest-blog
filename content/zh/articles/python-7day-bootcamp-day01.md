@@ -584,6 +584,6 @@ print(a, b)  # 20 10
 ## 14. 预习明天
 
 明天进入 **流程控制与字符串**：`if/elif/else`、`for`、`while`、切片、f-string 进阶。  
-今晚可先扫一眼官方文档：[Python 速览](https://docs.python.org/zh-cn/3/tutorial/introduction.html)。
+已更新：直接阅读 **[Day2｜流程控制与字符串](/articles/python-7day-bootcamp-day02)**。
 
 返回总览：[Python 7 天训练营总览](/articles/python-7day-bootcamp-overview)
