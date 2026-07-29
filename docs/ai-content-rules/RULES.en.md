@@ -33,7 +33,7 @@ Follow `content/zh/articles/spring-cache-consistency.md`:
 title: Title
 summary: One-line summary
 author: CodeNest
-category: learning   # learning | work | diary
+category: learning   # learning | work | diary | syntax
 tags: [Tag1, Tag2]
 createdAt: YYYY-MM-DD
 updatedAt: YYYY-MM-DD
@@ -48,6 +48,15 @@ slug: custom-slug    # optional; defaults to filename
 
 Body…
 ```
+
+Category reference:
+
+| category | English | Use |
+|----------|---------|-----|
+| `learning` | Learning | Technical notes |
+| `syntax` | Syntax | Language syntax tracks (e.g. Python) |
+| `work` | Work Notes | Work retrospectives |
+| `diary` | Diary | Personal notes |
 
 ## 3. Rewrite Style
 

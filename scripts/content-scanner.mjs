@@ -192,7 +192,7 @@ export const scanContent = (rootDir) => {
       const topOrder = toNumberValue(data.topOrder);
 
       const rawCategory = toStringValue(data.category, 'learning');
-      const category = ['learning', 'work', 'diary'].includes(rawCategory) ? rawCategory : 'learning';
+      const category = ['learning', 'work', 'diary', 'syntax'].includes(rawCategory) ? rawCategory : 'learning';
 
       articles.push({
         id: toStringValue(data.id, `article-${lang}-${slug}`),

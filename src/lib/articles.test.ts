@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Article } from '../types/content';
-import { getArticleCategories, getArticlesByCategory } from './articles';
+import { getArticleCategories, getArticlesByCategory, articleCategoryLabels } from './articles';
 
 const articleFixtures: Article[] = [
   {
@@ -47,5 +47,10 @@ describe('article helpers', () => {
       { category: 'learning', count: 1 },
       { category: 'work', count: 1 }
     ]);
+  });
+
+  it('supports syntax category label', () => {
+    expect(articleCategoryLabels.syntax.zh).toBe('语法学习');
+    expect(articleCategoryLabels.syntax.en).toBe('Syntax');
   });
 });

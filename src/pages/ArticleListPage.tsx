@@ -7,7 +7,7 @@ import { getLocalizedArticles } from '../lib/localizedContent';
 import { appRoutes, buildArticlePath } from '../lib/routes';
 import type { ArticleCategory } from '../types/content';
 
-const orderedCategories: ArticleCategory[] = ['learning', 'work', 'diary'];
+const orderedCategories: ArticleCategory[] = ['learning', 'syntax', 'work', 'diary'];
 const PAGE_SIZE = 10;
 
 export default function ArticleListPage() {

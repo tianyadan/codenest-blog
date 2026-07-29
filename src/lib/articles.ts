@@ -3,7 +3,8 @@ import type { ArticleCategory } from '../types/content';
 export const articleCategoryLabels: Record<ArticleCategory, { zh: string; en: string }> = {
   learning: { zh: '学习沉淀', en: 'Learning' },
   work: { zh: '工作总结', en: 'Work Notes' },
-  diary: { zh: '心情日记', en: 'Diary' }
+  diary: { zh: '心情日记', en: 'Diary' },
+  syntax: { zh: '语法学习', en: 'Syntax' }
 };
 
 export type ArticleCategoryFilter = ArticleCategory | 'all';
