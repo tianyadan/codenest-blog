@@ -33,7 +33,7 @@ content/
 title: 标题
 summary: 一句话摘要
 author: CodeNest
-category: learning   # learning | work | diary
+category: learning   # learning | work | diary | syntax
 tags: [标签1, 标签2]
 createdAt: YYYY-MM-DD
 updatedAt: YYYY-MM-DD
@@ -48,6 +48,15 @@ slug: custom-slug    # 可选，默认用文件名
 
 正文……
 ```
+
+分类说明：
+
+| category | 中文 | 用途 |
+|----------|------|------|
+| `learning` | 学习沉淀 | 技术学习笔记 |
+| `syntax` | 语法学习 | 语言语法专项课程（如 Python 专项） |
+| `work` | 工作总结 | 工作复盘 |
+| `diary` | 心情日记 | 随笔 |
 
 ## 3. 正文改写风格
 

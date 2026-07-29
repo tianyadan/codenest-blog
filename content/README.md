@@ -36,7 +36,7 @@ AI 整理文档时请阅读：`docs/ai-content-rules/RULES.zh.md`（中文）或
 title: 标题
 summary: 摘要
 author: CodeNest
-category: learning   # learning | work | diary
+category: learning   # learning | work | diary | syntax
 tags: [Spring, Redis]
 createdAt: 2026-07-16
 updatedAt: 2026-07-16
@@ -49,6 +49,15 @@ slug: custom-slug    # 可选，默认用文件名
 
 正文……
 ```
+
+文章分类对应：
+
+| category | 中文 | English |
+|----------|------|---------|
+| `learning` | 学习沉淀 | Learning |
+| `syntax` | 语法学习 | Syntax |
+| `work` | 工作总结 | Work Notes |
+| `diary` | 心情日记 | Diary |
 
 ## 提示词 frontmatter
 

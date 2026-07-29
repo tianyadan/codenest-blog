@@ -6,7 +6,7 @@ export type ContentType = 'article' | 'question' | 'prompt';
 
 export type Difficulty = 'easy' | 'medium' | 'hard';
 
-export type ArticleCategory = 'learning' | 'work' | 'diary';
+export type ArticleCategory = 'learning' | 'work' | 'diary' | 'syntax';
 
 /** 提示词分类。 */
 export type PromptCategory =
