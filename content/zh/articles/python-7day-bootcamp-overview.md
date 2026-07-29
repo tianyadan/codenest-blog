@@ -11,6 +11,7 @@ topOrder: 1
 slug: python-7day-bootcamp-overview
 ---
 
+
 # Python 7 天训练营总览｜Java 开发者从 0 到 Web / 数据清洗 / 爬虫
 
 > 适合人群：编程小白心态起步，但已会 **Java 基础**、了解 **Java 并发**、用过 **Spring Boot**。  
@@ -70,7 +71,7 @@ Day6 数据清洗（pandas）+ 爬虫入门（requests / BeautifulSoup）
 Day7 Web 开发（FastAPI）综合小项目收官
 ```
 
-### Day 1｜环境与语法地基（今天开始）
+### Day 1｜环境与语法地基
 
 - 安装 Python、venv、pip
 - Hello World 与 Java `main` 对比
@@ -86,7 +87,7 @@ Day7 Web 开发（FastAPI）综合小项目收官
 - Java：`if`、`for-each`、`String` API 对照
 - 交付：成绩评级脚本 + 文本处理小练习
 
-> 状态：待补全（后续按本总览继续写）
+阅读：[第二天训练营](/articles/python-7day-bootcamp-day02)
 
 ### Day 3｜四大容器：list / tuple / dict / set
 
@@ -162,7 +163,7 @@ Day7 Web 开发（FastAPI）综合小项目收官
 |------|------|------|
 | 总览 | [本文](/articles/python-7day-bootcamp-overview) | 已发布 |
 | Day 1 | [环境与语法地基](/articles/python-7day-bootcamp-day01) | 已发布 |
-| Day 2 | 流程控制与字符串 | 待写 |
+| Day 2 | [流程控制与字符串](/articles/python-7day-bootcamp-day02) | 已发布 |
 | Day 3 | 四大容器 | 待写 |
 | Day 4 | 函数 / 模块 / 异常 | 待写 |
 | Day 5 | OOP + 文件 | 待写 |
@@ -178,4 +179,7 @@ Day7 Web 开发（FastAPI）综合小项目收官
 - [PEP 8 代码风格](https://peps.python.org/pep-0008/)
 - FastAPI 文档、pandas 用户指南、Beautiful Soup 文档（Day6/7 再用）
 
-下一篇直接进入实战：**[Day 1｜环境搭建与语法地基](/articles/python-7day-bootcamp-day01)**。
+下一篇可按顺序阅读：
+
+- **[Day 1｜环境搭建与语法地基](/articles/python-7day-bootcamp-day01)**
+- **[Day 2｜流程控制与字符串](/articles/python-7day-bootcamp-day02)**
