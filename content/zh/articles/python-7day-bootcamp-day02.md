@@ -530,7 +530,7 @@ else:
 ## 11. 预习明天
 
 明天进入 **四大容器**：`list` / `tuple` / `dict` / `set`。  
-今晚可先扫：[数据结构](https://docs.python.org/zh-cn/3/tutorial/datastructures.html)
+已更新：直接阅读 **[Day3｜四大容器](/articles/python-7day-bootcamp-day03)**。
 
 - 上一篇：[Day1](/articles/python-7day-bootcamp-day01)  
 - 返回总览：[总览](/articles/python-7day-bootcamp-overview)
