@@ -476,7 +476,7 @@ print("全部相关：", liked | learned)
 ## 12. 预习明天
 
 明天进入 **函数 / 模块 / 异常**：`def`、参数、返回值、`import`、`try/except`。  
-官方预习：[定义函数](https://docs.python.org/zh-cn/3/tutorial/controlflow.html#defining-functions)
+已更新：直接阅读 **[Day4｜函数、模块与异常](/articles/python-7day-bootcamp-day04)**。
 
 - 上一篇：[Day2](/articles/python-7day-bootcamp-day02)  
 - 返回总览：[总览](/articles/python-7day-bootcamp-overview)
