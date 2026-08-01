@@ -5,7 +5,7 @@ author: CodeNest
 category: syntax
 tags: [语法学习, Python专项, Python, 7天训练营, Java对比]
 createdAt: 2026-07-29
-updatedAt: 2026-07-29
+updatedAt: 2026-08-01
 readingMinutes: 12
 topOrder: 1
 slug: python-7day-bootcamp-overview
@@ -96,7 +96,7 @@ Day7 Web 开发（FastAPI）综合小项目收官
 - 推导式初识
 - 交付：用字典统计词频 / 名单去重
 
-> 状态：待补全
+阅读：[第三天训练营](/articles/python-7day-bootcamp-day03)
 
 ### Day 4｜函数、模块与异常
 
@@ -105,7 +105,7 @@ Day7 Web 开发（FastAPI）综合小项目收官
 - `try / except / finally`（对照 Java 异常）
 - 交付：拆成多文件的小工具脚本
 
-> 状态：待补全
+阅读：[第四天训练营](/articles/python-7day-bootcamp-day04)
 
 ### Day 5｜面向对象与文件 I/O
 
@@ -164,8 +164,8 @@ Day7 Web 开发（FastAPI）综合小项目收官
 | 总览 | [本文](/articles/python-7day-bootcamp-overview) | 已发布 |
 | Day 1 | [环境与语法地基](/articles/python-7day-bootcamp-day01) | 已发布 |
 | Day 2 | [流程控制与字符串](/articles/python-7day-bootcamp-day02) | 已发布 |
-| Day 3 | 四大容器 | 待写 |
-| Day 4 | 函数 / 模块 / 异常 | 待写 |
+| Day 3 | [四大容器](/articles/python-7day-bootcamp-day03) | 已发布 |
+| Day 4 | [函数 / 模块 / 异常](/articles/python-7day-bootcamp-day04) | 已发布 |
 | Day 5 | OOP + 文件 | 待写 |
 | Day 6 | 清洗 + 爬虫 | 待写 |
 | Day 7 | FastAPI Web 收官 | 待写 |
@@ -183,3 +183,5 @@ Day7 Web 开发（FastAPI）综合小项目收官
 
 - **[Day 1｜环境搭建与语法地基](/articles/python-7day-bootcamp-day01)**
 - **[Day 2｜流程控制与字符串](/articles/python-7day-bootcamp-day02)**
+- **[Day 3｜四大容器 list / tuple / dict / set](/articles/python-7day-bootcamp-day03)**
+- **[Day 4｜函数、模块与异常](/articles/python-7day-bootcamp-day04)**
