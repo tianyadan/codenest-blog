@@ -843,7 +843,7 @@ button {
   position: absolute;
   top: 10px;
   right: 10px;
-  z-index: 1;
+  z-index: 2;
   min-height: 30px;
   padding: 4px 10px;
   border: 1px solid var(--border);
@@ -852,6 +852,8 @@ button {
   color: var(--muted);
   font-size: var(--font-size-xs);
   font-weight: 600;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .markdown-body .code-block-copy:hover {
