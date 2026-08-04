@@ -1,6 +1,6 @@
 ---
 title: DevWatch：打造 AI 编程助手进度监控手表
-summary: 记录使用 Apple Watch、Python Agent 与 SpringBoot 打造 AI 编程助手状态监控系统的开发计划。
+summary: 记录使用 Apple Watch、Python Agent 与 SpringBoot 打造 AI 编程助手状态监控系统的一周开发计划。
 category: 学习
 tags:
   - AI
@@ -9,15 +9,16 @@ tags:
   - Python
   - Agent
 date: 2026-08-04
+updated: 2026-08-04 11:53
 ---
 
 # DevWatch：打造 AI 编程助手进度监控手表
 
 ## 项目背景
 
-随着 Claude Code、Codex、Cursor 等 AI 编程工具逐渐进入开发流程，开发者越来越依赖 AI Agent 完成代码分析、重构和测试任务。
+随着 Claude Code、Codex、Cursor 等 AI 编程工具逐渐成为开发流程的一部分，开发者越来越依赖 AI Agent 完成代码分析、重构、测试等工作。
 
-但是这些工具目前主要运行在电脑端，当离开电脑时，我们无法快速了解 AI Agent 当前执行状态。
+但是这些工具主要运行在电脑端，当离开电脑后，开发者无法快速了解 AI Agent 当前是否正在执行任务、执行到了哪个阶段。
 
 因此，我计划开发一个属于程序员自己的 Apple Watch 工具：
 
@@ -25,7 +26,7 @@ date: 2026-08-04
 
 ## 项目目标
 
-最终实现：
+整体架构：
 
 ```text
 Claude Code / Codex / Cursor
@@ -40,13 +41,13 @@ Claude Code / Codex / Cursor
        Apple Watch
 ```
 
-Apple Watch 可以展示：
+Apple Watch 最终展示：
 
 - AI Agent 当前状态
 - 当前执行任务
 - 代码修改进度
-- Git 状态
-- 服务器状态
+- Git 提交情况
+- 服务器运行状态
 
 示例：
 
@@ -67,19 +68,15 @@ Running
 
 ## Day 1：设计整体架构
 
-目标：确定项目模块和数据流。
-
-拆分三个核心模块：
+目标：明确三个核心模块。
 
 - Mac Agent：负责采集 AI 工具运行状态
-- Backend：负责存储和提供接口
-- Apple Watch：负责展示数据
-
----
+- SpringBoot Backend：负责数据存储和接口提供
+- Apple Watch：负责状态展示
 
 ## Day 2：开发 Mac Agent
 
-目标：让 Mac 可以主动收集 AI 工作状态。
+目标：让 Mac 自动收集 AI 工作状态。
 
 技术：
 
@@ -88,37 +85,24 @@ Running
 - Shell 调用
 - HTTP 请求
 
-统一输出状态数据：
-
-```json
-{
-  "agent": "Claude",
-  "status": "RUNNING",
-  "task": "Refactor Service",
-  "progress": 70
-}
-```
-
----
+统一输出状态数据。
 
 ## Day 3：开发 SpringBoot 服务
 
-目标：提供数据同步接口。
+目标：完成状态同步接口。
 
 实现：
 
-- 接收 Mac Agent 上传状态
+- 接收 Agent 状态
 - 保存最新状态
 - 提供查询接口
 
-接口设计：
+接口：
 
 ```text
 POST /api/watch/status
 GET  /api/watch/latest
 ```
-
----
 
 ## Day 4：开发 Apple Watch App
 
@@ -130,19 +114,7 @@ GET  /api/watch/latest
 - SwiftUI
 - WatchKit
 
-展示：
-
-```text
-10:30
-
-🤖 Claude
-
-Coding...
-
-Progress 70%
-```
-
----
+展示 AI Agent 当前状态。
 
 ## Day 5：优化展示效果
 
@@ -155,18 +127,14 @@ Progress 70%
 
 让应用更接近程序员专属仪表盘。
 
----
-
 ## Day 6：扩展开发者数据
 
-增加更多信息：
+增加：
 
 - Git 提交记录
 - Docker 服务状态
 - AI Token 使用量
 - 服务器资源状态
-
----
 
 ## Day 7：整理项目文档
 
@@ -179,7 +147,7 @@ Progress 70%
 
 # 后续规划
 
-未来扩展方向：
+未来扩展：
 
 - iPhone Widget
 - Mac 菜单栏应用
