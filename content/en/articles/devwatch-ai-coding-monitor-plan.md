@@ -1,6 +1,6 @@
 ---
 title: DevWatch: Building an AI Coding Agent Progress Monitor on Apple Watch
-summary: A development plan for building an AI coding assistant monitor using Apple Watch, Python Agent, and SpringBoot.
+summary: A one-week development plan for building an AI coding assistant monitor using Apple Watch, Python Agent, and SpringBoot.
 category: Learning
 tags:
   - AI
@@ -9,15 +9,16 @@ tags:
   - Python
   - Agent
 date: 2026-08-04
+updated: 2026-08-04 11:53
 ---
 
 # DevWatch: Building an AI Coding Agent Progress Monitor on Apple Watch
 
 ## Background
 
-With the rise of AI coding tools such as Claude Code, Codex, and Cursor, AI Agents are becoming an important part of daily software development.
+With AI coding tools such as Claude Code, Codex, and Cursor becoming part of daily development workflows, developers increasingly rely on AI Agents for analysis, refactoring, and testing.
 
-However, these tools mainly run on computers. When developers leave their desks, they cannot easily know whether an AI Agent is working, what task it is performing, or whether it has completed the job.
+However, these tools mainly run on computers. When developers leave their desks, they cannot easily know whether an AI Agent is running, what task it is performing, or whether the task is completed.
 
 Therefore, I plan to build a developer-focused Apple Watch tool:
 
@@ -25,7 +26,7 @@ Therefore, I plan to build a developer-focused Apple Watch tool:
 
 ## Project Goal
 
-The target architecture:
+Architecture:
 
 ```text
 Claude Code / Codex / Cursor
@@ -67,19 +68,15 @@ Running
 
 ## Day 1: Design Architecture
 
-Goal: Define the system modules and data flow.
-
-Three core modules:
+Define three core modules:
 
 - Mac Agent: Collect AI tool status
-- Backend: Store and provide APIs
+- SpringBoot Backend: Store data and provide APIs
 - Apple Watch: Display information
-
----
 
 ## Day 2: Build Mac Agent
 
-Goal: Let the Mac collect AI working status automatically.
+Goal: Collect AI working status automatically.
 
 Technology:
 
@@ -88,61 +85,32 @@ Technology:
 - Shell commands
 - HTTP requests
 
-Unified output format:
-
-```json
-{
-  "agent": "Claude",
-  "status": "RUNNING",
-  "task": "Refactor Service",
-  "progress": 70
-}
-```
-
----
-
 ## Day 3: Develop SpringBoot Service
 
-Goal: Build the synchronization service.
+Goal: Build synchronization APIs.
 
 Features:
 
 - Receive Agent status
 - Store latest status
-- Provide query API
+- Provide query APIs
 
-API design:
+API:
 
 ```text
 POST /api/watch/status
 GET  /api/watch/latest
 ```
 
----
-
 ## Day 4: Build Apple Watch App
 
-Goal: Create the first watch display page.
+Goal: Create the first watch dashboard.
 
 Technology:
 
 - Swift
 - SwiftUI
 - WatchKit
-
-Display:
-
-```text
-10:30
-
-🤖 Claude
-
-Coding...
-
-Progress 70%
-```
-
----
 
 ## Day 5: Improve Watch Experience
 
@@ -153,20 +121,14 @@ Add:
 - Dark theme
 - Animations
 
-Make it closer to a developer dashboard.
-
----
-
 ## Day 6: Extend Developer Data
 
-Add more information:
+Add:
 
 - Git commits
 - Docker status
 - AI token usage
 - Server resources
-
----
 
 ## Day 7: Documentation
 
