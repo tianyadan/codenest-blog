@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { Dictionary } from '../lib/i18n';
+import { copyTextToClipboard } from '../lib/clipboard';
 
 const contactEmail = '18661344507@163.com';
 
@@ -34,14 +35,10 @@ export function EmailModal({ open, onClose, dictionary }: EmailModalProps) {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [open, onClose]);
 
-  /** 复制邮箱地址到剪贴板 */
+  /** 复制邮箱地址到剪贴板（含非 HTTPS 降级） */
   const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(contactEmail);
-      setCopied(true);
-    } catch {
-      setCopied(false);
-    }
+    const ok = await copyTextToClipboard(contactEmail);
+    setCopied(ok);
   };
 
   if (!open) {

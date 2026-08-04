@@ -600,7 +600,7 @@ day04_words/
 ## 11. 预习明天
 
 明天进入 **面向对象 + 文件读写**：`class`、`__init__`、`self`、文本/CSV I/O。  
-官方预习：[类](https://docs.python.org/zh-cn/3/tutorial/classes.html) · [读写文件](https://docs.python.org/zh-cn/3/tutorial/inputoutput.html#reading-and-writing-files)
+已更新：直接阅读 **[Day5｜面向对象与文件读写](/articles/python-7day-bootcamp-day05)**。
 
 - 上一篇：[Day3](/articles/python-7day-bootcamp-day03)  
 - 返回总览：[总览](/articles/python-7day-bootcamp-overview)
