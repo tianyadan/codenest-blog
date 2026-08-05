@@ -5,7 +5,7 @@ author: CodeNest
 category: syntax
 tags: [语法学习, Python专项, Python, 7天训练营, Java对比]
 createdAt: 2026-07-29
-updatedAt: 2026-08-03
+updatedAt: 2026-08-05
 readingMinutes: 12
 topOrder: 1
 slug: python-7day-bootcamp-overview
@@ -123,7 +123,7 @@ Day7 Web 开发（FastAPI）综合小项目收官
 - 合规与礼貌爬取（频率、robots、仅练手站）
 - 交付：抓取公开页面字段 → 清洗 → 导出 CSV
 
-> 状态：待补全
+阅读：[第六天训练营](/articles/python-7day-bootcamp-day06)
 
 ### Day 7｜Web 开发收官（FastAPI）
 
@@ -167,7 +167,7 @@ Day7 Web 开发（FastAPI）综合小项目收官
 | Day 3 | [四大容器](/articles/python-7day-bootcamp-day03) | 已发布 |
 | Day 4 | [函数 / 模块 / 异常](/articles/python-7day-bootcamp-day04) | 已发布 |
 | Day 5 | [OOP + 文件](/articles/python-7day-bootcamp-day05) | 已发布 |
-| Day 6 | 清洗 + 爬虫 | 待写 |
+| Day 6 | [清洗 + 爬虫](/articles/python-7day-bootcamp-day06) | 已发布 |
 | Day 7 | FastAPI Web 收官 | 待写 |
 
 ---
@@ -186,3 +186,4 @@ Day7 Web 开发（FastAPI）综合小项目收官
 - **[Day 3｜四大容器 list / tuple / dict / set](/articles/python-7day-bootcamp-day03)**
 - **[Day 4｜函数、模块与异常](/articles/python-7day-bootcamp-day04)**
 - **[Day 5｜面向对象与文件读写](/articles/python-7day-bootcamp-day05)**
+- **[Day 6｜数据清洗与爬虫入门](/articles/python-7day-bootcamp-day06)**

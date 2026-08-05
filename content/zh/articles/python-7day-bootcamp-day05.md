@@ -832,6 +832,8 @@ if __name__ == "__main__":
 ## 13. 预习明天
 
 明天进入实战线：**pandas 数据清洗 + 爬虫入门（requests / BeautifulSoup）**。  
+已更新：直接阅读 **[Day6｜数据清洗与爬虫入门](/articles/python-7day-bootcamp-day06)**。
+
 建议先安装（在虚拟环境里）：
 
 ```bash
