@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useNavigate, useOutletContext } from 'react-router-dom';
 import { SearchBox } from '../components/SearchBox';
 import { MoonIcon, SunIcon } from '../components/Icons';
 import { appRoutes } from '../lib/routes';
+import { shouldHideHeaderOnScroll } from '../lib/scrollHeader';
 import type { Dictionary } from '../lib/i18n';
 import type { Language, ThemeMode } from '../types/content';
 
@@ -22,10 +24,28 @@ type AppLayoutProps = {
 export function AppLayout({ context }: AppLayoutProps) {
   const navigate = useNavigate();
   const { dictionary, language, theme, toggleLanguage, toggleTheme } = context;
+  const [headerHidden, setHeaderHidden] = useState(false);
+
+  /** 向下滚动收起顶栏，向上滚动再展开，避免遮挡正文。 */
+  useEffect(() => {
+    let lastY = window.scrollY;
+
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      const nextHidden = shouldHideHeaderOnScroll({ currentY, lastY });
+      if (nextHidden !== null) {
+        setHeaderHidden(nextHidden);
+      }
+      lastY = currentY;
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <div className="app-shell">
-      <header className="site-header">
+      <header className={`site-header${headerHidden ? ' is-hidden' : ''}`}>
         <NavLink to={appRoutes.home} className="brand" aria-label="CodeNest home">
           <img className="brand-logo" src="/favicon-32x32.png" alt="" width={32} height={32} />
           <span>CodeNest</span>

@@ -5,7 +5,7 @@ author: CodeNest
 category: syntax
 tags: [语法学习, Python专项, Python, 7天训练营, Java对比]
 createdAt: 2026-07-29
-updatedAt: 2026-08-05
+updatedAt: 2026-08-06
 readingMinutes: 12
 topOrder: 1
 slug: python-7day-bootcamp-overview
@@ -132,7 +132,7 @@ Day7 Web 开发（FastAPI）综合小项目收官
 - 本地启动、用浏览器 / curl 验证
 - 交付：一个可运行的迷你后端 + README
 
-> 状态：待补全
+阅读：[第七天训练营](/articles/python-7day-bootcamp-day07)
 
 ---
 
@@ -168,7 +168,7 @@ Day7 Web 开发（FastAPI）综合小项目收官
 | Day 4 | [函数 / 模块 / 异常](/articles/python-7day-bootcamp-day04) | 已发布 |
 | Day 5 | [OOP + 文件](/articles/python-7day-bootcamp-day05) | 已发布 |
 | Day 6 | [清洗 + 爬虫](/articles/python-7day-bootcamp-day06) | 已发布 |
-| Day 7 | FastAPI Web 收官 | 待写 |
+| Day 7 | [FastAPI Web 收官](/articles/python-7day-bootcamp-day07) | 已发布 |
 
 ---
 
@@ -187,3 +187,4 @@ Day7 Web 开发（FastAPI）综合小项目收官
 - **[Day 4｜函数、模块与异常](/articles/python-7day-bootcamp-day04)**
 - **[Day 5｜面向对象与文件读写](/articles/python-7day-bootcamp-day05)**
 - **[Day 6｜数据清洗与爬虫入门](/articles/python-7day-bootcamp-day06)**
+- **[Day 7｜FastAPI Web 收官](/articles/python-7day-bootcamp-day07)**
