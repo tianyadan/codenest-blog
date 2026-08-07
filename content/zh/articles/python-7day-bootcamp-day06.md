@@ -679,6 +679,8 @@ print("已导出：", dst)
 ## 15. 预习明天（Day7 收官）
 
 明天用 **FastAPI** 把今天洗干净的 CSV 做成查询 API（对照 Spring `@RestController`）。  
+已更新：直接阅读 **[Day7｜FastAPI Web 收官](/articles/python-7day-bootcamp-day07)**。
+
 可先安装：
 
 ```bash

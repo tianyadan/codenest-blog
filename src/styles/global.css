@@ -95,6 +95,14 @@ button {
   padding: 0 clamp(20px, 4vw, 64px);
   border-bottom: 1px solid var(--border);
   background: var(--surface);
+  transition: transform 0.28s ease;
+  will-change: transform;
+}
+
+/* 向下滑动时收起顶栏，避免遮挡正文 */
+.site-header.is-hidden {
+  transform: translateY(-100%);
+  pointer-events: none;
 }
 
 .brand,
