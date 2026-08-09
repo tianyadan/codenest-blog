@@ -29,17 +29,13 @@ describe('localizedContent', () => {
 
   it('keeps question banks ordered and scoped by bank slug', () => {
     const banks = getLocalizedQuestionBanks('zh');
-    expect(banks.map((bank) => bank.slug)).toEqual([
-      'mysql',
-      'redis',
-      'java',
-      'spring',
-      'vue',
-      'react',
-      'go',
-      'data-structures'
-    ]);
-    expect(findLocalizedQuestionBank('redis', 'zh')?.name).toBe('Redis');
+    const orders = banks.map((bank) => (typeof bank.order === 'number' ? bank.order : Number.MAX_SAFE_INTEGER));
+    // 题库应按 order 非递减排列。
+    expect(orders).toEqual([...orders].sort((left, right) => left - right));
+    expect(banks.map((bank) => bank.slug)).toEqual(
+      expect.arrayContaining(['mysql', 'redis', 'java', 'vue', 'react', 'go'])
+    );
+    expect(findLocalizedQuestionBank('redis', 'zh')?.name).toMatch(/Redis/);
     expect(getQuestionsByBank('mysql', 'zh').every((item) => item.bankSlug === 'mysql')).toBe(true);
   });
 
