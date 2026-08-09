@@ -2,12 +2,14 @@ import { useEffect, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { AppLayout, type AppOutletContext } from './layouts/AppLayout';
 import { getDictionary, normalizeLanguage } from './lib/i18n';
-import { appRoutes, buildArticlePath, buildPromptPath, buildQuestionBankPath, buildQuestionPath } from './lib/routes';
+import { appRoutes, buildArticlePath, buildPlanPath, buildPromptPath, buildQuestionBankPath, buildQuestionPath } from './lib/routes';
 import { normalizeTheme, resolveNextTheme } from './lib/theme';
 import ArticleDetailPage from './pages/ArticleDetailPage';
 import ArticleListPage from './pages/ArticleListPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
+import PlanDetailPage from './pages/PlanDetailPage';
+import PlanListPage from './pages/PlanListPage';
 import PromptDetailPage from './pages/PromptDetailPage';
 import PromptListPage from './pages/PromptListPage';
 import QuestionBankPage from './pages/QuestionBankPage';
@@ -24,6 +26,12 @@ const themeStorageKey = 'codenest-theme';
 function LegacyArticleRedirect() {
   const { slug = '' } = useParams();
   return <Navigate to={buildArticlePath(decodeURIComponent(slug))} replace />;
+}
+
+/** 兼容中文计划详情路径。 */
+function LegacyPlanRedirect() {
+  const { slug = '' } = useParams();
+  return <Navigate to={buildPlanPath(decodeURIComponent(slug))} replace />;
 }
 
 /** 兼容旧中文题库分类路径。 */
@@ -75,6 +83,8 @@ export default function App() {
         <Route index element={<HomePage />} />
         <Route path={appRoutes.articles.slice(1)} element={<ArticleListPage />} />
         <Route path={appRoutes.articleDetail.slice(1)} element={<ArticleDetailPage />} />
+        <Route path={appRoutes.plans.slice(1)} element={<PlanListPage />} />
+        <Route path={appRoutes.planDetail.slice(1)} element={<PlanDetailPage />} />
         <Route path={appRoutes.questions.slice(1)} element={<QuestionListPage />} />
         <Route path={appRoutes.questionBank.slice(1)} element={<QuestionBankPage />} />
         <Route path={appRoutes.questionDetail.slice(1)} element={<QuestionDetailPage />} />
@@ -96,6 +106,8 @@ export default function App() {
         {/* 旧中文路径 → 英文路径 */}
         <Route path="文章" element={<Navigate to={appRoutes.articles} replace />} />
         <Route path="文章/:slug" element={<LegacyArticleRedirect />} />
+        <Route path="计划" element={<Navigate to={appRoutes.plans} replace />} />
+        <Route path="计划/:slug" element={<LegacyPlanRedirect />} />
         <Route path="题库" element={<Navigate to={appRoutes.questions} replace />} />
         <Route path="题库/:bankSlug" element={<LegacyQuestionBankRedirect />} />
         <Route path="题库/:bankSlug/:slug" element={<LegacyQuestionDetailRedirect />} />

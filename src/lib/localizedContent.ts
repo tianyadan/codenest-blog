@@ -1,9 +1,13 @@
 import type { Language } from '../types/content';
-import { articles, prompts, questionBanks, questions } from '../data/content';
+import { articles, plans, prompts, questionBanks, questions } from '../data/content';
 
 /** 按当前语言过滤文章（严格隔离，不回退）。 */
 export const getLocalizedArticles = (language: Language) =>
   articles.filter((item) => item.lang === language);
+
+/** 按当前语言过滤计划。 */
+export const getLocalizedPlans = (language: Language) =>
+  plans.filter((item) => item.lang === language);
 
 /** 按当前语言过滤提示词。 */
 export const getLocalizedPrompts = (language: Language) =>
@@ -24,6 +28,10 @@ export const findLocalizedQuestionBank = (bankSlug: string, language: Language) 
 /** 按 slug + 语言查找文章。 */
 export const findLocalizedArticle = (slug: string, language: Language) =>
   articles.find((item) => item.slug === slug && item.lang === language);
+
+/** 按 slug + 语言查找计划。 */
+export const findLocalizedPlan = (slug: string, language: Language) =>
+  plans.find((item) => item.slug === slug && item.lang === language);
 
 /** 按 slug + 语言查找提示词。 */
 export const findLocalizedPrompt = (slug: string, language: Language) =>

@@ -8,12 +8,16 @@
 content/
   zh/
     articles/          # 中文文章
+    plans/             # 中文计划（与文章同级）
     banks/             # 中文题库
     questions/<bank>/  # 中文题目
+    prompts/           # 中文提示词
   en/
     articles/          # 英文文章
+    plans/             # 英文计划
     banks/
     questions/<bank>/
+    prompts/
 ```
 
 - **语言优先**：中英文分目录，不要混放在同一文件夹。
@@ -57,6 +61,26 @@ slug: custom-slug    # 可选，默认用文件名
 | `syntax` | 语法学习 | 语言语法专项课程（如 Python 专项） |
 | `work` | 工作总结 | 工作复盘 |
 | `diary` | 心情日记 | 随笔 |
+
+## 2.1 计划 Frontmatter
+
+计划与文章同级，路径为 `content/{lang}/plans/*.md`，可不写 `tags` / `category`：
+
+```md
+---
+title: 2026 年 8 月计划
+summary: 一句话摘要
+author: evan
+createdAt: YYYY-MM-DD
+updatedAt: YYYY-MM-DD
+readingMinutes: 10
+slug: custom-slug    # 可选，默认用文件名
+---
+
+# 正文标题
+
+正文……
+```
 
 ## 3. 正文改写风格
 

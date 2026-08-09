@@ -285,8 +285,8 @@ button {
 
 .home-stats {
   display: grid;
-  max-width: 560px;
-  grid-template-columns: repeat(3, 1fr);
+  max-width: 720px;
+  grid-template-columns: repeat(4, 1fr);
   margin-top: 28px;
 }
 

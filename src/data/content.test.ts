@@ -1,11 +1,26 @@
 import { describe, expect, it } from 'vitest';
-import { articles, loadArticleContent, loadPromptContent, prompts, questionBanks, questions } from '../data/content';
+import {
+  articles,
+  loadArticleContent,
+  loadPlanContent,
+  loadPromptContent,
+  plans,
+  prompts,
+  questionBanks,
+  questions
+} from '../data/content';
 import { loadSearchableContent } from '../data/searchCorpus';
-import { getLocalizedArticles, getLocalizedPrompts, getLocalizedQuestionBanks } from '../lib/localizedContent';
+import {
+  getLocalizedArticles,
+  getLocalizedPlans,
+  getLocalizedPrompts,
+  getLocalizedQuestionBanks
+} from '../lib/localizedContent';
 
 describe('markdown content catalog', () => {
-  it('loads article, prompt and question metadata from language content trees', () => {
+  it('loads article, plan, prompt and question metadata from language content trees', () => {
     expect(articles.length).toBeGreaterThanOrEqual(2);
+    expect(plans.length).toBeGreaterThanOrEqual(1);
     expect(prompts.length).toBeGreaterThanOrEqual(9);
     expect(questions.length).toBeGreaterThanOrEqual(2);
     expect(articles.every((article) => article.lang === 'zh' || article.lang === 'en')).toBe(true);
@@ -21,12 +36,13 @@ describe('markdown content catalog', () => {
     ]);
     expect(getLocalizedArticles('zh').some((article) => article.slug === 'seatunnel-data-sync')).toBe(true);
     expect(getLocalizedArticles('en').some((article) => article.slug === 'seatunnel-data-sync')).toBe(true);
+    expect(getLocalizedPlans('zh').some((plan) => plan.slug === '2026-08-career-java-python-ai')).toBe(true);
     expect(getLocalizedPrompts('zh').some((prompt) => prompt.slug === 'busy-timeline-drawer')).toBe(true);
     expect(getLocalizedPrompts('en').some((prompt) => prompt.category === 'schema')).toBe(true);
     expect(questionBanks.every((bank) => bank.lang === 'zh' || bank.lang === 'en')).toBe(true);
   });
 
-  it('lazy-loads article and prompt markdown bodies by slug and language', async () => {
+  it('lazy-loads article, plan and prompt markdown bodies by slug and language', async () => {
     const zhContent = await loadArticleContent('seatunnel-data-sync', 'zh');
     expect(zhContent).toContain('批次同步配置');
     expect(zhContent).not.toContain('title: SeaTunnel');
@@ -34,6 +50,10 @@ describe('markdown content catalog', () => {
     const enContent = await loadArticleContent('seatunnel-data-sync', 'en');
     expect(enContent).toContain('Batch sync config');
     expect(enContent).not.toContain('title: SeaTunnel');
+
+    const zhPlan = await loadPlanContent('2026-08-career-java-python-ai', 'zh');
+    expect(zhPlan).toContain('7 分精力深耕 Java');
+    expect(zhPlan).not.toContain('title: 2026');
 
     const zhPrompt = await loadPromptContent('busy-timeline-drawer', 'zh');
     expect(zhPrompt).toContain('忙碌时间轴');
@@ -48,6 +68,7 @@ describe('markdown content catalog', () => {
     const zhCorpus = await loadSearchableContent('zh');
     expect(zhCorpus.some((item) => item.slug === 'mysql-index-invalid' && item.body.includes('EXPLAIN'))).toBe(true);
     expect(zhCorpus.some((item) => item.slug === 'seatunnel-data-sync' && item.lang === 'zh')).toBe(true);
+    expect(zhCorpus.some((item) => item.type === 'plan' && item.slug === '2026-08-career-java-python-ai')).toBe(true);
     expect(zhCorpus.some((item) => item.type === 'prompt' && item.slug === 'backend-api-design')).toBe(true);
     expect(zhCorpus.every((item) => item.lang === 'zh')).toBe(true);
 

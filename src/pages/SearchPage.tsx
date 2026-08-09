@@ -4,7 +4,7 @@ import { SearchBox } from '../components/SearchBox';
 import { TagList } from '../components/TagList';
 import { loadSearchableContent } from '../data/searchCorpus';
 import { useAppContext } from '../layouts/AppLayout';
-import { appRoutes, buildArticlePath, buildPromptPath, buildQuestionPath } from '../lib/routes';
+import { appRoutes, buildArticlePath, buildPlanPath, buildPromptPath, buildQuestionPath } from '../lib/routes';
 import { searchContent } from '../lib/search';
 import type { SearchableContent } from '../types/content';
 
@@ -12,6 +12,9 @@ import type { SearchableContent } from '../types/content';
 const resolveSearchHref = (item: SearchableContent) => {
   if (item.type === 'article') {
     return buildArticlePath(item.slug);
+  }
+  if (item.type === 'plan') {
+    return buildPlanPath(item.slug);
   }
   if (item.type === 'prompt') {
     return buildPromptPath(item.slug);
@@ -25,6 +28,7 @@ const resolveSearchHref = (item: SearchableContent) => {
 /** 搜索结果类型文案。 */
 const resolveTypeLabel = (type: SearchableContent['type'], dictionary: ReturnType<typeof useAppContext>['dictionary']) => {
   if (type === 'article') return dictionary.labels.articles;
+  if (type === 'plan') return dictionary.labels.plans;
   if (type === 'prompt') return dictionary.labels.prompts;
   return dictionary.labels.questions;
 };

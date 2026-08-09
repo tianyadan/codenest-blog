@@ -2,7 +2,7 @@ export type Language = 'zh' | 'en';
 
 export type ThemeMode = 'light' | 'dark';
 
-export type ContentType = 'article' | 'question' | 'prompt';
+export type ContentType = 'article' | 'question' | 'prompt' | 'plan';
 
 export type Difficulty = 'easy' | 'medium' | 'hard';
 
@@ -47,6 +47,21 @@ export type Prompt = {
   tags: string[];
   createdAt: string;
   updatedAt: string;
+  content: string;
+};
+
+/** 学习 / 成长计划，与文章同级。 */
+export type Plan = {
+  id: string;
+  lang: Language;
+  slug: string;
+  title: string;
+  summary: string;
+  author: string;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+  readingMinutes: number;
   content: string;
 };
 

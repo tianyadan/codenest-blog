@@ -2,6 +2,8 @@ export const appRoutes = {
   home: '/',
   articles: '/articles',
   articleDetail: '/articles/:slug',
+  plans: '/plans',
+  planDetail: '/plans/:slug',
   questions: '/questions',
   questionBank: '/questions/:bankSlug',
   questionDetail: '/questions/:bankSlug/:slug',
@@ -16,6 +18,9 @@ const buildDetailPath = (basePath: string, slug: string) => {
 };
 
 export const buildArticlePath = (slug: string) => buildDetailPath(appRoutes.articles, slug);
+
+/** 计划详情路径：/plans/:slug */
+export const buildPlanPath = (slug: string) => buildDetailPath(appRoutes.plans, slug);
 
 /** 题库分类页路径：/questions/:bankSlug */
 export const buildQuestionBankPath = (bankSlug: string) => buildDetailPath(appRoutes.questions, bankSlug);

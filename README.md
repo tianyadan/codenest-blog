@@ -10,11 +10,12 @@
 
 ### 这个项目是做什么的
 
-CodeNest Blog 是一个面向工程师的知识沉淀站点，主要承载三类内容：
+CodeNest Blog 是一个面向工程师的知识沉淀站点，主要承载四类内容：
 
 1. **技术文章**：排查记录、学习笔记、工作复盘
-2. **八股文题库**：按主题分类的高频问题与答案
-3. **AI 提示词**：可直接复制使用的工程提示模板
+2. **成长计划**：阶段性目标与执行清单（与文章同级）
+3. **八股文题库**：按主题分类的高频问题与答案
+4. **AI 提示词**：可直接复制使用的工程提示模板
 
 站点支持 **中 / 英双语** 切换，语言严格隔离：切换语言后只展示当前语言内容，缺译不会回退到另一语言。
 
@@ -22,7 +23,7 @@ CodeNest Blog 是一个面向工程师的知识沉淀站点，主要承载三类
 
 本仓库会持续更新。
 
-- 文章、题库、提示词会随学习与工作实践不断补充
+- 文章、计划、题库、提示词会随学习与工作实践不断补充
 - 优先保证内容可用、结构清晰，再逐步完善双语与排版细节
 - 欢迎把真实踩坑、可复用经验写进 Markdown，丢进 `content/` 即可参与沉淀
 
@@ -43,6 +44,7 @@ CodeNest Blog 是一个面向工程师的知识沉淀站点，主要承载三类
 ### 功能概览
 
 - 文章列表 / 详情 / 分类 / 标签 / 搜索
+- 计划列表 / 详情（与文章同级）
 - 题库三级导航：分类 → 题目列表 → 题目详情
 - 提示词库：分类浏览 + 代码块一键复制
 - 中英切换、浅色 / 深色主题
@@ -54,11 +56,13 @@ CodeNest Blog 是一个面向工程师的知识沉淀站点，主要承载三类
 content/
   zh/                          # 中文
     articles/*.md              # 文章
+    plans/*.md                 # 计划
     banks/*.md                 # 题库分类
     questions/<bank>/*.md      # 题目
     prompts/*.md               # 提示词
   en/                          # 英文（与中文同 slug 配对）
     articles/
+    plans/
     banks/
     questions/
     prompts/
@@ -95,11 +99,12 @@ npm test                   # 生成内容后跑测试
 
 ### What this project is
 
-CodeNest Blog is a knowledge site for engineers. It currently hosts three content types:
+CodeNest Blog is a knowledge site for engineers. It currently hosts four content types:
 
 1. **Articles** — troubleshooting notes, learning write-ups, and work retrospectives
-2. **Question banks** — categorized interview-style Q&A
-3. **AI prompts** — copy-ready engineering prompt templates
+2. **Plans** — stage goals and execution lists (peer to articles)
+3. **Question banks** — categorized interview-style Q&A
+4. **AI prompts** — copy-ready engineering prompt templates
 
 The site supports **Chinese / English** switching with strict language isolation: after switching, only the current language is shown. Missing translations do not fall back to the other language.
 
@@ -107,7 +112,7 @@ The site supports **Chinese / English** switching with strict language isolation
 
 This repository is under active maintenance.
 
-- Articles, question banks, and prompts will keep growing with real learning and work practice
+- Articles, plans, question banks, and prompts will keep growing with real learning and work practice
 - Prefer shipping useful, well-structured content first, then refine bilingual coverage and polish
 - Drop Markdown into `content/` to contribute durable notes and reusable experience
 
@@ -128,6 +133,7 @@ No backend database is required. The runtime reads content indexes and search co
 ### Features
 
 - Article list / detail / categories / tags / search
+- Plan list / detail (peer to articles)
 - Three-level question navigation: bank → list → detail
 - Prompt library with category browsing and one-click code copy
 - Language switch and light / dark theme
@@ -139,11 +145,13 @@ No backend database is required. The runtime reads content indexes and search co
 content/
   zh/                          # Chinese
     articles/*.md
+    plans/*.md
     banks/*.md
     questions/<bank>/*.md
     prompts/*.md
   en/                          # English (paired by the same slug)
     articles/
+    plans/
     banks/
     questions/
     prompts/

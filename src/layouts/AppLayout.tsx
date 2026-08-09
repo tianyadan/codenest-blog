@@ -54,6 +54,7 @@ export function AppLayout({ context }: AppLayoutProps) {
         <nav className="main-nav" aria-label="Primary">
           <NavLink to={appRoutes.home}>{dictionary.nav.home}</NavLink>
           <NavLink to={appRoutes.articles}>{dictionary.nav.articles}</NavLink>
+          <NavLink to={appRoutes.plans}>{dictionary.nav.plans}</NavLink>
           <NavLink to={appRoutes.questions}>{dictionary.nav.questions}</NavLink>
           <NavLink to={appRoutes.prompts}>{dictionary.nav.prompts}</NavLink>
           <NavLink to={appRoutes.tags}>{dictionary.nav.tags}</NavLink>

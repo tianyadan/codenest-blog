@@ -8,12 +8,16 @@
 content/
   zh/
     articles/          # Chinese articles
+    plans/             # Chinese plans (peer to articles)
     banks/             # Chinese question banks
     questions/<bank>/  # Chinese questions
+    prompts/           # Chinese prompts
   en/
     articles/          # English articles
+    plans/             # English plans
     banks/
     questions/<bank>/
+    prompts/
 ```
 
 - **Language-first**: Keep Chinese and English in separate trees. Never mix them in one folder.
@@ -57,6 +61,26 @@ Category reference:
 | `syntax` | Syntax | Language syntax tracks (e.g. Python) |
 | `work` | Work Notes | Work retrospectives |
 | `diary` | Diary | Personal notes |
+
+## 2.1 Plan Frontmatter
+
+Plans are a peer section to articles under `content/{lang}/plans/*.md`. `tags` / `category` are optional:
+
+```md
+---
+title: August 2026 Plan
+summary: One-line summary
+author: evan
+createdAt: YYYY-MM-DD
+updatedAt: YYYY-MM-DD
+readingMinutes: 10
+slug: custom-slug    # optional; defaults to filename
+---
+
+# Body Title
+
+Body…
+```
 
 ## 3. Rewrite Style
 
