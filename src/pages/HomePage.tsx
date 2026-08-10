@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { EmailModal } from '../components/EmailModal';
 import { ArrowRightIcon, CodeIcon, DatabaseIcon, GithubIcon, MailIcon } from '../components/Icons';
 import { TagList } from '../components/TagList';
-import { appRoutes, buildArticlePath, buildPromptPath, buildQuestionBankPath } from '../lib/routes';
+import { appRoutes, buildArticlePath, buildPlanPath, buildPromptPath, buildQuestionBankPath } from '../lib/routes';
 import {
   getLocalizedArticles,
+  getLocalizedPlans,
   getLocalizedPrompts,
   getLocalizedQuestionBanks,
   getLocalizedQuestions
@@ -17,11 +18,13 @@ export default function HomePage() {
   const { dictionary, language } = useAppContext();
   const [emailModalOpen, setEmailModalOpen] = useState(false);
   const articles = getLocalizedArticles(language);
+  const plans = getLocalizedPlans(language);
   const prompts = getLocalizedPrompts(language);
   const questions = getLocalizedQuestions(language);
   const questionBanks = getLocalizedQuestionBanks(language);
   const topArticles = [...articles].sort((left, right) => (left.topOrder ?? 99) - (right.topOrder ?? 99)).slice(0, 3);
   const latestArticles = [...articles].sort((left, right) => right.updatedAt.localeCompare(left.updatedAt)).slice(0, 4);
+  const latestPlans = [...plans].sort((left, right) => right.updatedAt.localeCompare(left.updatedAt)).slice(0, 3);
   const latestPrompts = [...prompts].sort((left, right) => right.updatedAt.localeCompare(left.updatedAt)).slice(0, 5);
 
   return (
@@ -35,6 +38,10 @@ export default function HomePage() {
             <div>
               <strong>{articles.length}</strong>
               <span>{dictionary.labels.articles}</span>
+            </div>
+            <div>
+              <strong>{plans.length}</strong>
+              <span>{dictionary.labels.plans}</span>
             </div>
             <div>
               <strong>{questions.length}</strong>
@@ -76,6 +83,37 @@ export default function HomePage() {
             ))}
           </div>
         </section>
+
+        {latestPlans.length > 0 ? (
+          <section className="home-section">
+            <div className="home-section-heading">
+              <h2>{dictionary.pages.latestPlans}</h2>
+              <Link to={appRoutes.plans}>
+                {dictionary.pages.allPlans}
+                <ArrowRightIcon />
+              </Link>
+            </div>
+
+            <div className="article-list-plain">
+              {latestPlans.map((plan) => (
+                <article className="article-row" key={plan.id}>
+                  <div>
+                    <h3>
+                      <Link to={buildPlanPath(plan.slug)}>{plan.title}</Link>
+                    </h3>
+                    <p>{plan.summary}</p>
+                  </div>
+                  <div className="article-row-meta">
+                    <time dateTime={plan.updatedAt}>{plan.updatedAt}</time>
+                    <span>
+                      {plan.readingMinutes} {dictionary.labels.readingMinutes}
+                    </span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <section className="home-section">
           <div className="home-section-heading">

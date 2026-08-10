@@ -8,6 +8,8 @@
 |------|------|------|
 | 中文文章 | `content/zh/articles/*.md` | 文件名默认作为 `slug` |
 | 英文文章 | `content/en/articles/*.md` | 与中文共用同一 `slug` 配对 |
+| 中文计划 | `content/zh/plans/*.md` | 与文章同级，文件名默认作为 `slug` |
+| 英文计划 | `content/en/plans/*.md` | 与中文共用同一 `slug` 配对 |
 | 中文提示词 | `content/zh/prompts/*.md` | 文件名默认作为 `slug` |
 | 英文提示词 | `content/en/prompts/*.md` | 与中文共用同一 `slug` 配对 |
 | 中文题库 | `content/zh/banks/*.md` | 文件名默认作为题库 `slug` |
@@ -25,7 +27,7 @@
 2. `/questions/:bankSlug` — 该分类下的题目列表
 3. `/questions/:bankSlug/:slug` — 题目详情
 
-主路由统一使用英文：`/articles`、`/questions`、`/prompts`、`/tags`、`/search`。
+主路由统一使用英文：`/articles`、`/plans`、`/questions`、`/prompts`、`/tags`、`/search`。
 
 AI 整理文档时请阅读：`docs/ai-content-rules/RULES.zh.md`（中文）或 `RULES.en.md`（英文）。
 
@@ -58,6 +60,26 @@ slug: custom-slug    # 可选，默认用文件名
 | `syntax` | 语法学习 | Syntax |
 | `work` | 工作总结 | Work Notes |
 | `diary` | 心情日记 | Diary |
+
+## 计划 frontmatter
+
+与文章同级栏目，用于阶段性目标与执行清单。可不写 `tags` / `category`。
+
+```md
+---
+title: 2026 年 8 月计划
+summary: 一句话说明这个阶段的重点
+author: evan
+createdAt: 2026-08-09
+updatedAt: 2026-08-09
+readingMinutes: 10
+slug: custom-slug    # 可选，默认用文件名
+---
+
+# 正文标题
+
+正文……
+```
 
 ## 提示词 frontmatter
 

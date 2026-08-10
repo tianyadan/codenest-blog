@@ -3,8 +3,10 @@
 Place English Markdown here:
 
 - `articles/*.md`
+- `plans/*.md`
 - `banks/*.md`
 - `questions/<bankSlug>/*.md`
+- `prompts/*.md`
 
 Use the **same slug** as the Chinese counterpart when translating.
 If a translation is missing, the English site simply omits it (no Chinese fallback).

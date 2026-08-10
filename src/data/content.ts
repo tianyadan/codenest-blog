@@ -1,11 +1,12 @@
-import { articleMetas, promptMetas, questionBanks, questionMetas } from './generated/content-index';
+import { articleMetas, planMetas, promptMetas, questionBanks, questionMetas } from './generated/content-index';
 import { parseFrontmatter } from '../lib/frontmatter';
-import type { Article, Language, Prompt, QuestionItem } from '../types/content';
+import type { Article, Language, Plan, Prompt, QuestionItem } from '../types/content';
 
-export type { ArticleMeta, PromptMeta, QuestionMeta, QuestionBankMeta } from './generated/content-index';
+export type { ArticleMeta, PlanMeta, PromptMeta, QuestionMeta, QuestionBankMeta } from './generated/content-index';
 
 /** 列表/首页只用元数据，避免把全部正文打进首包。 */
 export const articles = articleMetas;
+export const plans = planMetas;
 export const prompts = promptMetas;
 export const questions = questionMetas;
 export { questionBanks };
@@ -14,9 +15,11 @@ export { questionBanks };
 const markdownLoaders = import.meta.glob(
   [
     '../../content/zh/articles/**/*.md',
+    '../../content/zh/plans/**/*.md',
     '../../content/zh/prompts/**/*.md',
     '../../content/zh/questions/**/*.md',
     '../../content/en/articles/**/*.md',
+    '../../content/en/plans/**/*.md',
     '../../content/en/prompts/**/*.md',
     '../../content/en/questions/**/*.md'
   ],
@@ -40,6 +43,22 @@ const resolveLoader = (relativeFile: string) => {
 /** 加载文章正文（去掉 frontmatter），按语言精确匹配。 */
 export const loadArticleContent = async (slug: string, language: Language): Promise<string | null> => {
   const meta = articleMetas.find((item) => item.slug === slug && item.lang === language);
+  if (!meta) {
+    return null;
+  }
+
+  const loader = resolveLoader(meta.file);
+  if (!loader) {
+    return null;
+  }
+
+  const raw = await loader();
+  return parseFrontmatter(raw).content;
+};
+
+/** 加载计划正文（去掉 frontmatter），按语言精确匹配。 */
+export const loadPlanContent = async (slug: string, language: Language): Promise<string | null> => {
+  const meta = planMetas.find((item) => item.slug === slug && item.lang === language);
   if (!meta) {
     return null;
   }
@@ -87,6 +106,12 @@ export const loadQuestionAnswer = async (slug: string, language: Language): Prom
 
 /** 组装完整 Article（测试或需要同步结构时使用）。 */
 export const toArticle = (meta: (typeof articleMetas)[number], content: string): Article => {
+  const { file: _file, ...rest } = meta;
+  return { ...rest, content };
+};
+
+/** 组装完整 Plan。 */
+export const toPlan = (meta: (typeof planMetas)[number], content: string): Plan => {
   const { file: _file, ...rest } = meta;
   return { ...rest, content };
 };

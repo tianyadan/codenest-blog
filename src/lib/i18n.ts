@@ -4,6 +4,7 @@ export type Dictionary = {
   nav: {
     home: string;
     articles: string;
+    plans: string;
     questions: string;
     prompts: string;
     tags: string;
@@ -12,12 +13,14 @@ export type Dictionary = {
   actions: {
     searchPlaceholder: string;
     readArticle: string;
+    viewPlan: string;
     viewQuestion: string;
     viewPrompt: string;
     viewBank: string;
     backToBanks: string;
     backToQuestions: string;
     backToPrompts: string;
+    backToPlans: string;
     toggleTheme: string;
     switchLanguage: string;
     copyEmail: string;
@@ -31,6 +34,7 @@ export type Dictionary = {
     homeTitle: string;
     homeSubtitle: string;
     latestArticles: string;
+    latestPlans: string;
     latestPrompts: string;
     questionBanks: string;
     questionBankIntro: string;
@@ -41,9 +45,11 @@ export type Dictionary = {
     emailTitle: string;
     recentUpdates: string;
     articleIntro: string;
+    planIntro: string;
     promptIntro: string;
     all: string;
     allArticles: string;
+    allPlans: string;
     allQuestions: string;
     allPrompts: string;
     articleCategories: string;
@@ -51,6 +57,7 @@ export type Dictionary = {
     viewAllArticles: string;
     emptyBank: string;
     emptyPrompts: string;
+    emptyPlans: string;
     globalSearch: string;
     noResults: string;
     notFound: string;
@@ -58,6 +65,7 @@ export type Dictionary = {
   };
   labels: {
     articles: string;
+    plans: string;
     questions: string;
     prompts: string;
     questionCount: string;
@@ -77,20 +85,23 @@ const dictionaries: Record<Language, Dictionary> = {
     nav: {
       home: '首页',
       articles: '文章',
+      plans: '计划',
       questions: '题库',
       prompts: '提示词',
       tags: '标签',
       search: '搜索'
     },
     actions: {
-      searchPlaceholder: '搜索文章、题库、提示词、标签',
+      searchPlaceholder: '搜索文章、计划、题库、提示词、标签',
       readArticle: '阅读文章',
+      viewPlan: '查看计划',
       viewQuestion: '查看题目',
       viewPrompt: '查看提示词',
       viewBank: '进入题库',
       backToBanks: '返回题库分类',
       backToQuestions: '返回题目列表',
       backToPrompts: '返回提示词列表',
+      backToPlans: '返回计划列表',
       toggleTheme: '切换主题',
       switchLanguage: '切换语言',
       copyEmail: '复制邮箱',
@@ -102,8 +113,9 @@ const dictionaries: Record<Language, Dictionary> = {
     },
     pages: {
       homeTitle: 'CodeNest 技术知识库',
-      homeSubtitle: '轻量静态站点，沉淀文章、题库与开发提示词。',
+      homeSubtitle: '轻量静态站点，沉淀文章、计划、题库与开发提示词。',
       latestArticles: '最新文章',
+      latestPlans: '最近计划',
       latestPrompts: '最近提示词',
       questionBanks: '题库分类',
       questionBankIntro: '先选分类，再刷题目，逐层深入学习。',
@@ -114,9 +126,11 @@ const dictionaries: Record<Language, Dictionary> = {
       emailTitle: '联系邮箱',
       recentUpdates: '最近更新',
       articleIntro: '记录技术成长，沉淀知识价值。',
+      planIntro: '阶段性目标与执行清单，把精力花在刀刃上。',
       promptIntro: '收集可复用的开发提示词，按场景快速调用。',
       all: '全部',
       allArticles: '全部文章',
+      allPlans: '全部计划',
       allQuestions: '全部题目',
       allPrompts: '全部提示词',
       articleCategories: '文章分类',
@@ -124,6 +138,7 @@ const dictionaries: Record<Language, Dictionary> = {
       viewAllArticles: '查看全部文章',
       emptyBank: '该分类暂无题目，敬请期待。',
       emptyPrompts: '该分类暂无提示词，敬请期待。',
+      emptyPlans: '暂无计划，敬请期待。',
       globalSearch: '全局搜索',
       noResults: '没有找到匹配内容',
       notFound: '页面不存在',
@@ -131,6 +146,7 @@ const dictionaries: Record<Language, Dictionary> = {
     },
     labels: {
       articles: '文章',
+      plans: '计划',
       questions: '题目',
       prompts: '提示词',
       questionCount: '道题目',
@@ -148,20 +164,23 @@ const dictionaries: Record<Language, Dictionary> = {
     nav: {
       home: 'Home',
       articles: 'Articles',
+      plans: 'Plans',
       questions: 'Questions',
       prompts: 'Prompts',
       tags: 'Tags',
       search: 'Search'
     },
     actions: {
-      searchPlaceholder: 'Search articles, questions, prompts, tags',
+      searchPlaceholder: 'Search articles, plans, questions, prompts, tags',
       readArticle: 'Read article',
+      viewPlan: 'View plan',
       viewQuestion: 'View question',
       viewPrompt: 'View prompt',
       viewBank: 'Open bank',
       backToBanks: 'Back to banks',
       backToQuestions: 'Back to questions',
       backToPrompts: 'Back to prompts',
+      backToPlans: 'Back to plans',
       toggleTheme: 'Toggle theme',
       switchLanguage: 'Switch language',
       copyEmail: 'Copy email',
@@ -173,8 +192,9 @@ const dictionaries: Record<Language, Dictionary> = {
     },
     pages: {
       homeTitle: 'CodeNest Knowledge Base',
-      homeSubtitle: 'A lightweight static site for articles, interview notes, and prompts.',
+      homeSubtitle: 'A lightweight static site for articles, plans, interview notes, and prompts.',
       latestArticles: 'Latest Articles',
+      latestPlans: 'Recent Plans',
       latestPrompts: 'Recent Prompts',
       questionBanks: 'Question Banks',
       questionBankIntro: 'Pick a category first, then drill into questions.',
@@ -185,9 +205,11 @@ const dictionaries: Record<Language, Dictionary> = {
       emailTitle: 'Contact Email',
       recentUpdates: 'Recent Updates',
       articleIntro: 'Record growth and preserve technical value.',
+      planIntro: 'Stage goals and execution lists — focus where it matters.',
       promptIntro: 'Reusable development prompts, organized by common engineering scenarios.',
       all: 'All',
       allArticles: 'All Articles',
+      allPlans: 'All Plans',
       allQuestions: 'All Questions',
       allPrompts: 'All Prompts',
       articleCategories: 'Article Categories',
@@ -195,6 +217,7 @@ const dictionaries: Record<Language, Dictionary> = {
       viewAllArticles: 'View All Articles',
       emptyBank: 'No questions in this bank yet.',
       emptyPrompts: 'No prompts in this category yet.',
+      emptyPlans: 'No plans yet.',
       globalSearch: 'Global Search',
       noResults: 'No matching content found',
       notFound: 'Page not found',
@@ -202,6 +225,7 @@ const dictionaries: Record<Language, Dictionary> = {
     },
     labels: {
       articles: 'Articles',
+      plans: 'Plans',
       questions: 'Questions',
       prompts: 'Prompts',
       questionCount: 'questions',

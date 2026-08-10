@@ -154,6 +154,7 @@ const PROMPT_CATEGORIES = [
 export const scanContent = (rootDir) => {
   const contentRoot = path.join(rootDir, 'content');
   const articles = [];
+  const plans = [];
   const prompts = [];
   const questionBanks = [];
   const questions = [];
@@ -161,6 +162,7 @@ export const scanContent = (rootDir) => {
   for (const lang of SUPPORTED_LANGS) {
     const langRoot = path.join(contentRoot, lang);
     const articleFiles = listMarkdownFiles(path.join(langRoot, 'articles'));
+    const planFiles = listMarkdownFiles(path.join(langRoot, 'plans'));
     const promptFiles = listMarkdownFiles(path.join(langRoot, 'prompts'));
     const bankFiles = listMarkdownFiles(path.join(langRoot, 'banks'));
     const questionFiles = listMarkdownFiles(path.join(langRoot, 'questions'));
@@ -207,6 +209,28 @@ export const scanContent = (rootDir) => {
         updatedAt: toStringValue(data.updatedAt, toStringValue(data.createdAt, '1970-01-01')),
         readingMinutes,
         ...(topOrder === undefined ? {} : { topOrder }),
+        file: toPosixRelative(rootDir, filePath),
+        body: content
+      });
+    }
+
+    for (const filePath of planFiles) {
+      const raw = fs.readFileSync(filePath, 'utf8');
+      const { data, content } = parseFrontmatter(raw);
+      const slug = toStringValue(data.slug, fileSlug(filePath));
+      const readingMinutes = toNumberValue(data.readingMinutes) ?? Math.max(1, Math.ceil(content.length / 400));
+
+      plans.push({
+        id: toStringValue(data.id, `plan-${lang}-${slug}`),
+        lang,
+        slug,
+        title: toStringValue(data.title, slug),
+        summary: toStringValue(data.summary),
+        author: toStringValue(data.author, 'CodeNest'),
+        tags: toStringArray(data.tags),
+        createdAt: toStringValue(data.createdAt, '1970-01-01'),
+        updatedAt: toStringValue(data.updatedAt, toStringValue(data.createdAt, '1970-01-01')),
+        readingMinutes,
         file: toPosixRelative(rootDir, filePath),
         body: content
       });
@@ -277,6 +301,7 @@ export const scanContent = (rootDir) => {
   }
 
   const articleMetas = articles.map(({ body, file, ...meta }) => ({ ...meta, file }));
+  const planMetas = plans.map(({ body, file, ...meta }) => ({ ...meta, file }));
   const promptMetas = prompts.map(({ body, file, ...meta }) => ({ ...meta, file }));
   const questionMetas = questions.map(({ body, file, ...meta }) => ({ ...meta, file }));
 
@@ -290,6 +315,16 @@ export const scanContent = (rootDir) => {
       summary: article.summary,
       tags: article.tags,
       body: article.body
+    })),
+    ...plans.map((plan) => ({
+      id: plan.id,
+      lang: plan.lang,
+      type: 'plan',
+      slug: plan.slug,
+      title: plan.title,
+      summary: plan.summary,
+      tags: plan.tags,
+      body: plan.body
     })),
     ...prompts.map((prompt) => ({
       id: prompt.id,
@@ -316,6 +351,7 @@ export const scanContent = (rootDir) => {
 
   return {
     articleMetas,
+    planMetas,
     promptMetas,
     questionMetas,
     questionBanks: questionBanks.sort((left, right) => {
@@ -336,6 +372,7 @@ export const renderContentModules = (rootDir) => {
 
   return {
     articleMetas: scanned.articleMetas,
+    planMetas: scanned.planMetas,
     promptMetas: scanned.promptMetas,
     questionMetas: scanned.questionMetas,
     questionBanks: scanned.questionBanks,
@@ -357,6 +394,20 @@ export type ArticleMeta = {
   updatedAt: string;
   readingMinutes: number;
   topOrder?: number;
+  file: string;
+};
+
+export type PlanMeta = {
+  id: string;
+  lang: Language;
+  slug: string;
+  title: string;
+  summary: string;
+  author: string;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+  readingMinutes: number;
   file: string;
 };
 
@@ -390,6 +441,8 @@ export type QuestionMeta = {
 export type QuestionBankMeta = QuestionBank & { lang: Language };
 
 export const articleMetas: ArticleMeta[] = ${serialize(scanned.articleMetas)};
+
+export const planMetas: PlanMeta[] = ${serialize(scanned.planMetas)};
 
 export const promptMetas: PromptMeta[] = ${serialize(scanned.promptMetas)};
 
