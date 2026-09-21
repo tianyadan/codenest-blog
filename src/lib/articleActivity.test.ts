@@ -23,8 +23,11 @@ describe('article activity', () => {
     expect(heatLevel(5)).toBe(4);
   });
 
-  it('lists years from the earliest article down to today', () => {
-    expect(listHeatmapYears(['2024-01-01', '2026-09-21'], new Date(2026, 8, 21))).toEqual([2026, 2025, 2024]);
+  it('starts heatmap years at 2025 and ignores earlier dates', () => {
+    expect(listHeatmapYears(['1970-01-01', '2024-01-01', '2025-03-01', '2026-09-21'], new Date(2026, 8, 21))).toEqual([
+      2026,
+      2025
+    ]);
     expect(listHeatmapYears([], new Date(2026, 8, 21))).toEqual([2026]);
   });
 

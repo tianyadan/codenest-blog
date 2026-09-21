@@ -56,13 +56,16 @@ export const countArticlesByDay = (articleDates: string[]): Map<string, number> 
   return counts;
 };
 
+/** 热力图最早只展示这一年，避免缺省日期把列表拉到 1970。 */
+export const HEATMAP_START_YEAR = 2025;
+
 /**
- * 热力图可选年份：从最早文章年到今年。
- * 没有文章时只返回当前年。
+ * 热力图可选年份：从 2025 到今年。
+ * 更早的文章日期不参与，避免年份按钮把页面撑得很长。
  */
 export const listHeatmapYears = (articleDates: string[], today = new Date()): number[] => {
   const currentYear = today.getFullYear();
-  let earliest = currentYear;
+  const years: number[] = [];
 
   articleDates.forEach((value) => {
     const day = toArticleDay(value);
@@ -70,16 +73,16 @@ export const listHeatmapYears = (articleDates: string[], today = new Date()): nu
       return;
     }
     const year = Number(day.slice(0, 4));
-    if (year < earliest) {
-      earliest = year;
+    if (year >= HEATMAP_START_YEAR && year <= currentYear && !years.includes(year)) {
+      years.push(year);
     }
   });
 
-  const years: number[] = [];
-  for (let year = currentYear; year >= earliest; year -= 1) {
-    years.push(year);
+  if (!years.includes(currentYear) && currentYear >= HEATMAP_START_YEAR) {
+    years.push(currentYear);
   }
-  return years;
+
+  return years.sort((left, right) => right - left);
 };
 
 /**
