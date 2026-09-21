@@ -38,6 +38,9 @@ export type Dictionary = {
     latestPrompts: string;
     questionBanks: string;
     questionBankIntro: string;
+    articleActivity: string;
+    heatmapLess: string;
+    heatmapMore: string;
     aboutMe: string;
     aboutMeBio1: string;
     aboutMeBio2: string;
@@ -119,6 +122,9 @@ const dictionaries: Record<Language, Dictionary> = {
       latestPrompts: '最近提示词',
       questionBanks: '题库分类',
       questionBankIntro: '先选分类，再刷题目，逐层深入学习。',
+      articleActivity: '文章更新',
+      heatmapLess: '少',
+      heatmapMore: '多',
       aboutMe: '关于我',
       aboutMeBio1: '热爱编程，喜欢研究技术与业务结合的可能性。',
       aboutMeBio2: '专注于 Java 后端开发，沉淀知识，分享成长。',
@@ -198,6 +204,9 @@ const dictionaries: Record<Language, Dictionary> = {
       latestPrompts: 'Recent Prompts',
       questionBanks: 'Question Banks',
       questionBankIntro: 'Pick a category first, then drill into questions.',
+      articleActivity: 'Article activity',
+      heatmapLess: 'Less',
+      heatmapMore: 'More',
       aboutMe: 'About Me',
       aboutMeBio1: 'Passionate about programming and exploring how technology integrates with business.',
       aboutMeBio2: 'Focused on Java backend development — building knowledge and sharing growth.',

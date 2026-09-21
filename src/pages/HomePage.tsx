@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ArticleHeatmap } from '../components/ArticleHeatmap';
 import { EmailModal } from '../components/EmailModal';
 import { ArrowRightIcon, CodeIcon, DatabaseIcon, GithubIcon, MailIcon } from '../components/Icons';
 import { TagList } from '../components/TagList';
@@ -11,6 +12,7 @@ import {
   getLocalizedQuestionBanks,
   getLocalizedQuestions
 } from '../lib/localizedContent';
+import { pickTopQuestionBanks } from '../lib/articleActivity';
 import { promptCategoryLabels } from '../lib/prompts';
 import { useAppContext } from '../layouts/AppLayout';
 
@@ -22,8 +24,9 @@ export default function HomePage() {
   const prompts = getLocalizedPrompts(language);
   const questions = getLocalizedQuestions(language);
   const questionBanks = getLocalizedQuestionBanks(language);
-  const topArticles = [...articles].sort((left, right) => (left.topOrder ?? 99) - (right.topOrder ?? 99)).slice(0, 3);
+  const latestPublished = [...articles].sort((left, right) => right.createdAt.localeCompare(left.createdAt)).slice(0, 3);
   const latestArticles = [...articles].sort((left, right) => right.updatedAt.localeCompare(left.updatedAt)).slice(0, 4);
+  const topBanks = pickTopQuestionBanks(questionBanks, (bank) => questions.filter((question) => question.bankSlug === bank.slug).length);
   const latestPlans = [...plans].sort((left, right) => right.updatedAt.localeCompare(left.updatedAt)).slice(0, 3);
   const latestPrompts = [...prompts].sort((left, right) => right.updatedAt.localeCompare(left.updatedAt)).slice(0, 5);
 
@@ -64,7 +67,7 @@ export default function HomePage() {
           </div>
 
           <div className="article-list-plain">
-            {topArticles.map((article) => (
+            {latestPublished.map((article) => (
               <article className="article-row" key={article.id}>
                 <div>
                   <h3>
@@ -149,7 +152,7 @@ export default function HomePage() {
           </div>
 
           <div className="bank-grid-plain">
-            {questionBanks.map((bank) => {
+            {topBanks.map((bank) => {
               const count = questions.filter((question) => question.bankSlug === bank.slug).length;
 
               return (
@@ -166,6 +169,14 @@ export default function HomePage() {
             })}
           </div>
         </section>
+
+        <ArticleHeatmap
+          dates={articles.map((article) => article.updatedAt)}
+          language={language}
+          title={dictionary.pages.articleActivity}
+          lessLabel={dictionary.pages.heatmapLess}
+          moreLabel={dictionary.pages.heatmapMore}
+        />
       </div>
 
       <aside className="home-sidebar" aria-label="Home sidebar">
