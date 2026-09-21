@@ -53,4 +53,9 @@ describe('article helpers', () => {
     expect(articleCategoryLabels.syntax.zh).toBe('语法学习');
     expect(articleCategoryLabels.syntax.en).toBe('Syntax');
   });
+
+  it('supports security category label', () => {
+    expect(articleCategoryLabels.security.zh).toBe('网络安全');
+    expect(articleCategoryLabels.security.en).toBe('Security');
+  });
 });

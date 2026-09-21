@@ -37,7 +37,7 @@ Follow `content/zh/articles/spring-cache-consistency.md`:
 title: Title
 summary: One-line summary
 author: CodeNest
-category: learning   # learning | work | diary | syntax
+category: learning   # learning | work | diary | syntax | security
 tags: [Tag1, Tag2]
 createdAt: YYYY-MM-DD
 updatedAt: YYYY-MM-DD
@@ -60,6 +60,7 @@ Category reference:
 | `learning` | Learning | Technical notes |
 | `syntax` | Syntax | Language syntax tracks (e.g. Python) |
 | `work` | Work Notes | Work retrospectives |
+| `security` | Security | Security research on devices you own |
 | `diary` | Diary | Personal notes |
 
 ## 2.1 Plan Frontmatter
