@@ -241,6 +241,11 @@ button {
   width: 320px;
   max-width: 36vw;
   box-shadow: none;
+  cursor: pointer;
+}
+
+.search-box-compact input {
+  cursor: pointer;
 }
 
 .search-icon-button {
@@ -1087,6 +1092,122 @@ button.heat-cell.is-selected {
 .search-results {
   display: grid;
   gap: 14px;
+}
+
+.search-stage {
+  display: grid;
+  gap: 28px;
+  justify-items: center;
+  width: min(640px, 100%);
+  margin: 48px auto 80px;
+  padding: 0 8px;
+}
+
+.search-stage-box {
+  width: 100%;
+}
+
+.search-stage-box .search-box {
+  height: 52px;
+}
+
+.search-stage-results {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+}
+
+.search-stage-empty {
+  margin: 8px 0 0;
+  text-align: center;
+}
+
+.search-hit {
+  display: grid;
+  gap: 4px;
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.search-hit-type {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.search-hit-title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.search-hit-summary {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.search-ticker {
+  width: 100%;
+}
+
+.search-ticker-viewport {
+  height: 168px;
+  overflow: hidden;
+  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+}
+
+.search-ticker-track {
+  display: grid;
+  gap: 10px;
+  animation: search-ticker-scroll 36s linear infinite;
+}
+
+.search-ticker:hover .search-ticker-track {
+  animation-play-state: paused;
+}
+
+.search-ticker-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: baseline;
+  padding: 4px 2px;
+  color: var(--muted);
+}
+
+.search-ticker-item:hover {
+  color: var(--text);
+}
+
+.search-ticker-type {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.search-ticker-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+@keyframes search-ticker-scroll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-ticker-track {
+    animation: none;
+  }
 }
 
 .empty-state {

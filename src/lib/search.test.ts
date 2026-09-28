@@ -33,10 +33,18 @@ describe('searchContent', () => {
     expect(results[0].item.slug).toBe('spring-cache');
   });
 
-  it('returns all content with score 0 when query is blank', () => {
-    const results = searchContent(searchableContent, '   ');
+  it('returns no results when query is blank', () => {
+    expect(searchContent(searchableContent, '   ')).toEqual([]);
+  });
 
-    expect(results).toHaveLength(2);
-    expect(results.every((result) => result.score === 0)).toBe(true);
+  it('keeps at most ten matches', () => {
+    const many = Array.from({ length: 12 }, (_, index) => ({
+      ...searchableContent[0],
+      id: `article-${index}`,
+      slug: `spring-cache-${index}`,
+      title: `Redis note ${index}`
+    }));
+
+    expect(searchContent(many, 'redis')).toHaveLength(10);
   });
 });

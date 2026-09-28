@@ -1,11 +1,18 @@
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { LatestActivityTicker } from '../components/LatestActivityTicker';
 import { SearchBox } from '../components/SearchBox';
-import { TagList } from '../components/TagList';
 import { loadSearchableContent } from '../data/searchCorpus';
 import { useAppContext } from '../layouts/AppLayout';
+import {
+  getLocalizedArticles,
+  getLocalizedPrompts,
+  getLocalizedQuestions
+} from '../lib/localizedContent';
 import { appRoutes, buildArticlePath, buildPlanPath, buildPromptPath, buildQuestionPath } from '../lib/routes';
 import { searchContent } from '../lib/search';
+import { buildLatestActivity } from '../lib/searchActivity';
+import { useDebouncedValue } from '../lib/useDebouncedValue';
 import type { SearchableContent } from '../types/content';
 
 /** 根据内容类型拼详情路径。 */
@@ -25,8 +32,11 @@ const resolveSearchHref = (item: SearchableContent) => {
   return appRoutes.questions;
 };
 
-/** 搜索结果类型文案。 */
-const resolveTypeLabel = (type: SearchableContent['type'], dictionary: ReturnType<typeof useAppContext>['dictionary']) => {
+/** 搜索结果 / 动态类型文案。 */
+const resolveTypeLabel = (
+  type: SearchableContent['type'] | 'article' | 'question' | 'prompt',
+  dictionary: ReturnType<typeof useAppContext>['dictionary']
+) => {
   if (type === 'article') return dictionary.labels.articles;
   if (type === 'plan') return dictionary.labels.plans;
   if (type === 'prompt') return dictionary.labels.prompts;
@@ -36,8 +46,19 @@ const resolveTypeLabel = (type: SearchableContent['type'], dictionary: ReturnTyp
 export default function SearchPage() {
   const { dictionary, language } = useAppContext();
   const [searchParams, setSearchParams] = useSearchParams();
-  const keyword = searchParams.get('q') ?? '';
+  const queryFromUrl = searchParams.get('q') ?? '';
+  const [keyword, setKeyword] = useState(queryFromUrl);
+  const debouncedKeyword = useDebouncedValue(keyword, 300);
   const [corpus, setCorpus] = useState<SearchableContent[] | null>(null);
+  const skipUrlSync = useRef(false);
+
+  const articles = getLocalizedArticles(language);
+  const prompts = getLocalizedPrompts(language);
+  const questions = getLocalizedQuestions(language);
+  const latestActivity = useMemo(
+    () => buildLatestActivity(articles, prompts, questions),
+    [articles, prompts, questions]
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -52,51 +73,63 @@ export default function SearchPage() {
     };
   }, [language]);
 
-  const results = corpus ? searchContent(corpus, keyword) : [];
+  // 自己写回 URL 时不要再把输入框重置成旧值。
+  useEffect(() => {
+    if (skipUrlSync.current) {
+      skipUrlSync.current = false;
+      return;
+    }
+    setKeyword(queryFromUrl);
+  }, [queryFromUrl]);
+
+  // 防抖后的关键字写回地址栏，方便分享。
+  useEffect(() => {
+    const next = debouncedKeyword.trim();
+    if (next === queryFromUrl.trim()) {
+      return;
+    }
+    skipUrlSync.current = true;
+    setSearchParams(next ? { q: next } : {}, { replace: true });
+  }, [debouncedKeyword, queryFromUrl, setSearchParams]);
+
+  const results = corpus ? searchContent(corpus, debouncedKeyword, 10) : [];
+  const showEmpty = Boolean(debouncedKeyword.trim()) && corpus !== null && results.length === 0;
 
   return (
-    <section className="page-stack">
-      <div className="page-heading">
-        <p className="eyebrow">Search</p>
-        <h1>{dictionary.pages.globalSearch}</h1>
-      </div>
-
-      <SearchBox
-        initialValue={keyword}
-        placeholder={dictionary.actions.searchPlaceholder}
-        onSearch={(nextKeyword) => setSearchParams({ q: nextKeyword })}
+    <section className="search-stage">
+      <LatestActivityTicker
+        items={latestActivity}
+        language={language}
+        typeLabel={(type) => resolveTypeLabel(type, dictionary)}
       />
 
-      <div className="search-results">
-        {!corpus ? (
-          <p className="muted">Loading…</p>
-        ) : results.length === 0 ? (
-          <div className="empty-state">
-            <p>{dictionary.pages.noResults}</p>
-          </div>
-        ) : (
-          results.map((result) => {
-            const href = resolveSearchHref(result.item);
-
-            return (
-              <article className="search-result" key={result.item.id}>
-                <p className="card-meta">{resolveTypeLabel(result.item.type, dictionary)}</p>
-                <h2>
-                  <Link to={href}>{result.item.title}</Link>
-                </h2>
-                <p>{result.item.summary}</p>
-                <TagList tags={result.item.tags} />
-              </article>
-            );
-          })
-        )}
+      <div className="search-stage-box">
+        <SearchBox
+          autoFocus
+          initialValue={keyword}
+          placeholder={dictionary.actions.searchPlaceholder}
+          onQueryChange={setKeyword}
+          onSearch={(nextKeyword) => setKeyword(nextKeyword)}
+        />
       </div>
 
-      {!keyword ? (
-        <p className="muted">
-          {dictionary.nav.home}: <Link to={appRoutes.home}>CodeNest</Link>
-        </p>
-      ) : null}
+      <div className="search-stage-results">
+        {!corpus && debouncedKeyword.trim() ? <p className="muted">Loading…</p> : null}
+
+        {results.map((result) => {
+          const href = resolveSearchHref(result.item);
+
+          return (
+            <Link className="search-hit" to={href} key={result.item.id}>
+              <span className="search-hit-type">{resolveTypeLabel(result.item.type, dictionary)}</span>
+              <span className="search-hit-title">{result.item.title}</span>
+              {result.item.summary ? <span className="search-hit-summary">{result.item.summary}</span> : null}
+            </Link>
+          );
+        })}
+
+        {showEmpty ? <p className="muted search-stage-empty">{dictionary.pages.noResults}</p> : null}
+      </div>
     </section>
   );
 }

@@ -64,7 +64,7 @@ export function AppLayout({ context }: AppLayoutProps) {
           <SearchBox
             compact
             placeholder={dictionary.actions.searchPlaceholder}
-            onSearch={(keyword) => navigate(`${appRoutes.search}?q=${encodeURIComponent(keyword)}`)}
+            onActivate={() => navigate(appRoutes.search)}
           />
           <button className="icon-button" type="button" onClick={toggleTheme} aria-label={dictionary.actions.toggleTheme}>
             {theme === 'light' ? <SunIcon /> : <MoonIcon />}

@@ -9,11 +9,11 @@ const countMatches = (source: string, query: string) => {
   return normalizeText(source).includes(query) ? 1 : 0;
 };
 
-export const searchContent = (items: SearchableContent[], query: string): SearchResult[] => {
+export const searchContent = (items: SearchableContent[], query: string, limit = 10): SearchResult[] => {
   const normalizedQuery = normalizeText(query);
 
   if (!normalizedQuery) {
-    return items.map((item) => ({ item, score: 0, matchedFields: [] }));
+    return [];
   }
 
   return items
@@ -33,5 +33,6 @@ export const searchContent = (items: SearchableContent[], query: string): Search
       return { item, score, matchedFields };
     })
     .filter((result) => result.score > 0)
-    .sort((left, right) => right.score - left.score);
+    .sort((left, right) => right.score - left.score)
+    .slice(0, limit);
 };
