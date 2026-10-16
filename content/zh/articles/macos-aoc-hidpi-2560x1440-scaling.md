@@ -18,15 +18,15 @@ slug: macos-aoc-hidpi-2560x1440-scaling
 
 最后成功运行了这条命令：
 
-`bash
+```bash
 ~/.hidpi-scale/set-scale.sh large
-`
+```
 
 终端返回：
 
-`text
+```text
 Monitor scaled: looks like 2560x1440
-`
+```
 
 这篇记录我具体怎么做的、遇到了什么坑，以及后面怎么恢复。先说清楚：**这不是把一块 1080P 面板变成真正的 2K 面板**，只是改变 macOS 的逻辑桌面空间。
 
@@ -52,9 +52,9 @@ Monitor scaled: looks like 2560x1440
 
 它的思路是通过**虚拟显示器、HiDPI 缩放和多屏布局**来调整逻辑桌面，再映射到真实的 AOC 屏幕。脚本中可以看到一些显示器配置项：
 
-`text
+```text
 id:... res:... hz:... scaling:on origin:(...) degree:0
-`
+```
 
 这里的 `id` 指显示器标识，`res` 指设置的分辨率，`hz` 是请求的刷新率，`scaling:on` 是缩放设置，`origin` 是显示器在虚拟桌面中的位置。
 
@@ -66,33 +66,33 @@ id:... res:... hz:... scaling:on origin:(...) degree:0
 
 这台 AOC 对应的配置是：
 
-`text
+```text
 1507:9987:1920x1080
-`
+```
 
 我使用的型号配置文件是：
 
-`bash
+```bash
 ~/.hidpi-scale/models.conf
-`
+```
 
 先检查文件，避免重复追加：
 
-`bash
+```bash
 cat ~/.hidpi-scale/models.conf
-`
+```
 
 如果没有对应的一行，再执行：
 
-`bash
+```bash
 echo "1507:9987:1920x1080" >> ~/.hidpi-scale/models.conf
-`
+```
 
 随后重新加载对应的用户级服务：
 
-`bash
+```bash
 launchctl kickstart -k gui/$(id -u)/com.hidpiscale
-`
+```
 
 这个服务属于当前脚本方案，并不是 macOS 自带的通用服务。如果提示找不到服务，需要先检查工具是否安装成功。
 
@@ -100,23 +100,23 @@ launchctl kickstart -k gui/$(id -u)/com.hidpiscale
 
 这套脚本提供了三个模式：
 
-`bash
+```bash
 ~/.hidpi-scale/set-scale.sh medium
 ~/.hidpi-scale/set-scale.sh large
 ~/.hidpi-scale/set-scale.sh native
-`
+```
 
 我想要更大的桌面空间，所以运行：
 
-`bash
+```bash
 ~/.hidpi-scale/set-scale.sh large
-`
+```
 
 得到：
 
-`text
+```text
 Monitor scaled: looks like 2560x1440
-`
+```
 
 看起来像 2560×1440，意味着逻辑桌面空间增加了。对于 IDE、浏览器和终端并排显示很有用。
 
@@ -128,22 +128,22 @@ Monitor scaled: looks like 2560x1440
 
 我当时运行的排查命令：
 
-`bash
+```bash
 grep -RnE 'refreshRate:60|hz:60|60Hz' \
   ~/.hidpi-scale \
   --include='*.sh' \
   --include='*.m'
-`
+```
 
 找到过这些位置：
 
-`text
+```text
 set-scale.sh:102: ... hz:60 scaling:on ...
 set-scale.sh:103: ... hz:60 scaling:on ...
 set-scale.sh:104: ... hz:60 scaling:on ...
 set-scale.sh:105: ... hz:60 scaling:on ...
 set-scale.sh:121: ... hz:100 scaling:on ...
-`
+```
 
 也就是说，脚本里 **60Hz 和 100Hz 是混用的**。
 
@@ -151,35 +151,35 @@ set-scale.sh:121: ... hz:100 scaling:on ...
 
 动手前，先备份：
 
-`bash
+```bash
 cp ~/.hidpi-scale/set-scale.sh ~/.hidpi-scale/set-scale.sh.bak
-`
+```
 
 再检查原脚本：
 
-`bash
+```bash
 grep -n 'hz:60' ~/.hidpi-scale/set-scale.sh
-`
+```
 
 如果已经确认对应模式支持 100Hz，可以修改相应的行。此前考虑的批量替换命令是：
 
-`bash
+```bash
 sed -i '' 's/hz:60/hz:100/g' ~/.hidpi-scale/set-scale.sh
-`
+```
 
 **不建议未经检查直接执行上面的批量替换。** 更稳妥的做法，是先分清哪些是 AOC 物理屏配置、哪些是虚拟屏配置，再按实际支持的模式修改。
 
 修改后，重新执行：
 
-`bash
+```bash
 ~/.hidpi-scale/set-scale.sh large
-`
+```
 
 检查显示模式：
 
-`bash
+```bash
 displayplacer list
-`
+```
 
 同时打开 **系统设置 → 显示器**，查看 macOS 当前允许选择的刷新率。
 
@@ -191,9 +191,9 @@ displayplacer list
 
 ### 方式一：切回原生模式
 
-`bash
+```bash
 ~/.hidpi-scale/set-scale.sh native
-`
+```
 
 这是当前脚本提供的恢复入口，目标是回到原生显示模式。执行后再检查系统设置，确认 AOC 是否回到 1920×1080。
 
@@ -203,9 +203,9 @@ displayplacer list
 
 打开：
 
-`text
+```text
 系统设置 → 显示器 → AOC 显示器
-`
+```
 
 选择原生 1920×1080 模式，刷新率选择系统列出的、显示器支持的模式。
 
@@ -215,16 +215,16 @@ displayplacer list
 
 前面如果备份过 `set-scale.sh.bak`，就可以把修改过的脚本还原：
 
-`bash
+```bash
 cp ~/.hidpi-scale/set-scale.sh.bak ~/.hidpi-scale/set-scale.sh
 ~/.hidpi-scale/set-scale.sh native
-`
+```
 
 如果打算彻底卸载当前方案，安装目录里还提供了：
 
-`bash
+```bash
 ~/.hidpi-scale/uninstall.sh
-`
+```
 
 卸载之前最好先检查脚本内容，弄清楚它会清理哪些服务和配置。**恢复分辨率不等于必须卸载工具**。
 
@@ -232,11 +232,11 @@ cp ~/.hidpi-scale/set-scale.sh.bak ~/.hidpi-scale/set-scale.sh
 
 我后面的终端日志还出现了几次：
 
-`text
+```text
 [恢复于2026年10月16日 08:44:01]
 Last login: Fri Oct 16 08:43:57 on console
 Restored session: 2026年10月16日 星期五 08时38分56秒 CST
-`
+```
 
 刚看到时，我也容易把它和显示器切换联系起来。
 
@@ -246,7 +246,7 @@ Restored session: 2026年10月16日 星期五 08时38分56秒 CST
 
 这次最有用的就是下面三个命令：
 
-`bash
+```bash
 # 让桌面空间更宽敞
 ~/.hidpi-scale/set-scale.sh large
 
@@ -255,7 +255,7 @@ Restored session: 2026年10月16日 星期五 08时38分56秒 CST
 
 # 恢复原生模式
 ~/.hidpi-scale/set-scale.sh native
-`
+```
 
 我的实际结果是：运行 `large` 后脚本报告「looks like 2560x1440」，达到了调整逻辑桌面尺寸的目的。
 
