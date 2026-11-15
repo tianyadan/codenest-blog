@@ -24,10 +24,10 @@ The target was specific: **Mac built-in Bluetooth, factory firmware, no Wi-Fi/LA
 
 The initial idea was to record a dial command and replay it. The actual chain is:
 
-~~~text
+```text
 Dial input → MiBeacon event → AES-CCM encryption and MIC
            → FE95 BLE advertising → lamp identity/replay checks → action
-~~~
+```
 
 Decoding and creating a message is not the same as transmitting it with an acceptable sender identity.
 
@@ -66,10 +66,10 @@ The lamp's FE95 service exposed:
 
 The `0004` read returned:
 
-~~~text
+```text
 31 2e 30 2e 30 5f 30 30 38 38 00 00 6f 70 63 6f 64 65 5f 73
 ASCII: 1.0.0_0088..opcode_s
-~~~
+```
 
 No observable GATT notification or readable state changed when the dial operated the lamp. A separate read-only Codex verification agreed. The `001A/001B` characteristics used by some documented MIoT BLE attribute protocols were not exposed.
 
@@ -85,9 +85,9 @@ The dial's FE95 service exposed characteristics including `0001 / 0002 / 0004 / 
 
 My initial script wrote the legacy registration-start opcode to `0010`:
 
-~~~text
+```text
 90 CA 85 DE
-~~~
+```
 
 The host reported successful GATT submission, followed by 12 seconds without notifications. This was not sufficient evidence of rejection: **I had not yet sent the encrypted authentication challenge**.
 
@@ -95,12 +95,12 @@ The host reported successful GATT submission, followed by 12 seconds without not
 
 Following the open-source `MiotLegacyBondClient` approach, I constructed a challenge using the dial's address, PID, a random token, and RC4. A 12-byte challenge was written to `FE95/0001`:
 
-~~~text
+```text
 challenge_prepared         bytes=12 mac_order=reverse
 challenge_write_completed  char=0001 length=12
 notification               char=0001 length=12
 challenge_verified         valid=true
-~~~
+```
 
 A separate explicitly confirmed run also wrote the binding-completion command, logged as `bond_complete_written`.
 
@@ -110,7 +110,7 @@ A separate explicitly confirmed run also wrote the binding-completion command, l
 
 A post-authentication raw read of `0004` appeared corrupted until it was decrypted with the active RC4 session:
 
-~~~text
+```text
 raw:
 08 35 45 78 1d e2 51 5a 8b 87 dd 3e ba 69 45 a1 0e 9f 9f 50
 
@@ -118,7 +118,7 @@ decrypted:
 32 2e 30 2e 30 5f 30 30 30 31 00 00 00 00 00 00 00 00 00 00
 
 ASCII: 2.0.0_0001
-~~~
+```
 
 The discrepancy with the earlier `2.0.0_0009` field remains unexplained; **it is not evidence of a firmware upgrade or downgrade**.
 
@@ -130,31 +130,31 @@ The first offline decoder failed on all 100 historical samples because its forma
 
 The captured frames began with:
 
-~~~text
+```text
 48 50 CE 15 ...
-~~~
+```
 
 `48 50` encodes the relevant MiBeacon v5 frame-control information, while `CE 15` is the little-endian product ID `0x15CE`.
 
 The compatibility transformation that worked was:
 
-~~~text
+```text
 Decrypted 0014 12-byte material + FF FF FF FF → 16-byte AES-CCM key
 nonce: reverse MAC byte order as used in the successful verifier
-~~~
+```
 
 I am publishing the derivation, not the device-specific secret.
 
 Running `verify_remote_beacon_v3.py --live` produced:
 
-~~~text
+```text
 Historical MiBeacon v5 advertisements: 100
 AES-CCM MIC verified: 100
 variant: legacy+FFFFFFFF / mac-reversed
 
 Live MiBeacon v5 advertisements: 9
 Live AES-CCM MIC verified: 9
-~~~
+```
 
 **109 out of 109 authenticated frames.** AES-CCM MIC validation is substantially stronger than merely obtaining plausible-looking plaintext.
 
@@ -174,11 +174,11 @@ Historical messages were captured before active authentication; later live broad
 
 A locally self-verifying MiBeacon payload can now be constructed:
 
-~~~text
+```text
 FE95 Service Data: 48 50 CE 15 ...
 Full BLE AD:       15 16 95 FE 48 50 CE 15 ...
 AES-CCM MIC:      local verification passed
-~~~
+```
 
 **A local MIC self-test does not prove RF transmission or lamp acceptance.**
 
@@ -203,11 +203,11 @@ Codex reviewed the little-endian `0x2006` parameters, advertising intervals, `AD
 
 A native Objective-C diagnostic then sent only a read-only `0x1001 Read Local Version Information`:
 
-~~~text
+```text
 REQUEST_CREATE status=0x00000000 request=0
 SEND_RAW status=0x00000000
 EVENT_RECEIVED=no
-~~~
+```
 
 This establishes **successful host API submission, but no delivered HCI Command Complete/Status event**. It proves neither controller acceptance nor controller rejection. The event path, permissions, OS mediation, and `bluetoothd` scheduling remain potential causes.
 
@@ -223,15 +223,15 @@ The lamp might reject a message on that basis, but **we have not directly proved
 
 Using nRF Connect on iPhone, I filtered Scanner Data for:
 
-~~~text
+```text
 4850CE15
-~~~
+```
 
 Rotating the real dial produced observable FE95 Service Data, for example:
 
-~~~text
+```text
 48 50 CE 15 E3 7D 2A 17 1F DB 77 38 00 00 EB 3B 8A D2
-~~~
+```
 
 This positively demonstrated that the phone could receive the **real dial's** target advertisements.
 
