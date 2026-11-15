@@ -24,10 +24,10 @@ slug: xiaomi-lightbar-1s-ble-reverse-engineering
 
 最初的想法是“录一条旋钮信号，重放就行”。实际需要经过：
 
-~~~text
+```text
 旋钮操作 → MiBeacon 事件编码 → AES-CCM 加密及 MIC
        → BLE FE95 广播 → 挂灯验身份/计数器/密文 → 灯光动作
-~~~
+```
 
 录制、解密和构造报文只解决前半段，**真正发射与被挂灯接受是两件独立的事**。
 
@@ -66,10 +66,10 @@ Mac 可以使用 Bleak 成功发现、连接挂灯和原装旋钮。CoreBluetoot
 
 `0004` 读取结果：
 
-~~~text
+```text
 31 2e 30 2e 30 5f 30 30 38 38 00 00 6f 70 63 6f 64 65 5f 73
 ASCII: 1.0.0_0088..opcode_s
-~~~
+```
 
 三轮中连接正常，旋钮操作没有导致任何可观察的 GATT Notify 或可读字段变化。Codex 后续再次做只读核验，结论一致：**没有找到已验证的灯光控制写入入口**。也没有看到部分 MIoT BLE 属性协议使用的 `001A/001B`。
 
@@ -83,20 +83,20 @@ MIoT 规格中的 `siid=2/piid=1`（开关）、`piid=2`（亮度）、`piid=3`�
 
 原装旋钮的 FE95 GATT 包含 `0001 / 0002 / 0004 / 0010 / 0014 / 0019` 等特征。最初只向 `0010` 写入公开旧版绑定流程中的启动字节：
 
-~~~text
+```text
 90 CA 85 DE
-~~~
+```
 
 Mac 报告 GATT 写入成功，但等待 12 秒没有收到 Notify。后来才明白：**这还不是完整挑战响应，等不到通知不代表旋钮拒绝绑定。**
 
 改为订阅 `0001`、`0010`、`0019`，结合真实地址、PID、随机 Token 和 RC4 算法生成挑战，写入 `FE95/0001`，终于得到了设备返回的数据：
 
-~~~text
+```text
 challenge_prepared         bytes=12 mac_order=reverse
 challenge_write_completed  char=0001 length=12
 notification               char=0001 length=12
 challenge_verified         valid=true
-~~~
+```
 
 随后有一次在明确确认后执行了 `bond_complete_written`。需要区分：**挑战验证通过是实测；完成指令写入成功不等于所有长期配对状态均已被证明。**
 
@@ -104,7 +104,7 @@ challenge_verified         valid=true
 
 绑定会话之后，`0004` 直接读取看起来是乱码，用会话 RC4 解密后得到：
 
-~~~text
+```text
 raw:
 08 35 45 78 1d e2 51 5a 8b 87 dd 3e ba 69 45 a1 0e 9f 9f 50
 
@@ -112,7 +112,7 @@ decrypted:
 32 2e 30 2e 30 5f 30 30 30 31 00 00 00 00 00 00 00 00 00 00
 
 ASCII: 2.0.0_0001
-~~~
+```
 
 它和先前读取的 `2.0.0_0009` 不同。**没有证据说明发生过固件升级或降级**，暂记为尚未解释的字段差异。
 
@@ -122,29 +122,29 @@ ASCII: 2.0.0_0001
 
 最初的验证程序错误处理了 MiBeacon 版本和 nonce/密钥格式。旋钮广播前缀实际是：
 
-~~~text
+```text
 48 50 CE 15 ...
-~~~
+```
 
 其中 `48 50` 表示相关 MiBeacon v5 帧控制信息，`CE 15` 是 PID `0x15CE` 的小端编码。
 
 最终有效的兼容构造是：
 
-~~~text
+```text
 0014 解密所得 12B 材料 + FF FF FF FF → 16B AES-CCM Key
 nonce 中使用与实验一致的反向 MAC 字节序
-~~~
+```
 
 运行 `verify_remote_beacon_v3.py --live`：
 
-~~~text
+```text
 MiBeacon v5 历史广播：100
 AES-CCM MIC 验证成功：100
 候选类型：legacy+FFFFFFFF / mac-reversed
 
 实时有效 v5 广播：9
 实时 MIC 验证成功：9
-~~~
+```
 
 **109/109 条认证成功。** 这比仅看明文是否可读更有说服力：MIC 是密码学认证标签，能够同时验证密钥与相关输入是否匹配。
 
@@ -164,11 +164,11 @@ AES-CCM MIC 验证成功：100
 
 在本地生成了带有效 AES-CCM MIC 的 MiBeacon v5 报文：
 
-~~~text
+```text
 Service Data FE95: 48 50 CE 15 ...
 完整 AD 结构:     15 16 95 FE 48 50 CE 15 ...
 AES-CCM MIC: 本地校验通过
-~~~
+```
 
 **报文构造成功不等于无线发射成功**，更不等于挂灯接受。
 
@@ -193,11 +193,11 @@ Codex 后来审查 `0x2006` 的小端参数、广告间隔、`ADV_NONCONN_IND`�
 
 于是新增原生 Objective-C `mac_hci_event_probe.m`，先执行无状态修改的 `0x1001 Read Local Version Information`：
 
-~~~text
+```text
 REQUEST_CREATE status=0x00000000 request=0
 SEND_RAW status=0x00000000
 EVENT_RECEIVED=no
-~~~
+```
 
 这意味着主机请求创建和 API 提交成功，但进程**没有收到控制器完成事件**。不能由此证明芯片执行，也不能断言芯片拒绝。
 
@@ -215,15 +215,15 @@ Codex 随后把 `--tx` 改为 **fail-closed**：拿不到 Command Complete / Sta
 
 后来用 iPhone 的 nRF Connect 扫描 BLE 广播，在 Data 过滤中输入：
 
-~~~text
+```text
 4850CE15
-~~~
+```
 
 旋转原装旋钮后，iPhone 成功看到 FE95 数据，例如：
 
-~~~text
+```text
 48 50 CE 15 E3 7D 2A 17 1F DB 77 38 00 00 EB 3B 8A D2
-~~~
+```
 
 这说明 iPhone 能作为观察原装旋钮广播的独立接收器。
 
